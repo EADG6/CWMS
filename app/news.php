@@ -6,7 +6,7 @@
 				<div class="col-sm-12">
 				<h2>The Dos and Don’ts of Leasing a Car</h2>	        
 				<h5>Posted by Georgi Boychev on 06 March 2017, 09:10 AM</h5>
-				<img src="img/1.jpg">
+				<img src="static/img/1.jpg">
 				<hr>
 				<div class="col-sm-10">
 				<h4>In the UK, more and more people are deciding to lease cars so that they can update and renew them without spending thousands of pounds every couple of years. This is a great solution for anyone who needs a larger car, or who is interested in the environmental and safety features newer cars come onto the market with.
@@ -40,7 +40,7 @@ You could well reduce your monthly lease payments by making a big deposit at the
 				<hr>
 				<h2>A concept with an instinct for adapting: sounds and looks good. For now</h2>
 				<h5>Posted by Georgi Boychev on 27 February 2017, 09:16 AM</h5>
-				<img src="img/2.jpg">
+				<img src="static/img/2.jpg">
 				<hr>
 				<h4>2017 PEUGEOT INSTINCT Concept PEUGEOT has finally let us taste what the future of mobility would look and feel like. Or, at least, the team would make anything possible to make us believe that they did so. Just revealed in Spain, the PEUGEOT INSTINCT Concept caught the eye of audience and critics. And there is a reason for that.
 

@@ -33,7 +33,7 @@
 		</center>
 		<div class='col-xs-1'>
 			<div class="left_tab">
-				<a href=#><img src='static/img/up.png'/></a><br/>
+				<a href=#><img src='../static/img/icon/up.png'/></a><br/>
 				<?php
 				if(!isset($_GET['action'])){
 					$_GET['action']='';
@@ -46,7 +46,7 @@
 					}
 				}
 				?>
-				<a href='#bottom'><img src='static/img/down.png'/></a>
+				<a href='#bottom'><img src='../static/img/icon/down.png'/></a>
 			</div>
 		</div>
 		<div class='col-xs-10'>

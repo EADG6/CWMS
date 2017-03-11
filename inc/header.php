@@ -8,9 +8,11 @@
     <meta name="author" content="">
     <title>Car Warsh Shop</title>
     <!-- Bootstrap Core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="static/css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom CSS -->
-    <link href="css/business-frontpage.css" rel="stylesheet">
-	<link href="css/table.css" rel="stylesheet">
+    <link href="static/css/business-frontpage.css" rel="stylesheet">
+	<link href="static/css/table.css" rel="stylesheet">
+	<!-- jQuery -->
+    <script src="static/js/jquery.min.js"></script>
 </head>
 <body>
