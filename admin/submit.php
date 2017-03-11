@@ -3,7 +3,7 @@
     <head>
         <title>Submit</title>
         <link type="text/css" rel="stylesheet" href="../static/css/kube.css"/>
-		<link type="text/css" rel="stylesheet" href="../static/css/style.css"/>
+		<link type="text/css" rel="stylesheet" href="../static/css/admin.css"/>
     </head>
     <body><br/><br/><br/><br/>
         <row centered>
