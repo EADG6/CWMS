@@ -2,7 +2,7 @@
 	 //Start the session
 	 session_start();
 	 //Connect database
-	 //require "inc/db.php";
+	 require "inc/db.php";
 	 include "inc/header.php";
 	 include "inc/nav.php";
 	 if(isset($_GET['page'])){
