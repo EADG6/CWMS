@@ -3,12 +3,12 @@
 		        <tr><td class='text-centered' id='tab'>
 				<nav>
 					<div class="left-menu">
-						<a href="index.php?page=create_order"><button class='btn-danger' type="button">Create order</button></a>
+						<a href="index.php?page=create_order"><button class='btn-primary' type="button">Create order</button></a>
 						<a href="index.php?page=current_orders"><button type="button">Current orders</button></a>
 					</div>
 					<div class="right-menu">
 						<div class="nav dropdown">
-						    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Menu
+						    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Menu
 						    <span class="caret"></span></button>
 						    <ul class="dropdown-menu">
 						      <li class="dropdown-header">Overviews</li>
