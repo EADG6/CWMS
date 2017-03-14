@@ -1,7 +1,7 @@
 <!-- This page used to connect the database -->
 <?php
 $username = "root";
-$password = "";
+$password = "0618";
 $hostname = "localhost";
 //connection to the database
 $db = mysql_connect ($hostname, $username, $password)
@@ -11,7 +11,7 @@ $db = mysql_connect ($hostname, $username, $password)
 	 
 <?php
 //selectselect a database to work with
-$selected = mysql_select_db("carwarshing",$db)
+$selected = mysql_select_db("carwashing",$db)
            or  die("Could not select database");
 ?>
 
