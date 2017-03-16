@@ -25,10 +25,6 @@
 		include "app/services.php";
 	}else if($page=='order'){
 		include "app/order.php";
-	}else if($page=='login'){
-		include "login.php";
-	}else if($page=='sign'){
-		include "sign.php";
 	}else if($page=='news'){
 		include "app/news.php";
 	}else if($page=='addorder'){
