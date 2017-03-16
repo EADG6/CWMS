@@ -1,6 +1,12 @@
 <?php
 	 //Start the session
 	 session_start();
+	 //Make sure login
+	 if (isset($_SESSION['customer_username'])){
+	 } else {
+		 //Ask login
+	 	 echo"<script type='text/javascript'>alert('Please Login First');location='login.php';</script>";
+		 }
 	 //Connect database
 	 require "inc/db.php";
 	 include "inc/header.php";

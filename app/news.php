@@ -56,15 +56,4 @@ And as we talk about future cars, we should mention some of the technologies tha
 			</div>
 
         </div>
-        <!-- /.row -->
-        <!-- Footer -->
-        <footer>
-            <div class="row">
-                <div class="col-lg-12">
-					<hr>
-                    <p>Copyright &copy; Your Website 2014</p>
-                </div>
-            </div>
-            <!-- /.row -->
-        </footer>
     </div>

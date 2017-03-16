@@ -22,10 +22,7 @@
                     </li>
                     <li>
                         <a href="index.php?page=news">News</a>
-                    </li>
-                    <li>
-                        <a href="index.php?page=login">Login</a>
-                    </li>
+                    </li>          
                     <li>
                         <a href="index.php?logout">Logout</a>
                     </li>
