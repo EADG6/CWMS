@@ -10,7 +10,7 @@
 ?>
 <script>
 /**Confirm when leave current page*/
-	//window.onbeforeunload=function(){return "Do You Want to Leave Current Page?"};
+//window.onbeforeunload=function(){return "Do You Want to Leave Current Page?"};
 /**function of add,minus,show,hide and check input number*/
 	function a(fid){ 
 		var x=document.getElementById(fid).value; 

@@ -9,6 +9,8 @@
     <title>Car Warsh Shop</title>
     <!-- Bootstrap Core CSS -->
     <link href="static/css/bootstrap.min.css" rel="stylesheet">
+	<!-- Font Awesome -->
+	<link href="static/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <!-- Custom CSS -->
     <link href="static/css/business-frontpage.css" rel="stylesheet">
 	<link href="static/css/table.css" rel="stylesheet">

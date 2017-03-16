@@ -19,6 +19,9 @@
 						      <li><a href="index.php?page=customer&action=info">Customer info</a></li>
 							  <li><a href="index.php?page=customer&action=new">New customer</a></li>
 							  <li><a href="index.php?page=recharge">Recharge</a></li>
+							  <li class="divider"></li>
+							  <li class="dropdown-header">Staff</li>
+							  <li><a href="index.php?page=staff&action=info">Staff info</a></li>
 						      <li class="divider"></li>
 							  <li class="dropdown-header">Product</li>							  
 							  <li><a href="index.php?page=product&action=detail">Product items</a></li>
@@ -33,7 +36,7 @@
 		</center>
 		<div class='col-xs-1'>
 			<div class="left_tab">
-				<a href=#><img src='../static/img/icon/up.png'/></a><br/>
+				<a href='#'><img src='../static/img/icon/up.png'/></a><br/>
 				<?php
 				if(!isset($_GET['action'])){
 					$_GET['action']='';

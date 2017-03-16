@@ -1,4 +1,5 @@
 <?php
+	session_start();
 	require("inc/db.php");
 	if (isset($_GET['page'])) {
 		$page = $_GET['page'];
@@ -19,6 +20,8 @@
 		include "create_order.php";
 	}else if($page == 'recharge'){
 		include "recharge.php";
+	}else if($page == 'staff'){
+		include "staff.php";
 	}
 	include("inc/footer.php");
 

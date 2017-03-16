@@ -17,11 +17,20 @@
         $res = mysql_query($sql,$this->conn) or die(mysql_error());
 		return $res;
 	}
+	function oneQuery($sql){	//Get one value from db
+		return $this->fetch($this->query($sql))[0];
+	}
 }
 $mysql = new Mysql();
-//prevent some of SQL injection and XSS attack
-	function inputCheck($input){
-		$input=mysql_real_escape_string(htmlspecialchars($input));
+	function inputCheck($input){	//prevent some of SQL injection and XSS attack
+		$input=mysql_real_escape_string(htmlspecialchars(strip_tags($input,'<p><b><i><u>')));
 		return $input;
+	}
+	function redirect($url,$msg=''){	//redirect and alert
+		if(empty($msg)){
+			echo "<script>location.href='$url';</script>";
+		}else{
+			echo "<script>alert('$msg');location.href='$url';</script>";
+		}
 	}
 ?>

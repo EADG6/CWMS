@@ -1,6 +1,6 @@
-<div class="col-md-8 col-md-offset-1">
+<div class="col-md-9 col-md-offset-1 mainblocks">
 	<div class="cards col-md-12">
-	  <h1 class="text-center">Recharge page</h1>
+	  <h1 class="text-center">Recharge Page</h1>
 		<div class="col-md-8 col-md-offset-2">
 			<form method='post'>
 				<div class="form-group">
