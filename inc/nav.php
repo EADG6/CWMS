@@ -22,6 +22,9 @@
                     </li>
                     <li>
                         <a href="index.php?page=news">News</a>
+                    </li>
+                    <li>
+                        <a href="index.php?page=customer">Customer</a>
                     </li>          
                     <li>
                         <a href="index.php?logout">Logout</a>

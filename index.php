@@ -35,6 +35,8 @@
 		include "app/news.php";
 	}else if($page=='addorder'){
 		include "app/addorder.php";
+	}else if($page=='customer'){
+		include "app/customer.php";
 	}
 	include "inc/footer.php";
 ?>
