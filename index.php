@@ -15,7 +15,7 @@
 		unset($_SESSION['customer_username']);
 		unset($_SESSION['customer_name']);
 		session_destroy();
-		echo "<script>location.href='index.php?page=login'</script>";
+		echo "<script>location.href='login.php'</script>";
 		//redirect('login.php');
 	 }
 	 //show all the page's location

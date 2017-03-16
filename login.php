@@ -62,7 +62,7 @@
 					header("location: index.php");		
 				}else{
 					//Say worn and go back to login page 
-					echo"<script type='text/javascript'>alert('Worn User Name or Password');location='index.php?page=login';</script>";
+					echo"<script type='text/javascript'>alert('Worn User Name or Password');location='login.php';</script>";
 				}     
 			}          
 		}  
@@ -72,7 +72,7 @@
 	}else if($action=='sign'){
 ?> 
 <?php  
-//require('db.php');
+require "inc/db.php";
 if (isset ($_POST['name']) && isset($_POST['username']) && isset($_POST['password']) && isset($_POST['passwordagain']) && isset($_POST['phone']) && isset($_POST['plate1']) && isset($_POST['color1']) && isset($_POST['type1']) && isset($_POST['plate2']) && isset($_POST['color2']) && isset($_POST['type2']) && isset($_POST['plate3']) && isset($_POST['color3']) && isset($_POST['type3'])) {
 	$name = $_POST['name'];
 	$username = $_POST['username'];
@@ -82,7 +82,7 @@ if (isset ($_POST['name']) && isset($_POST['username']) && isset($_POST['passwor
 	$plate1 = $_POST['plate1'];
 	$color1 = $_POST['color1'];
 	$type1 = $_POST['type1'];
-	$plate2= $_POST['plate2'];
+	$plate2 = $_POST['plate2'];
 	$color2 = $_POST['color2'];
 	$type2 = $_POST['type2'];
 	$plate3 = $_POST['plate3'];
@@ -90,31 +90,46 @@ if (isset ($_POST['name']) && isset($_POST['username']) && isset($_POST['passwor
 	$type3 = $_POST['type3'];	
 
 	if($username==""|| $password=="" || $name=="" || $phone=="" || $passwordagain=="") {  
-		echo"<script type='text/javascript'>alert('write all the information');location='register.php';  
-            </script>";  
+		echo"<script type='text/javascript'>alert('write all the information');location='login.php?new';  
+            </script>";
+			if ($passwoed!=$passwardagain){
+				echo"<script type='text/javascript'>alert('write same password');location='login.php?new';  
+		            </script>";
+				}
 	} else {  
 	    $sql = "SELECT * FROM customer WHERE username = '$username'";
 	    $query = mysql_query("$sql");
 	    $rows = mysql_num_rows($query);
 	
 	        if ($rows ==1){
-			echo"<script type='text/javascript'>alert('Username in Use');location='register.php';  
+			echo"<script type='text/javascript'>alert('Username in Use');location='login.php?new';  
             </script>";
 		      }else{
 		         if($password!=$passwordagain) {   
-			       echo"<script type='text/javascript'>alert('Password Not Same');location='register.php';  
+			       echo"<script type='text/javascript'>alert('Password Not Same');location='login.php?new';  
                         </script>"; 
                   } else { 
-			          $sql = "INSERT INTO customer (name,username,password,phone,plate1,plate2,plate3,color1,color2,color3,type1,type2,type3) VALUES('$name','$username','$password','$phone','$plate1','$plate2','$plate3','$color1','$color2','$color3','$type1','$type2','$type3')"; 
-			          $result=mysql_query($sql);  
-			if(!$result) {  
-				echo"<script type='text/javascript'>alert('Worn');location='register.php';  
-            </script>";
-			} else {  
+			          $sql_newcus = "INSERT INTO customer (name,username,password,phone) VALUES('$name','$username','$password','$phone')"; 
+					  $sql_newcar1 = "INSERT INTO car (plate,color,type) VALUES('$plate1','$color1','$type1')";
+					  $sql_newcar2 = "INSERT INTO car (plate,color,type) VALUES('$plate2','$color2','$type2')";
+					  $sql_newcar3 = "INSERT INTO car (plate,color,type) VALUES('$plate3','$color3','$type3')";
+			          mysql_query($sql_newcus);
+					  $customerid = mysql_insert_id();
+					  mysql_query($sql_newcar1);
+					  $carid1 = mysql_insert_id();
+					  mysql_query($sql_newcar2);
+					  $carid2 = mysql_insert_id();
+					  mysql_query($sql_newcar3);
+					  $carid3 = mysql_insert_id(); 
+					  $sql_cuscar1 = "INSERT INTO customercar (customerid, carid) VALUES('$customerid','$carid1')";
+					  $sql_cuscar2 = "INSERT INTO customercar (customerid, carid) VALUES('$customerid','$carid2')";
+					  $sql_cuscar3 = "INSERT INTO customercar (customerid, carid) VALUES('$customerid','$carid3')";
+					  mysql_query($sql_cuscar1);
+					  mysql_query($sql_cuscar2);
+					  mysql_query($sql_cuscar3);	 
 				echo"<script type='text/javascript'>alert('You Can Login Know');location='login.php';  
-            </script>";  
+           	 </script>";  
 			}
-		 }	
 		}  
 	}  
 }
@@ -123,28 +138,29 @@ if (isset ($_POST['name']) && isset($_POST['username']) && isset($_POST['passwor
     <div class="container">
         <div class="row">
 				<h1>Please Enter Your Information</h1>  
+				<form method='post'>
 				    <div class="form-group col-md-5 col-md-offset-0">  
 				    	<label for='name'>Name:</label>
 						<input type="text" class="form-control" name="name" id='name'>
 					</div>
 					
 				    <div class="form-group col-md-5 col-md-offset-0">  
-				    	<label for='name'>Username:</label>
+				    	<label for='username'>Username:</label>
 						<input type="text" class="form-control" name="username" id='username'>
 					</div>
 					
 			    	<div class="form-group col-md-5 col-md-offset-0">  
-			   		 	<label for='name'>Password:</label>
+			   		 	<label for='password'>Password:</label>
 						<input type="text" class="form-control" name="password" id='password'>
 					</div>
 					
 				    <div class="form-group col-md-5 col-md-offset-0">  
-				   	 	<label for='name'>Password Again:</label>
+				   	 	<label for='passwordagain'>Password Again:</label>
 						<input type="text" class="form-control" name="passwordagain" id='passwordagain'>
 					</div>
 					
 				    <div class="form-group col-md-5 col-md-offset-0">  
-				    	<label for='name'>Phone Number:</label>
+				    	<label for='phone'>Phone Number:</label>
 						<input type="text" class="form-control" name="phone" id='phone'>
 					</div>
 					<div class="col-md-12">
@@ -154,17 +170,17 @@ if (isset ($_POST['name']) && isset($_POST['username']) && isset($_POST['passwor
 						<div class="col-md-4">
 						<h4>First Car</h4>
 				   	 		<div class="form-group  col-md-offset-0">  
-				   			 	<label for='name'>Plate Number 1:</label>
+				   			 	<label for='plate1'>Plate Number 1:</label>
 								<input type="text" class="form-control" name="plate1" id='plate1'>
 							</div>
 					
 				    		<div class="form-group  col-md-offset-0">  
-				   			 	<label for='name'>Color:</label>
+				   			 	<label for='colol1'>Color:</label>
 								<input type="text" class="form-control" name="color1" id='color1'>
 							</div>
 							
 				    		<div class="form-group  col-md-offset-0">  
-				   			 	<label for='name'>Type:</label>
+				   			 	<label for='type1'>Type:</label>
 								<input type="text" class="form-control" name="type1" id='type1'>
 							</div>
 						</div>
@@ -172,17 +188,17 @@ if (isset ($_POST['name']) && isset($_POST['username']) && isset($_POST['passwor
 						<div class="col-md-4">
 						<h4>Second Car</h4>
 				   	 		<div class="form-group col-md-offset-0">  
-				   			 	<label for='name'>Plate Number 2:</label>
+				   			 	<label for='plate2'>Plate Number 2:</label>
 								<input type="text" class="form-control" name="plate2" id='plate2'>
 							</div>
 					
 				    		<div class="form-group col-md-offset-0">  
-				   			 	<label for='name'>Color:</label>
+				   			 	<label for='color2'>Color:</label>
 								<input type="text" class="form-control" name="color2" id='color2'>
 							</div>
 							
 				    		<div class="form-group col-md-offset-0">  
-				   			 	<label for='name'>Type:</label>
+				   			 	<label for='type2'>Type:</label>
 								<input type="text" class="form-control" name="type2" id='type2'>
 							</div>
 						</div>
@@ -190,17 +206,17 @@ if (isset ($_POST['name']) && isset($_POST['username']) && isset($_POST['passwor
 						<div class="col-md-4">
 						<h4>Third Car</h4>
 				   	 		<div class="form-group col-md-offset-0">  
-				   			 	<label for='name'>Plate Number 3:</label>
+				   			 	<label for='plate3'>Plate Number 3:</label>
 								<input type="text" class="form-control" name="plate3" id='plate3'>
 							</div>
 					
 				    		<div class="form-group col-md-offset-0">  
-				   			 	<label for='name'>Color:</label>
+				   			 	<label for='color3'>Color:</label>
 								<input type="text" class="form-control" name="color3" id='color3'>
 							</div>
 							
 				    		<div class="form-group col-md-offset-0">  
-				   			 	<label for='name'>Type:</label>
+				   			 	<label for='type3'>Type:</label>
 								<input type="text" class="form-control" name="type3" id='type3'>
 							</div>
 						</div>
@@ -209,9 +225,10 @@ if (isset ($_POST['name']) && isset($_POST['username']) && isset($_POST['passwor
 					</div>
 					<div class="col-md-12 col-md-offset-10">
 				    	<a href="login.php" >Back</a>
-				    	<input type="submit" value="ok">  
+				    	<input type="submit" value="Submit">  
 				   	 	<input type="reset" value="delete">
 					</div>
+				</form>
         		</div>        
     		</div>
 	<?php
