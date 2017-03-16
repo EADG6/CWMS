@@ -47,23 +47,23 @@
 			}else{   
 				// select information from database
 				$sql = "SELECT * FROM customer WHERE password = '$password' AND username = '$username'";
-				echo $sql;
 				$query = mysql_query("$sql");
+				$cusinfo = mysql_fetch_array($query);
+				$id = $cusinfo['id'];
 				$rows = mysql_num_rows($query);
 				$row = mysql_fetch_array($query);
 				// check u & p
 				if ($rows ==1){
 					session_start();
-					$_SESSION['userid']= $row{'id'};
+					$_SESSION['customer_id']= $id;
 					$_SESSION['customer_username']= $username;
-					$_SESSION['customer_name']= $row{'name'};
 					//Say right and go to home2 page
 					echo"<script type='text/javascript'>alert('ok');</script>"; 
 					header("location: index.php");		
-				}else{
+				}else{					
 					//Say worn and go back to login page 
 					echo"<script type='text/javascript'>alert('Worn User Name or Password');location='login.php';</script>";
-				}     
+				}   
 			}          
 		}  
 		include "inc/footer.php";
