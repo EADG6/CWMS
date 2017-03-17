@@ -37,7 +37,7 @@
 					</div>
 					
 					<div class="col-md-12 col-md-offset-10">			
-				    	<input type="submit" value="Submit">  
+				    	<input type="submit" value="Submit" class="btn btn-primary">  
 					</div>
 				</form>
 				
@@ -45,24 +45,45 @@
 					<hr>
 					<h3>Update Password</h3>
 				</div>
+				<?php
+				if (isset ($_POST['password']) && isset ($_POST['newpassword']) && isset ($_POST['newpasswordagain'])){
+					$password_old = $cusinfo['password'];
+					$password = $_POST['password'];
+					$new_password = $_POST['newpassword'];
+					$new_password_again = $_POST['newpasswordagain'];
+					if($password==""|| $new_password=="" || $new_password_again=="") {  
+						echo"<script type='text/javascript'>alert('Write all the information');location='index.php?page=customer';</script>";
+							} else if ($new_password!=$new_password_again){
+								echo"<script type='text/javascript'>alert('New Password Not Same');location='index.php?page=customer';</script>";
+								} else if ($password!=$password_old){
+									echo"<script type='text/javascript'>alert('Wrong Password ');location='index.php?page=customer';</script>";
+					} else {
+						$sql_updatepass = "UPDATE customer SET password = '$new_password' WHERE id = '".$_SESSION['customer_id']."'";
+						$result_updatepass = mysql_query($sql_updatepass);
+						echo"<script type='text/javascript'>alert('Update Success'); location='index.php?page=customer';</script>";
+					}
+				}
+				?>
 				<form method="post">
 			    	<div class="form-group col-md-5 col-md-offset-0">  
 			   		 	<label for='password'>Password:</label>
 						<input type="text" class="form-control" name="password" id='password' placeholder="Your Old Password">
 					</div>
 			    	<div class="form-group col-md-5 col-md-offset-0">  
-			   		 	<label for='password'>Password:</label>
-						<input type="text" class="form-control" name="password" id='password' placeholder="New Password">
+			   		 	<label for='newpassword'>New Password:</label>
+						<input type="text" class="form-control" name="newpassword" id='newpassword' placeholder="New Password">
 					</div>
 			    	<div class="form-group col-md-5 col-md-offset-0">  
-			   		 	<label for='password'>Password:</label>
-						<input type="text" class="form-control" name="password" id='password' placeholder="New Password Again">
+			   		 	<label for='newpasswordagain'>New Password Again:</label>
+						<input type="text" class="form-control" name="newpasswordagain" id='newpasswordagain' placeholder="New Password Again">
+					</div>
+					<div class="col-md-12 col-md-offset-10">			
+				    	<input type="submit" value="Submit" class="btn btn-primary">  
 					</div>
 				</form>
 				<?php
 				$sql_cuscarid = "SELECT carid FROM customercar WHERE customerid = '".$_SESSION['customer_id']."'";
 				$result_cuscarid = mysql_query($sql_cuscarid);
-				echo $result_cuscarid;
 				?>
 					<div class="col-md-12">
 						<hr>
