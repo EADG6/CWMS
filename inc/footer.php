@@ -1,7 +1,7 @@
     <!-- Bootstrap Core JavaScript -->
     <footer>
         <div class="row">
-            <div class="col-lg-12 text-center">
+            <div class="col-sm-12 text-center">
 				<hr>
                 <p>Copyright &copy; Fresh Co. 2017</p>
             </div>
