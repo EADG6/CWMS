@@ -1,4 +1,9 @@
- <hr>
+	<?php
+		$sql_cusinfo = "SELECT name,username,password,phone  FROM customer WHERE id = '".$_SESSION['customer_id']."'";
+		$result = mysql_query($sql_cusinfo);
+		$cusinfo = mysql_fetch_array($result);
+	?>
+	
     <div class="container">
         <div class="row">
 				<div class="col-md-12">
@@ -127,10 +132,10 @@
 						<hr>
 					</div>
 					<div class="col-md-12 col-md-offset-10">
-				    	<a href="login.php" >Back</a>
-				    	<input type="submit" value="Submit">  
-				   	 	<input type="reset" value="delete">
+					    <a href="login.php" class="btn btn-primary" >Back</a>
+				    	<input type="submit" value="Submit" class="btn btn-primary">  
+				   	 	<input type="reset" value="Delete" class="btn btn-primary">
 					</div>
 				</form>
-        		</div>        
-    		</div>
+		</div>        
+	</div>

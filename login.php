@@ -19,14 +19,17 @@
 					<br> </br>
 						<form method="post">  
 							<!-- input the user name -->
-		        			<h4>Usename:</h4><br></br><input type="text" name="username" >  
-							<br> </br> 
+		        			<h4>Usename:</h4>
+							<div class="form-group col-md-offset-0">
+							<input type="text" name="username" class="form-control" style="width: 200px">  
+							</div> 
 							<!-- input the password -->
-		        			<h4>Password:</h4><br></br><input type="password" name="password">  
-							<br> </br>
-							<hr>
-							<a href="login.php?new">Sign Up</a>&nbsp;&nbsp;
-		       			 <input type="submit" value="ok">  
+		        			<h4>Password:</h4>
+							<div class="form-group col-md-offset-0">
+							<input type="password" name="password" class="form-control" style="width: 200px">  
+							</div>
+							<a href="login.php?new" class="btn btn-primary">Sign Up</a>&nbsp;&nbsp;
+		       			 <input type="submit" value="Sign In" class="btn btn-primary">  
 					 	</form>
 			</div>
 		</div>
@@ -39,11 +42,11 @@
 			$password = $_POST['password']; 
 			if(empty($username)){    
 				// check vaule
-				echo"<script type='text/javascript'>alert('Empty User Name');location='index.php?page=login';  
+				echo"<script type='text/javascript'>alert('Empty Username');location='index.php?page=login';  
 					</script>";            
 			}else if(empty($password)){
 				// check vaule
-				echo"<script type='text/javascript'>alert('Empty Pass Word');location='index.php?page=login';</script>";  
+				echo"<script type='text/javascript'>alert('Empty Password');location='index.php?page=login';</script>";  
 			}else{   
 				// select information from database
 				$sql = "SELECT * FROM customer WHERE password = '$password' AND username = '$username'";
@@ -61,8 +64,8 @@
 					echo"<script type='text/javascript'>alert('ok');</script>"; 
 					header("location: index.php");		
 				}else{					
-					//Say worn and go back to login page 
-					echo"<script type='text/javascript'>alert('Worn User Name or Password');location='login.php';</script>";
+					//Say wrong and go back to login page 
+					echo"<script type='text/javascript'>alert('Wrong User Name or Password');location='login.php';</script>";
 				}   
 			}          
 		}  
@@ -127,7 +130,7 @@ if (isset ($_POST['name']) && isset($_POST['username']) && isset($_POST['passwor
 					  mysql_query($sql_cuscar1);
 					  mysql_query($sql_cuscar2);
 					  mysql_query($sql_cuscar3);	 
-				echo"<script type='text/javascript'>alert('You Can Login Know');location='login.php';  
+				echo"<script type='text/javascript'>alert('You Can Login Now');location='login.php';  
            	 </script>";  
 			}
 		}  
@@ -224,9 +227,15 @@ if (isset ($_POST['name']) && isset($_POST['username']) && isset($_POST['passwor
 						<hr>
 					</div>
 					<div class="col-md-12 col-md-offset-10">
+<<<<<<< HEAD
 				    	<input type="submit" value="Submit">  
 				   	 	<input type="reset" value="delete">
 						<a href="login.php" >Back</a>
+=======
+				    	<a href="login.php" class="btn btn-primary" >Back</a>
+				    	<input type="submit" value="Submit" class="btn btn-primary">  
+				   	 	<input type="reset" value="Delete" class="btn btn-primary">
+>>>>>>> origin/dev
 					</div>
 				</form>
         		</div>        

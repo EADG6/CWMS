@@ -1,7 +1,4 @@
 <?php
-	session_start();
-	error_reporting(E_ALL^E_NOTICE^E_WARNING^E_DEPRECATED);
-	date_default_timezone_set('PRC'); 
 /**save product catalogue and customers full name into arrays*/
 	$sql_fcata = "SELECT type_id,product_name FROM product_service WHERE price IS NULL ORDER BY type_id";
 	$result_fcata = $mysql->query($sql_fcata);

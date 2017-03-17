@@ -127,7 +127,7 @@ input[type="number"]{-moz-appearance:textfield;}
 }
 .order_block{
 	width: 33%;
-	padding-right: 15px;
+	padding-right: 5px;
 	height: 300px;
 	float:left;  
 }
@@ -177,7 +177,7 @@ input[type="number"]{-moz-appearance:textfield;}
 	padding: 0px 15px 0px 15px;
 }
 #paybtn form{
-display: inline;
+	display: inline;
 }
 #paid span{
 	color: #0ab159;	
