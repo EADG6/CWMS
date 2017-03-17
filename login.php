@@ -19,17 +19,17 @@
 					<br> </br>
 						<form method="post">  
 							<!-- input the user name -->
-		        			<h4>Usename:</h4>
 							<div class="form-group col-md-offset-0">
-							<input type="text" name="username" class="form-control" style="width: 200px">  
+								<label for='username'>Username:</label>
+								<input type="text" name="username" class="form-control" style="width: 200px">  
 							</div> 
 							<!-- input the password -->
-		        			<h4>Password:</h4>
 							<div class="form-group col-md-offset-0">
-							<input type="password" name="password" class="form-control" style="width: 200px">  
+								<label for='password'>Password:</label>
+								<input type="password" name="password" class="form-control" style="width: 200px">  
 							</div>
 							<a href="login.php?new" class="btn btn-primary">Sign Up</a>&nbsp;&nbsp;
-		       			 <input type="submit" value="Sign In" class="btn btn-primary">  
+							<input type="submit" value="Sign In" class="btn btn-primary">  
 					 	</form>
 			</div>
 		</div>
