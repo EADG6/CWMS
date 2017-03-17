@@ -1,12 +1,26 @@
-	<?php
-		$sql_cusinfo = "SELECT name,username,password,phone  FROM customer WHERE id = '".$_SESSION['customer_id']."'";
-		$result = mysql_query($sql_cusinfo);
-		$cusinfo = mysql_fetch_array($result);
-	?>
- 	<hr>
+ <hr>
     <div class="container">
         <div class="row">
-				<h1>You Can Update Your Information</h1>  
+				<div class="col-md-12">
+				<h1>You Can Update Your Information</h1> 
+				</div>
+				<?php
+					$sql_cusinfo = "SELECT name,username,password,phone  FROM customer WHERE id = '".$_SESSION['customer_id']."'";
+					$result_cusinfo = mysql_query($sql_cusinfo);
+					$cusinfo = mysql_fetch_array($result_cusinfo);
+					if (isset ($_POST['name']) && isset($_POST['username']) && isset($_POST['phone'])){
+						$name = $_POST['name'];
+						$username = $_POST['username'];
+						$phone = $_POST['phone'];
+						if($username==""||  $name=="" || $phone=="") {  
+							echo"<script type='text/javascript'>alert('Write all the information');location='index.php?page=customer';</script>";
+					} else {  
+				    $sql_updatecus = "UPDATE customer SET name = '$name', username = '$username', phone = '$phone' WHERE id = '".$_SESSION['customer_id']."'";
+					$result_updatecus = mysql_query($sql_updatecus);
+					echo"<script type='text/javascript'>alert('Update Success'); location='index.php?page=customer';</script>";
+				}
+			}
+				?> 
 				<form method='post'>
 				    <div class="form-group col-md-5 col-md-offset-0">  
 				    	<label for='name'>Name:</label>
@@ -16,21 +30,46 @@
 				    <div class="form-group col-md-5 col-md-offset-0">  
 				    	<label for='username'>Username:</label>
 						<input type="text" class="form-control" name="username" id='username' value="<?php echo $cusinfo['username']; ?>">
-					</div>
-					
-			    	<div class="form-group col-md-5 col-md-offset-0">  
-			   		 	<label for='password'>Password:</label>
-						<input type="text" class="form-control" name="password" id='password' value="<?php echo $cusinfo['password']; ?>">
-					</div>
+					</div>			    	
 					
 				    <div class="form-group col-md-5 col-md-offset-0">  
 				    	<label for='phone'>Phone Number:</label>
 						<input type="text" class="form-control" name="phone" id='phone' value="<?php echo $cusinfo['phone']; ?>">
 					</div>
+					
+					<div class="col-md-12 col-md-offset-10">			
+				    	<input type="submit" value="Submit">  
+					</div>
+				</form>
+				
+				<div class="col-md-12">
+					<hr>
+					<h3>Update Password</h3>
+				</div>
+				<form method="post">
+			    	<div class="form-group col-md-5 col-md-offset-0">  
+			   		 	<label for='password'>Password:</label>
+						<input type="text" class="form-control" name="password" id='password' placeholder="Your Old Password">
+					</div>
+			    	<div class="form-group col-md-5 col-md-offset-0">  
+			   		 	<label for='password'>Password:</label>
+						<input type="text" class="form-control" name="password" id='password' placeholder="New Password">
+					</div>
+			    	<div class="form-group col-md-5 col-md-offset-0">  
+			   		 	<label for='password'>Password:</label>
+						<input type="text" class="form-control" name="password" id='password' placeholder="New Password Again">
+					</div>
+				</form>
+				<?php
+				$sql_cuscarid = "SELECT carid FROM customercar WHERE customerid = '".$_SESSION['customer_id']."'";
+				$result_cuscarid = mysql_query($sql_cuscarid);
+				echo $result_cuscarid;
+				?>
 					<div class="col-md-12">
 						<hr>
 						<h3>Update Car Information</h3>
 					</div>
+					<form method="post">
 						<div class="col-md-4">
 						<h4>First Car</h4>
 				   	 		<div class="form-group  col-md-offset-0">  
@@ -95,6 +134,3 @@
 				</form>
         		</div>        
     		</div>
-	<?php
-	include "inc/footer.php";
-	?>

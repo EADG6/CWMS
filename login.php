@@ -141,27 +141,27 @@ if (isset ($_POST['name']) && isset($_POST['username']) && isset($_POST['passwor
 				<form method='post'>
 				    <div class="form-group col-md-5 col-md-offset-0">  
 				    	<label for='name'>Name:</label>
-						<input type="text" class="form-control" name="name" id='name'>
+						<input type="text" class="form-control" name="name" id='name' placeholder="Your Name">
 					</div>
 					
 				    <div class="form-group col-md-5 col-md-offset-0">  
 				    	<label for='username'>Username:</label>
-						<input type="text" class="form-control" name="username" id='username'>
+						<input type="text" class="form-control" name="username" id='username' placeholder="Make a User Name">
 					</div>
 					
 			    	<div class="form-group col-md-5 col-md-offset-0">  
 			   		 	<label for='password'>Password:</label>
-						<input type="text" class="form-control" name="password" id='password'>
+						<input type="text" class="form-control" name="password" id='password' placeholder="Your Password">
 					</div>
 					
 				    <div class="form-group col-md-5 col-md-offset-0">  
 				   	 	<label for='passwordagain'>Password Again:</label>
-						<input type="text" class="form-control" name="passwordagain" id='passwordagain'>
+						<input type="text" class="form-control" name="passwordagain" id='passwordagain'placeholder="Password Again">
 					</div>
 					
 				    <div class="form-group col-md-5 col-md-offset-0">  
 				    	<label for='phone'>Phone Number:</label>
-						<input type="text" class="form-control" name="phone" id='phone'>
+						<input type="text" class="form-control" name="phone" id='phone' placeholder="Your Phone Number">
 					</div>
 					<div class="col-md-12">
 						<hr>
@@ -171,17 +171,17 @@ if (isset ($_POST['name']) && isset($_POST['username']) && isset($_POST['passwor
 						<h4>First Car</h4>
 				   	 		<div class="form-group  col-md-offset-0">  
 				   			 	<label for='plate1'>Plate Number 1:</label>
-								<input type="text" class="form-control" name="plate1" id='plate1'>
+								<input type="text" class="form-control" name="plate1" id='plate1' placeholder="Plate Number">
 							</div>
 					
 				    		<div class="form-group  col-md-offset-0">  
 				   			 	<label for='colol1'>Color:</label>
-								<input type="text" class="form-control" name="color1" id='color1'>
+								<input type="text" class="form-control" name="color1" id='color1' placeholder="Your Car Color">
 							</div>
 							
 				    		<div class="form-group  col-md-offset-0">  
 				   			 	<label for='type1'>Type:</label>
-								<input type="text" class="form-control" name="type1" id='type1'>
+								<input type="text" class="form-control" name="type1" id='type1' placeholder="Type of Your Car">
 							</div>
 						</div>
 					
@@ -189,17 +189,17 @@ if (isset ($_POST['name']) && isset($_POST['username']) && isset($_POST['passwor
 						<h4>Second Car</h4>
 				   	 		<div class="form-group col-md-offset-0">  
 				   			 	<label for='plate2'>Plate Number 2:</label>
-								<input type="text" class="form-control" name="plate2" id='plate2'>
+								<input type="text" class="form-control" name="plate2" id='plate2' placeholder="Plate Number">
 							</div>
 					
 				    		<div class="form-group col-md-offset-0">  
 				   			 	<label for='color2'>Color:</label>
-								<input type="text" class="form-control" name="color2" id='color2'>
+								<input type="text" class="form-control" name="color2" id='color2' placeholder="Your Car Color">
 							</div>
 							
 				    		<div class="form-group col-md-offset-0">  
 				   			 	<label for='type2'>Type:</label>
-								<input type="text" class="form-control" name="type2" id='type2'>
+								<input type="text" class="form-control" name="type2" id='type2' placeholder="Type of Your Car">
 							</div>
 						</div>
 						
@@ -207,32 +207,31 @@ if (isset ($_POST['name']) && isset($_POST['username']) && isset($_POST['passwor
 						<h4>Third Car</h4>
 				   	 		<div class="form-group col-md-offset-0">  
 				   			 	<label for='plate3'>Plate Number 3:</label>
-								<input type="text" class="form-control" name="plate3" id='plate3'>
+								<input type="text" class="form-control" name="plate3" id='plate3' placeholder="Plate Number">
 							</div>
 					
 				    		<div class="form-group col-md-offset-0">  
 				   			 	<label for='color3'>Color:</label>
-								<input type="text" class="form-control" name="color3" id='color3'>
+								<input type="text" class="form-control" name="color3" id='color3' placeholder="Your Car Color">
 							</div>
 							
 				    		<div class="form-group col-md-offset-0">  
 				   			 	<label for='type3'>Type:</label>
-								<input type="text" class="form-control" name="type3" id='type3'>
+								<input type="text" class="form-control" name="type3" id='type3' placeholder="Type of Your Car">
 							</div>
 						</div>
 					<div class="col-md-12">
 						<hr>
 					</div>
 					<div class="col-md-12 col-md-offset-10">
-				    	<a href="login.php" >Back</a>
 				    	<input type="submit" value="Submit">  
 				   	 	<input type="reset" value="delete">
+						<a href="login.php" >Back</a>
 					</div>
 				</form>
         		</div>        
     		</div>
 	<?php
-	include "inc/footer.php";
 }
 	?>
 
