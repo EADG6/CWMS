@@ -286,6 +286,7 @@ if($action == 'cata'){
 				<td class='bold'>Thursday</td>
 				<td class='bold'>Friday</td>
 				<td class='bold'>Saturday</td>
+				<td class='bold'>Sunday</td>
 				<td class='bold'>Quantity</td>
 			</tr>";
 		while($row_finfo = $mysql->fetch($result_finfo)) {
@@ -298,6 +299,7 @@ if($action == 'cata'){
 					<td id='4_{$row_finfo['id']}'></td>
 					<td id='5_{$row_finfo['id']}'></td>
 					<td id='6_{$row_finfo['id']}'></td>
+					<td id='7_{$row_finfo['id']}'></td>
 					<td id='q_{$row_finfo['id']}'>0</td>
 				</tr>";
 	    }echo "<tr>
@@ -308,7 +310,8 @@ if($action == 'cata'){
 					<td>&#165;<span id='3_c$cata_id'>0</span></td>
 					<td>&#165;<span id='4_c$cata_id'>0</span></td>
 					<td>&#165;<span id='5_c$cata_id'>0</span></td>
-					<td>&#165;<span id='6_c$cata_id'>0</td>
+					<td>&#165;<span id='6_c$cata_id'>0</span></td>
+					<td>&#165;<span id='7_c$cata_id'>0</span></td>
 					<td id='q_c$cata_id'>0</td>
 				</tr>
 				<tr>
@@ -325,11 +328,12 @@ if($action == 'cata'){
 			<td>&#165;<span id='day4'>0</span></td>
 			<td>&#165;<span id='day5'>0</span></td>
 			<td>&#165;<span id='day6'>0</span></td>
+			<td>&#165;<span id='day7'>0</span></td>
 		  </tr>
 		</table>
 	</div>";
 /**stastic data and write it on the report table*/
-	for($dayweek=2;$dayweek<8;$dayweek++){
+	for($dayweek=2;$dayweek<9;$dayweek++){
 		$sql="select of.product_id,sum(quantity),sum(quantity)*fc.price,fc.type_id from order_product as of join product_service as fc ON of.product_id = fc.id where order_id in (select id from orders where week(date,1) = $weeknum and year(date)=$yearnum and DAYOFWEEK(date) = $dayweek) group by product_id";
 		$res = $mysql->query($sql);
 		$zhou = $dayweek - 1;
