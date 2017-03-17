@@ -128,8 +128,8 @@
 session['times'] is a counter to make sure session['order_id'] directly comes from 'order_block.php', otherwise, if user refersh,
  go to other page or cancel order while editing order, the session['order_id'] is still here.*/	
 		if(isset($_POST['fd_quan'])){
-			$fd_quan= inputCheck($_POST['fd_quan']);
-			$od_cus = inputCheck($_POST['od_cus']);
+			$fd_quan= $_POST['fd_quan'];
+			$od_cus = $_POST['od_cus'];
 			$emp_id = inputCheck($_POST['od_emp']);
 			$order_id=array_keys($od_cus)[0];
 			$_SESSION['order_id']=$order_id;
