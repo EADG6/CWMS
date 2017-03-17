@@ -26,20 +26,33 @@ $sql_fcata = "select type_id,product_name from product_service where price IS NU
 $result_fcata = $mysql->query($sql_fcata);
 if($action == 'cata'){
 /**Show Catalogue of product*/
-    echo "<table class ='table-stripped'>
-			<th colspan='2'>Product catalogue:</th>
+?>
+<div class="col-md-12 mainblocks">
+	<div class='helptip' id='helptip' style="display:none;">
+		<a class='label label-primary'>E</a> Edit /
+		<a class='label label-danger'>X</a> Delete /
+	</div>
+	<table class ='table-stripped'>
+		<thead>
+			<th colspan='3'>Product catalogue:</th>
 			<tr>
-				<td class='bold'>Catalogue ID</td>
-				<td class='bold'>Catalogue Name</td>
-				<td style='width:1%;'></td>
-				<td style='width:1%;'></td>
-			</tr>";
+				<th>Catalogue ID</th>
+				<th class='text-center'>Catalogue Name</th>
+				<th class='text-right'>
+					Operation <a href='javascript:void(0);' onclick="$('#helptip').toggle()" class="glyphicon glyphicon-question-sign icona"></a>
+				</th>
+			</tr>
+		</thead>
+		<tbody>
+<?php
     while($row_fcata = $mysql->fetch($result_fcata)) {
         echo "<tr>
 				<td>".$row_fcata['type_id']."</td>
-				<td>".$row_fcata['product_name']." </td>
-				<td><samp onclick=\"firm('Do you want to Edit this Product Type?','editCata{$row_fcata['type_id']}')\">E</samp></td>
-				<td><kbd onclick=\"firm('Do you want to Delete this Product Type and all of its sub product items?','deleteCata{$row_fcata['type_id']}')\">X</kbd></td>
+				<td class='text-center'>".$row_fcata['product_name']." </td>
+				<td class='text-right'>
+					<a class='label label-primary' onclick=\"firm('Do you want to Edit this Product Type?','editCata{$row_fcata['type_id']}')\">E</a>
+					<a class='label label-danger' onclick=\"firm('Do you want to Delete this Product Type and all of its sub product items?','deleteCata{$row_fcata['type_id']}')\">X</a>
+				</td>
 			</tr>";
 		echo "<form action='index.php?page=product&action=new' method='post' id='editCata{$row_fcata['type_id']}'>
 					<input type='hidden' name='origCataEdit' value='{$row_fcata['type_id']},{$row_fcata['product_name']}'/>
@@ -48,7 +61,11 @@ if($action == 'cata'){
 					<input type='hidden' name='origCataDel' value='{$row_fcata['type_id']}'/>
 				</form>";
     }
-    echo "</table>";
+?>
+		</tbody>
+	</table>
+</div>
+<?php
 	if(isset($_POST['origCataDel'])){
 			$sql_delproduct = "DELETE FROM product_service WHERE type_id = {$_POST['origCataDel']}";
 			$mysql->query($sql_delproduct);
@@ -58,34 +75,50 @@ if($action == 'cata'){
 /**Show product detail*/
 	$sql_fdetail = "select s.id,s.product_name as product_name,s.price,p.product_name AS product_type from product_service as s join product_service as p where p.type_id = s.type_id and s.price IS NOT NULL GROUP BY s.id"; 
 	    $result = $mysql->query($sql_fdetail);
-		
-        echo "<table class ='table-stripped'>
+?>
+	<div class="col-md-12 mainblocks">
+		<div class='helptip' id='helptip1' style="display:none;">
+			<a class='label label-primary'>E</a> Edit /
+			<a class='label label-danger'>X</a> Delete /
+		</div>
+		<table class ='table-stripped'>
+			<thead>
 				<th colspan='6'>Product Category:</th>
 				<tr>
-					<td class='bold'>Product ID</td>
-					<td class='bold'>Product Name</td>
-					<td class='bold'>Product Price</td>
-					<td class='bold'>Product Type</td>
-					<td style='width:1%;'></td>
-					<td style='width:1%;'></td>
-				</tr>";
+					<th>Product ID</th>
+					<th>Product Name</th>
+					<th>Product Price</th>
+					<th>Product Type</th>
+					<th>
+						Operation <a href='javascript:void(0);' onclick="$('#helptip1').toggle()" class="glyphicon glyphicon-question-sign icona"></a>
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+<?php
         while($row = $mysql->fetch($result)) {
             echo "<tr>
 					<td>".$row['id']."</td>
 					<td>".$row['product_name']." </td>
 					<td>&#165;".$row['price']." </td>
 					<td>".$row['product_type']." </td>
-					<td><samp onclick=\"firm('Do you want to Edit this product?','editproduct{$row['id']}')\">E</samp></td>
-					<td><kbd onclick=\"firm('Do you want to Delete this product?','deleteproduct{$row['id']}')\">X</kbd></td>
+					<td>
+						<a class='label label-primary' onclick=\"firm('Do you want to Edit this product?','editproduct{$row['id']}')\">E</a>
+						<a class='label label-danger' onclick=\"firm('Do you want to Delete this product?','deleteproduct{$row['id']}')\">X</a>
+					</td>
 				</tr>";
 			echo "<form action='index.php?page=product&action=new' method='post' id='editproduct{$row['id']}'>
-					<input type='hidden' name='origproductEdit' value='{$row['id']},{$row['product_name']},{$row['price']},{$row['product_name']}'/>
+					<input type='hidden' name='origproductEdit' value='{$row['id']},{$row['product_name']},{$row['price']},{$row['product_type']}'/>
 				</form>
 				<form action='' method='post' id='deleteproduct{$row['id']}'>
 					<input type='hidden' name='origproductDel' value='{$row['id']}'/>
 				</form>";
         }
-        echo "</table>";
+?>
+			</tbody>
+		</table>
+	</div>
+<?php
 /**Delete product item function*/
 		if(isset($_POST['origproductDel'])){
 			$sql_delproduct = "DELETE FROM product_service WHERE id = {$_POST['origproductDel']}";
@@ -159,9 +192,9 @@ if($action == 'cata'){
 	$result_productCata = $mysql->query($sql_productCata);	
 	$productCata = array();
 		while($row = $mysql->fetch($result_productCata)) {
-			echo "<option value=$row[0]>$row[1]</option>";
-			$productCata[$row[1]] = $row[0];
-		}	
+			echo "<option value={$row['type_id']}>{$row['product_name']}</option>";
+			$productCata[$row['product_name']] = $row['type_id'];
+		}
 	echo"				</select>
 					</div></span>
 				</td>
@@ -182,12 +215,11 @@ if($action == 'cata'){
 		echo "<script>
 				document.getElementsByName('isCata')[1].disabled = true;
 				var productid = document.getElementsByName('origId')[0];
-				productid.disabled = false;
 				document.getElementsByName('cataId')[0].disabled = true;
 				productid.value = {$origproduct[0]};
 				productid.onchange = function(){
 					productid.value = {$origproduct[0]};
-				};
+				}
 				document.getElementsByName('productName')[0].value = '{$origproduct[1]}';
 				document.getElementsByName('price')[0].value = '{$origproduct[2]}';
 				document.getElementsByName('productCata')[0].value = '{$productCata[$origproduct[3]]}';
@@ -199,7 +231,6 @@ if($action == 'cata'){
 				document.getElementsByName('isCata')[0].disabled = true;
 				document.getElementsByName('isCata')[1].checked = true;
 				var productid = document.getElementsByName('origId')[0];
-				productid.disabled = false;
 				document.getElementsByName('cataId')[0].disabled = true;
 				productid.value = {$origCata[0]};
 				productid.onchange = function(){
