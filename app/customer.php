@@ -128,9 +128,6 @@
 								<input type="text" class="form-control" name="type3" id='type3'>
 							</div>
 						</div>
-					<div class="col-md-12">
-						<hr>
-					</div>
 					<div class="col-md-12 col-md-offset-10">
 					    <a href="login.php" class="btn btn-primary" >Back</a>
 				    	<input type="submit" value="Submit" class="btn btn-primary">  
