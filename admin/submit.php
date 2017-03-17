@@ -46,7 +46,7 @@
                 echo "Create Order Successfully";  
                 header("refresh:1;url='index.php?page=current_orders'");		
             }else if(isset($_POST['fname'])){
-/**chaeck info and create a new customer*/	
+/**cheack info and create a new customer*/	
 				$fname = preg_replace("/\s/","",(string)$_POST['fname']);
 				if(!empty($fname)){
 					$lname = preg_replace("/\s/","",(string)$_POST['lname']);
@@ -69,7 +69,7 @@
 				}
             }else if(isset($_POST['isCata'])){
 /**create or update product item*/
-				$productname = preg_replace("/\s/","",(string)$_POST['productName']);
+				$productname = inputCheck($_POST['productName']);
 				$productPrice = preg_replace("/\s/","",(string)$_POST['price']);
 				if(!empty($productname)){
 					if($_POST['isCata']=='product'){
@@ -85,11 +85,11 @@
 						header("refresh:1;url='index.php?page=product&action=detail'");
 					}else if($_POST['isCata']=='cata'){
 						if(isset($_POST['origId'])){
-							$sql_newcata = "UPDATE product_service SET product_name = '$productname' WHERE type_id = {$_POST['origId']}";
+							$sql_newcata = "UPDATE product_service SET product_name = '$productname' WHERE id = '{$_POST['origId']}'";
 							echo "Update Product Catalogue Successfully";
 						}else{
 							$cataId = inputCheck($_POST['cataId']);
-							$sql_newcata = "INSERT product_service (product_name,type_id) VALUES ('$productname',$cataId)";
+							$sql_newcata = "INSERT product_service (product_name,type_id) VALUES ('$productname','$cataId')";
 							echo "Add New Product Catalogue Successfully";
 						}
 						$mysql->query($sql_newcata);

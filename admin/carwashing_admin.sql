@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 2017-03-13 08:52:23
+-- Generation Time: 2017-03-17 17:06:36
 -- 服务器版本： 5.6.24
 -- PHP Version: 5.6.8
 
@@ -42,7 +42,8 @@ CREATE TABLE IF NOT EXISTS `car` (
 CREATE TABLE IF NOT EXISTS `customer` (
   `id` int(10) unsigned NOT NULL,
   `username` varchar(50) DEFAULT NULL,
-  `password` varchar(200) DEFAULT NULL,
+  `pwdhash` varchar(60) DEFAULT NULL,
+  `salt` varchar(10) DEFAULT NULL,
   `FirstName` varchar(10) DEFAULT NULL,
   `LastName` varchar(10) NOT NULL,
   `sex` tinyint(1) DEFAULT NULL,
@@ -55,10 +56,10 @@ CREATE TABLE IF NOT EXISTS `customer` (
 -- 转存表中的数据 `customer`
 --
 
-INSERT INTO `customer` (`id`, `username`, `password`, `FirstName`, `LastName`, `sex`, `tel`, `address`, `balance`) VALUES
-(1, 'Mars', '1234', 'Mars', 'Liu', 1, '123456789001', 'CDUTSong2-562', 410),
-(2, 'Cary', '1234', 'Cary', 'Tian', 0, '1829444332', 'CDUTSong2-334', 43),
-(5, 'kevin', '1234', 'Kevin', 'He', 3, '23333', 'CDUT562', 10);
+INSERT INTO `customer` (`id`, `username`, `pwdhash`, `salt`, `FirstName`, `LastName`, `sex`, `tel`, `address`, `balance`) VALUES
+(1, 'cus1', '4037f3d099eb4e3cd9e657df21936662', 'f018f9', 'Hao', 'Liu', 1, '123456789001', 'CDUTSong2-562', 410),
+(2, 'cus2', 'f056d6a7a5ec600efee50537bd50549f', 'd13ca1', 'Yuan', 'Tian', 1, '1829444332', 'CDUTSong2-334', 43),
+(5, 'kevin', '9abe16a3aa0abd091d9dfb9649080e37', '9879f9', 'Kevin', 'He', 3, '23333', 'CDUT562', 10);
 
 -- --------------------------------------------------------
 
@@ -69,11 +70,14 @@ INSERT INTO `customer` (`id`, `username`, `password`, `FirstName`, `LastName`, `
 CREATE TABLE IF NOT EXISTS `employee` (
   `id` int(11) NOT NULL,
   `username` varchar(200) DEFAULT NULL,
-  `password` varchar(200) DEFAULT NULL,
+  `pwdhash` varchar(60) DEFAULT NULL,
+  `salt` varchar(10) DEFAULT NULL,
+  `gender` tinyint(1) DEFAULT NULL,
+  `birth` date DEFAULT NULL,
   `firstname` varchar(20) DEFAULT NULL,
   `lastname` varchar(20) DEFAULT NULL,
   `phone` varchar(50) NOT NULL,
-  `usergroup` enum('manager','worker','day laborer') DEFAULT NULL,
+  `role_id` int(11) DEFAULT NULL,
   `hiredate` date DEFAULT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
@@ -81,11 +85,11 @@ CREATE TABLE IF NOT EXISTS `employee` (
 -- 转存表中的数据 `employee`
 --
 
-INSERT INTO `employee` (`id`, `username`, `password`, `firstname`, `lastname`, `phone`, `usergroup`, `hiredate`) VALUES
-(1, 'Marshall', '1234', 'Marshall', 'Liu', '1234567890', 'manager', '2016-12-01'),
-(2, 'Cary', '1234', 'Carry', 'Tian', '1234567890', 'manager', '2016-12-01'),
-(3, 'Leo', '1234', 'Leo', 'Li', '1234567890', 'manager', '2016-12-01'),
-(4, 'Kevin', '1234', 'Kevin', 'He', '1234567890', 'worker', '2016-12-01');
+INSERT INTO `employee` (`id`, `username`, `pwdhash`, `salt`, `gender`, `birth`, `firstname`, `lastname`, `phone`, `role_id`, `hiredate`) VALUES
+(1, 'Marshall', '434aebd7567c6a76dab0267bd10ddc10', 'c38142', 1, '1996-06-18', 'Marshall', 'Liu', '1234567890', 3, '2016-12-01'),
+(2, 'Cary', '1252b17fb65291ece0f4ea4fa019de8f', 'e5b4c0', 1, '1996-02-13', 'Carry', 'Tian', '1234567890', 1, '2016-12-01'),
+(3, 'Leo', '018e3904257d20399c7842526fc67c54', 'a99149', 1, '1995-04-23', 'Leo', 'Li', '1234567890', 2, '2016-12-01'),
+(4, 'Kevin', 'ba16456bd49a53c1f3248055c0f0492e', '531ea7', 0, '1996-03-15', 'Kevin', 'He', '1234567890', 2, '2016-12-01');
 
 -- --------------------------------------------------------
 
@@ -103,7 +107,7 @@ CREATE TABLE IF NOT EXISTS `orders` (
   `status` tinyint(4) NOT NULL,
   `rate` int(11) NOT NULL,
   `Discount` double NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;
 
 --
 -- 转存表中的数据 `orders`
@@ -120,7 +124,10 @@ INSERT INTO `orders` (`id`, `cus_id`, `employee_id`, `car_id`, `Date`, `Time`, `
 (13, '5', 2, 0, '2017-03-02', '12:27:19', 4, 0, 0),
 (14, '5', 2, 0, '2017-03-03', '10:53:20', 0, 0, 0),
 (15, '2', 1, 0, '2017-03-09', '13:20:25', 0, 0, 0),
-(16, '5', 3, 0, '2017-03-09', '13:30:41', 0, 0, 0);
+(16, '5', 3, 0, '2017-03-09', '13:30:41', 0, 0, 0),
+(17, '1', 2, 0, '2017-03-14', '16:56:55', 4, 0, 0),
+(19, '0', 2, 0, '2017-03-14', '16:57:35', 0, 0, 0),
+(20, '5', 2, 0, '2017-03-17', '23:46:39', 4, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -133,7 +140,7 @@ CREATE TABLE IF NOT EXISTS `order_product` (
   `order_id` int(10) unsigned DEFAULT NULL,
   `product_id` int(10) unsigned DEFAULT NULL,
   `Quantity` int(11) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=latin1;
 
 --
 -- 转存表中的数据 `order_product`
@@ -172,7 +179,14 @@ INSERT INTO `order_product` (`item_id`, `order_id`, `product_id`, `Quantity`) VA
 (32, 13, 10, 1),
 (33, 14, 11, 1),
 (34, 15, 3, 1),
-(35, 16, 3, 1);
+(35, 16, 3, 1),
+(36, 17, 3, 1),
+(37, 17, 11, 1),
+(38, 18, 16, 1),
+(39, 18, 10, 1),
+(40, 19, 3, 1),
+(41, 20, 16, 1),
+(42, 20, 10, 1);
 
 -- --------------------------------------------------------
 
@@ -234,8 +248,8 @@ INSERT INTO `product_service` (`id`, `product_name`, `Price`, `type_id`) VALUES
 (2, 'Accessories ', NULL, 2),
 (3, 'Small Car Washing', 25, 1),
 (4, 'Big Car Washing', 35, 1),
-(5, 'Wax ', 120, 1),
-(6, 'Polishing ', 200, 1),
+(5, 'Wax', 120, 1),
+(6, 'Polishing', 200, 1),
 (7, 'Engine oil', 180, 2),
 (8, 'Car Navigator ', 200, 2),
 (9, 'Glass cleaning water ', 80, 2),
@@ -276,6 +290,27 @@ INSERT INTO `recharge` (`id`, `cus_id`, `price`, `datetime`, `paytype`) VALUES
 (7, 1, 100, '2017-03-03 00:20:32', 'Cash'),
 (8, 2, 21, '2017-03-03 00:21:00', 'AliPay'),
 (9, 2, 12, '2017-03-11 16:10:58', 'Cash');
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `role`
+--
+
+CREATE TABLE IF NOT EXISTS `role` (
+  `id` int(11) NOT NULL,
+  `role` varchar(20) DEFAULT NULL,
+  `pid` int(11) DEFAULT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+
+--
+-- 转存表中的数据 `role`
+--
+
+INSERT INTO `role` (`id`, `role`, `pid`) VALUES
+(1, 'Manager', 1),
+(2, 'Worker', 2),
+(3, 'Super Admin', 0);
 
 -- --------------------------------------------------------
 
@@ -379,6 +414,12 @@ ALTER TABLE `recharge`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `role`
+--
+ALTER TABLE `role`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `salary_category`
 --
 ALTER TABLE `salary_category`
@@ -413,12 +454,12 @@ ALTER TABLE `employee`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=17;
+  MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=21;
 --
 -- AUTO_INCREMENT for table `order_product`
 --
 ALTER TABLE `order_product`
-  MODIFY `item_id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=36;
+  MODIFY `item_id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=43;
 --
 -- AUTO_INCREMENT for table `order_status`
 --
@@ -439,6 +480,11 @@ ALTER TABLE `product_service`
 --
 ALTER TABLE `recharge`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=10;
+--
+-- AUTO_INCREMENT for table `role`
+--
+ALTER TABLE `role`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `salary_category`
 --

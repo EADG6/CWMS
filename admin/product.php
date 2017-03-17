@@ -73,7 +73,7 @@ if($action == 'cata'){
 		}
 }else if($action == 'detail'){
 /**Show product detail*/
-	$sql_fdetail = "select s.id,s.product_name as product_name,s.price,p.product_name AS product_type from product_service as s join product_service as p where p.type_id = s.type_id and s.price IS NOT NULL GROUP BY s.id"; 
+	$sql_fdetail = "select s.id,s.product_name as product_name,s.price,p.product_name AS product_type from product_service as s join product_service as p ON s.type_id = p.id WHERE s.price IS NOT NULL"; 
 	    $result = $mysql->query($sql_fdetail);
 ?>
 	<div class="col-md-12 mainblocks">
@@ -202,7 +202,7 @@ if($action == 'cata'){
 			<tr>
 				<td class='bold'><span class='hideCata'>Price<span class='req'> *</span></span></td>
 				<td><span class='hideCata'>
-					<label>&#165;&nbsp;</label><input type='number' max='999' name='price' required/>
+					<label>&#165;&nbsp;</label><input type='number' min='0' max='999' name='price' required/>
 				</span></td>
 			</tr>
 		</table>
@@ -216,6 +216,7 @@ if($action == 'cata'){
 				document.getElementsByName('isCata')[1].disabled = true;
 				var productid = document.getElementsByName('origId')[0];
 				document.getElementsByName('cataId')[0].disabled = true;
+				productid.disabled=false;
 				productid.value = {$origproduct[0]};
 				productid.onchange = function(){
 					productid.value = {$origproduct[0]};
@@ -232,6 +233,7 @@ if($action == 'cata'){
 				document.getElementsByName('isCata')[1].checked = true;
 				var productid = document.getElementsByName('origId')[0];
 				document.getElementsByName('cataId')[0].disabled = true;
+				productid.disabled=false;
 				productid.value = {$origCata[0]};
 				productid.onchange = function(){
 					productid.value = {$origCata[0]};
