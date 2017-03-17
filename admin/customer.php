@@ -76,20 +76,31 @@ $sql_cusinfo = "SELECT id from customer order by id DESC;";
 /**show all customer's information*/
 		$sql_cusinfo = "SELECT * FROM customer;";
 		$result = $mysql->query($sql_cusinfo);
-		echo "<table class ='table-stripped'>
+?>		
+	<div class="col-md-12 mainblocks">
+		<div class='helptip' id='helptip_info' style="display:none;">
+			<a class='label label-primary'>E</a> Edit /
+			<a class='label label-danger'>X</a> Delete /
+		</div>
+		<table class ='table table table-striped'>
+			<thead>
 				<th colspan='10'>Customer Information:</th>
-					<tr>
-						<td class='bold'>Customer ID</td>
-						<td class='bold'>First Name</td>
-						<td class='bold'>Last Nmae</td>
-						<td class='bold'>Sex</td>
-						<td class='bold'>Tel</td>
-						<td class='bold'>Address</td>
-						<td class='bold'>Balance</td>
-						<td class='bold'>Credit</td>
-						<td style='width:1%;'></td>
-						<td style='width:1%;'></td>
-					</tr>";
+				<tr>
+					<th>Customer ID</th>
+					<th>First Name</th>
+					<th>Last Nmae</th>
+					<th>Sex</th>
+					<th>Tel</th>
+					<th>Address</th>
+					<th>Balance</th>
+					<th>Credit</th>
+					<th>
+						Operation <a href='javascript:void(0);' onclick="$('#helptip_info').toggle()" class="glyphicon glyphicon-question-sign icona"></a>
+					</th>
+				</tr>
+			<thead>
+			<tbody>
+<?php
 /**count how much money does each customer paid*/
 		while($row = $mysql->fetch($result)) {
 		    echo "<tr>";
@@ -112,8 +123,10 @@ $sql_cusinfo = "SELECT id from customer order by id DESC;";
 					<td>&#165;$balance</td>
 					<td>&#165;$credit</td>";
 ?>
-					<td><samp onclick="firm('Do you want to Edit this Customer?','editCus<?php echo $row['id'];?>')">E</samp></td>
-					<td><kbd onclick="firm('Do you want to Delete this Customer?','deleteCus<?php echo $row['id'];?>')">X</kbd></td>
+					<td>
+						<a class='label label-primary' onclick="firm('Do you want to Edit this Customer?','editCus<?php echo $row['id'];?>')">E</a>
+						<a class='label label-danger' onclick="firm('Do you want to Delete this Customer?','deleteCus<?php echo $row['id'];?>')">X</a>
+					</td>
 				</tr>
 				<form action='index.php?page=customer&action=new' method='post' id='editCus<?php echo $row['id'];?>'>
 					<input type='hidden' name='origCusEdit' value='<?php echo $row['id'].','.$row['FirstName'].','.$row['LastName'].','.$row['tel'].','.$row['sex'].','.$row['address'];?>'/>
@@ -122,7 +135,10 @@ $sql_cusinfo = "SELECT id from customer order by id DESC;";
 					<input type='hidden' name='origCusDel' value='<?php echo $row['id'];?>'/>
 				</form>
 <?php	}
-		echo "</table>";
+?>			<tbody>
+		</table>
+	</div>
+<?php
 /**Delete Customer function*/
 		if(isset($_POST['origCusDel'])){
 			$sql_delCus = "DELETE FROM customer WHERE id = {$_POST['origCusDel']}";
