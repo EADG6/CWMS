@@ -3,7 +3,7 @@
 		$result = mysql_query($sql_cusinfo);
 		$cusinfo = mysql_fetch_array($result);
 	?>
- 	<hr>
+
     <div class="container">
         <div class="row">
 				<h1>You Can Update Your Information</h1>  
@@ -88,13 +88,10 @@
 						<hr>
 					</div>
 					<div class="col-md-12 col-md-offset-10">
-				    	<a href="login.php" >Back</a>
-				    	<input type="submit" value="Submit">  
-				   	 	<input type="reset" value="delete">
+					    <a href="login.php" class="btn btn-primary" >Back</a>
+				    	<input type="submit" value="Submit" class="btn btn-primary">  
+				   	 	<input type="reset" value="Delete" class="btn btn-primary">
 					</div>
 				</form>
-        		</div>        
-    		</div>
-	<?php
-	include "inc/footer.php";
-	?>
+		</div>        
+	</div>
