@@ -23,6 +23,8 @@
 		include "create_order.php";
 	}else if($page == 'recharge'){
 		include "recharge.php";
+	}else if($page == 'payment'){
+		include "payment.php";
 	}else if($page == 'staff'){
 		include "staff.php";
 	}

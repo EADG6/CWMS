@@ -19,6 +19,7 @@
 						      <li><a href="index.php?page=customer&action=info">Customer info</a></li>
 							  <li><a href="index.php?page=customer&action=new">New customer</a></li>
 							  <li><a href="index.php?page=recharge">Recharge</a></li>
+							  <li><a href="index.php?page=payment">Payment</a></li>
 							  <li class="divider"></li>
 							  <li class="dropdown-header">Staff</li>
 							  <li><a href="index.php?page=staff&action=info">Staff info</a></li>

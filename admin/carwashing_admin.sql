@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 2017-03-18 10:53:41
+-- Generation Time: 2017-03-18 11:54:57
 -- 服务器版本： 5.6.24
 -- PHP Version: 5.6.8
 
@@ -125,7 +125,7 @@ INSERT INTO `orders` (`id`, `cus_id`, `emp_id`, `car_id`, `Date`, `Time`, `statu
 (15, '2', 1, 0, '2017-03-09', '13:20:25', 0, 0),
 (16, '5', 3, 0, '2017-03-09', '13:30:41', 0, 0),
 (17, '1', 2, 0, '2017-03-14', '16:56:55', 4, 0),
-(19, '0', 2, 0, '2017-03-14', '16:57:35', 0, 0),
+(19, '0', 2, 0, '2017-03-14', '16:57:35', 4, 0),
 (20, '5', 2, 0, '2017-03-17', '23:46:39', 4, 0),
 (21, '5', 1, 0, '2017-03-18', '00:07:05', 4, 0),
 (22, '1', 1, 0, '2017-03-18', '16:28:18', 4, 0),
@@ -225,22 +225,23 @@ INSERT INTO `order_status` (`id`, `status`) VALUES
 CREATE TABLE IF NOT EXISTS `payment` (
   `id` int(11) NOT NULL,
   `order_id` int(11) DEFAULT NULL,
-  `customer_id` int(11) DEFAULT NULL,
+  `cus_id` int(11) DEFAULT NULL,
   `price` double DEFAULT NULL,
   `discount` double DEFAULT NULL,
   `pay_time` datetime DEFAULT NULL,
   `pay_type_id` int(11) DEFAULT NULL,
   `emp_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 --
 -- 转存表中的数据 `payment`
 --
 
-INSERT INTO `payment` (`id`, `order_id`, `customer_id`, `price`, `discount`, `pay_time`, `pay_type_id`, `emp_id`) VALUES
+INSERT INTO `payment` (`id`, `order_id`, `cus_id`, `price`, `discount`, `pay_time`, `pay_type_id`, `emp_id`) VALUES
 (1, 21, 5, 30, 0.9, '2017-03-18 16:13:25', 1, 1),
 (2, 22, 1, 25, 0.9, '2017-03-18 17:17:41', 1, 1),
-(3, 23, 5, 185, 1, '2017-03-18 17:17:55', 4, 1);
+(3, 23, 5, 185, 1, '2017-03-18 17:17:55', 4, 1),
+(6, 19, NULL, 25, 1, '2017-03-18 18:30:09', 2, 1);
 
 -- --------------------------------------------------------
 
@@ -282,7 +283,7 @@ CREATE TABLE IF NOT EXISTS `product_service` (
 
 INSERT INTO `product_service` (`id`, `product_name`, `Price`, `type_id`) VALUES
 (1, 'Service', NULL, 1),
-(2, 'Accessories ', NULL, 2),
+(2, 'Accessories', NULL, 2),
 (3, 'Small Car Washing', 25, 1),
 (4, 'Big Car Washing', 35, 1),
 (5, 'Wax', 120, 1),
@@ -515,7 +516,7 @@ ALTER TABLE `order_status`
 -- AUTO_INCREMENT for table `payment`
 --
 ALTER TABLE `payment`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `pay_type`
 --
