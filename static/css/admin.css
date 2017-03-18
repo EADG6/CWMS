@@ -167,16 +167,16 @@ input[type="number"]{-moz-appearance:textfield;}
 	display: inline;
 	padding-left:0px;
 }
-#paybtn{
+.paybtn{
 	display: inline;
 	position: absolute;
 	padding-left: 10px;
 	margin-top: -60px;
 }
-#paybtn button{
+.paybtn button{
 	padding: 0px 15px 0px 15px;
 }
-#paybtn form{
+.paybtn form{
 	display: inline;
 }
 #paid span{

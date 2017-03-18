@@ -8,7 +8,7 @@
 					<select name='userid' class="form-control" required>
 						<option value=''>Username - Realname</option>
 		<?php
-			$sql_allCus = "SELECT id,username,CONCAT(FirstName,' ',LastName) AS realname FROM customer";
+			$sql_allCus = "SELECT id,username,CONCAT(FirstName,' ',LastName) AS realname FROM customer ORDER BY firstname, lastname";
 			$res = $mysql->query($sql_allCus);
 			while($row = $mysql->fetch($res)){
 		?>				

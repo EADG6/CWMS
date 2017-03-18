@@ -35,10 +35,12 @@
 		}
 	}
 	
-	function payOrder(orid){
-		if(confirm('Do you want to Pay order No.'+orid+'?')){
-			document.getElementById('pay'+orid).click();
-		}
+ 	function payOrder(orid,cusid,totprice){
+		$('#payordid').html(orid)
+		$('[name="payordid"]').val(orid)
+		$('[name="totprice"]').val(totprice)
+		$('[name="payer"]').val(cusid)
+		$('#modal-pay').click()
 	}
 	function deleteOrder(orid){
 		if(confirm('Do you want to Delete order No.'+orid+'?')){
@@ -56,9 +58,9 @@
 		$empname= empty($row_order['empname']) ? 'Unknown': $row_order['empname'];
 ?>
 <div class='order_block' id='ob<?php echo $row_order[0];?>'>
-  <div class='ob_nav' id='obnav<?php echo $row_order[0];?>'>
-	<table id="ob_tbl<?php echo $row_order[0];?>">
-		<tr>
+	<div class='ob_nav' id='obnav<?php echo $row_order[0];?>'>
+		<table id="ob_tbl<?php echo $row_order[0];?>">
+			<tr>
 		<?php
 /**count one orders' total price and item number*/
 		$sql_order_price = "select sum(f.price * quantity) as order_price, count(*) as num from order_product inner join product_service as f ON order_product.product_id = f.id where order_id = {$row_order['id']}";
@@ -68,13 +70,13 @@
 			echo "<th colspan='2'>$cusname  <samp><small>$empname</small></samp></th>
 					<th class='text-right' colspan='2'>".substr($row_order['Date'],5)." ".substr($row_order['Time'],0,5)."</th>";
 			?>
-		</tr>
-		<tr id='ob_tbl_th'>
-			<td>Products</td>
-			<td>Quantity</td>
-			<td>Single</td>
-			<td>Total</td>
-		</tr>
+			</tr>
+			<tr id='ob_tbl_th'>
+				<td>Products</td>
+				<td>Quantity</td>
+				<td>Single</td>
+				<td>Total</td>
+			</tr>
 		<?php
 /**find and show detail information of each order*/
 		$sql_item_detail = "SELECT Item_id,F.order_id,cus.lastname as lname,Cs.product_name as item_name,Cp.product_name,Quantity,Cs.price as Single_Price,(Cs.price*quantity)as Total_Price,F.product_id from order_product as F JOIN orders as O on F.order_id = O.id JOIN product_service as Cs ON F.product_id = Cs.id JOIN product_service as Cp ON Cp.id = Cs.type_id LEFT JOIN customer as cus ON cus.id = O.cus_id WHERE F.order_id= {$row_order['id']}";
@@ -115,18 +117,15 @@
 					<th class='text-right' colspan='2'>{$row_item['order_price']}&nbspRMB</th>
 				</tr>";
 		?>
-	</table>
-		<div id='paybtn'>
+		</table>
+		<div class='paybtn'>
 			<span id="btn2<?php echo $row_order[0];?>">
-				<button type="button"  onclick="payOrder('<?php echo $row_order[0];?>')" class='btn btn-success'>Pay</button>
+				<button type="button"  onclick="payOrder('<?php echo $row_order['id']."','".$row_order['cus_id']."','".$row_item['order_price'];?>')" class='btn btn-success'>Pay</button>
 				<button type="button" onclick="alert('<?php echo $row_order['employee_id'];?>')" class='btn btn-warning'>Rate</button>
 				<button type='button' name='edit' onclick="submit('<?php echo $row_order[0];?>')"  class='btn btn-primary'>Edit</button>
 				<button type='button' onclick="deleteOrder('<?php echo $row_order['id'];?>')" class='btn btn-danger'>Del</button>
 				<form method='post' action=''>
 					<input id='del<?php echo $row_order['id'];?>' type='submit' name='deloid' value='<?php echo $row_order['id'];?>' style='display:none;'/>
-				</form>
-				<form method='post' action=''>
-					<input id='pay<?php echo $row_order['id'];?>' type='submit' name='payoid' value='<?php echo $row_order['id'];?>' style='display:none;'/>
 				</form>
 			</span>
 			<?php
@@ -145,16 +144,72 @@
 			}
 			?>
 		</div>
-</div>
+	</div>
 </div>
 <?php
 	}
+?>
+<!-- Pay Order Form -->	
+			<input type='hidden' id='modal-pay' href='#modal-container-2' data-toggle='modal'/>
+			<div class="modal fade" id="modal-container-2" role="dialog" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+							<h1 class="modal-title text-center" id='popFormLabel'>
+								Pay a Order <span id='payordid'></span>
+							</h1>
+						</div>
+						<div class="modal-body">	
+							<form method='post'>
+								<div class="form-group">
+									<label>Select Payer:</label>
+									<select class="form-control" name='payer' required>
+							<?php
+								//Get all cusotmer
+								$sql_cus = "SELECT id,username,CONCAT(FirstName,' ',LastName) AS realname FROM customer ORDER BY firstname, lastname";
+								$res_cus = $mysql->query($sql_cus);
+								while($row_cus = $mysql->fetch($res_cus)){
+									echo "<option value='{$row_cus['id']}' $isdiabled>".$row_cus['username']." - ".$row_cus['realname']."</option>";
+								}
+							?>
+									</select>
+								</div>
+							    <div class="form-group">
+									<label>Select Pay Type:</label>
+									<select class="form-control" name='paytype' required>
+							<?php
+								//Get all pay type
+								$sql_payType = "SELECT * FROM pay_type ORDER BY id";
+								$res_payType = $mysql->query($sql_payType);
+								while($row_payType = $mysql->fetch($res_payType)){
+									echo "<option value='{$row_payType['id']}' $isdiabled>{$row_payType['type']}</option>";
+								}
+							?>
+									</select>
+								</div>
+								<input type='hidden' name='payordid'/>
+								<input type='hidden' name='totprice'/>
+								<button type='submit' class='btn btn-success btn-block'/>Submit</button>
+							</form>
+						</div>
+					</div>	
+				</div>
+			</div>
+<?php
 /**function of pay order*/
-	if(isset($_POST['payoid'])){
-		$payId = $_POST['payoid'];
-		$sql_pay = "UPDATE orders SET status=4 WHERE id= $payId";
-		$mysql->query($sql_pay);
-		echo "<script>paidstyle($payId);</script>";
+	if(isset($_POST['payordid'])){
+		$payId = inputCheck($_POST['payordid']);
+		$cusId = inputCheck($_POST['payer']);
+		$paytype = inputCheck($_POST['paytype']);
+		$totprice = inputCheck($_POST['totprice']);
+		$discount = $paytype==1? '0.9':'1';
+		$empid = $_SESSION['userid'];
+		$sql_payment = "INSERT payment VALUES ('','$payId','$cusId','$totprice','$discount',NOW(),'$paytype','$empid')";
+		$sql_updOrdStatus = "UPDATE orders SET status=4 WHERE id= $payId";
+		$mysql->query($sql_payment);
+		$mysql->query($sql_updOrdStatus);
+		echo "<script>paidstyle('$payId');</script>";
 	}
 /**function of delete order*/
 	if(isset($_POST['deloid'])){
@@ -166,5 +221,4 @@
 	if(empty($row_item)){
 		echo "No $unpaidAdj orders for <samp>$timestamp</samp> yet";
 	}
-	
 ?>

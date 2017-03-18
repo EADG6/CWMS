@@ -105,9 +105,10 @@
 				</div>
 			</div>
 <?php
-$_SESSION['userid']=1;
+/**Get Real pwd hash*/
 	$pwdres = $mysql->fetch($mysql->query("SELECT pwdhash,salt FROM employee WHERE id = {$_SESSION['userid']}"));
 	if(isset($_POST['cfpwd'])){$inputpwd = MD5($_POST['cfpwd'].$pwdres['salt']);}
+/**Edit User's Role*/
 	if(isset($_POST['editid'])){		
 		if($inputpwd==$pwdres['pwdhash']){
 			if($_SESSION['userid']==$_POST['editid']){
@@ -123,6 +124,7 @@ $_SESSION['userid']=1;
 			echo "<script>alert('Wrong Password')</script>";
 		}	
 	}
+/**Delete user*/	
 	if(isset($_POST['delid'])){
 		$delid = inputCheck($_POST['delid']);
 		if($_SESSION['userid']==$delid ){

@@ -3,6 +3,7 @@
 	//error_reporting(E_ALL^E_NOTICE^E_WARNING^E_DEPRECATED);
 	date_default_timezone_set('PRC'); 
 	require("inc/db.php");
+	$_SESSION['userid']=1;
 	if (isset($_GET['page'])) {
 		$page = $_GET['page'];
 	} else {
