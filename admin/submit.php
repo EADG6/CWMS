@@ -34,7 +34,7 @@
 					$time = 'curtime()';
 				}
                 $itemnum = count($product__quantity);
-                $sql_inserto = "INSERT orders(cus_id,employee_id,date,time) VALUE($cus_id,$emp_id,curdate(),$time)";
+                $sql_inserto = "INSERT orders(cus_id,emp_id,date,time) VALUE($cus_id,$emp_id,curdate(),$time)";
                 $mysql->query($sql_inserto);
 				$order_id = mysql_insert_id();
                 for ($itemcount=0;$itemcount<$itemnum;$itemcount++) {

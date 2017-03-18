@@ -21,9 +21,9 @@
 				<div class="form-group" class="form-control" required>
 					<label>Pay Type:</label>
 					<select name='paytype' class="form-control" required>
-						<option value='Cash'>Cash</option>
-						<option value='AliPay'>AliPay</option>
-						<option value='WeChatPay'>WeChatPay</option>
+						<option value='4'>Cash</option>
+						<option value='2'>AliPay</option>
+						<option value='3'>WeChatPay</option>
 					</select>
 				</div>
 				<div class="form-group">
@@ -46,7 +46,7 @@ if(isset($_POST['price'])){
 	$newBalance = $origBalance + $recharge;
 	$sql_recharge = "UPDATE customer SET balance = $newBalance WHERE id = {$_POST['userid']}";
 	$mysql->query($sql_recharge);
-	$sql_rechargeLog = "INSERT recharge VALUES('','{$_POST['userid']}','{$_POST['price']}',NOW(),'{$_POST['paytype']}')";
+	$sql_rechargeLog = "INSERT recharge VALUES('','{$_POST['userid']}','{$_POST['price']}',NOW(),'{$_POST['paytype']}','{$_SESSION['userid']}')";
 	$mysql->query($sql_rechargeLog);
 	echo "<script>alert('Recharge \"$cusName\" RMB $recharge Successfully! \\n Curent Balance: $newBalance')</script>";
 }

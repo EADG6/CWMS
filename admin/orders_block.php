@@ -34,8 +34,23 @@
 			x[i].style.display= 'table-cell';
 		}
 	}
-	
+	function noBalance(){
+		$('[name="paytype"] option:first').attr('disabled',true)
+		$('[name="paytype"]').val(2);
+	}
+	function checkcus(){
+		if($('[name="payer"]').val()=='NULL'){
+			noBalance();
+		}else{
+			$('[name="paytype"] option:first').attr('disabled',false)
+			$('[name="paytype"]').val(1);
+		}
+	}
  	function payOrder(orid,cusid,totprice){
+		if(cusid==0){
+			cusid='NULL';
+			noBalance();
+		}
 		$('#payordid').html(orid)
 		$('[name="payordid"]').val(orid)
 		$('[name="totprice"]').val(totprice)
@@ -51,7 +66,7 @@
 <?php
 	include 'timecond.php';
 /**query all the orders and customer information in limited condition*/	
-	$sql_orders = "SELECT o.id,o.cus_id,CONCAT(c.firstname,' ',c.lastname) AS cusname,employee_id,CONCAT(e.firstname,' ',e.lastname) AS empname,Date,Time,status FROM orders as o LEFT JOIN customer as c ON o.cus_id = c.id LEFT JOIN employee as e ON o.employee_id = e.id $condition ORDER BY Date DESC,time DESC";
+	$sql_orders = "SELECT o.id,o.cus_id,CONCAT(c.firstname,' ',c.lastname) AS cusname,emp_id,CONCAT(e.firstname,' ',e.lastname) AS empname,Date,Time,status FROM orders as o LEFT JOIN customer as c ON o.cus_id = c.id LEFT JOIN employee as e ON o.emp_id = e.id $condition ORDER BY Date DESC,time DESC";
 	$result = $mysql->query($sql_orders);
 	while($row_order = $mysql->fetch($result)) {
 		$cusname= empty($row_order['cusname']) ? 'Unknown': $row_order['cusname'];
@@ -106,7 +121,7 @@
 				echo "<input type='hidden' name='fd_quan[{$row_item_detail['product_id']}]' value='{$row_item_detail['Quantity']}'/>";
 			}
 			echo "<input type='hidden' name='od_cus[{$row_order['id']}]' value='{$row_order['cus_id']}'/>
-					<input type='hidden' name='od_emp' value='{$row_order['employee_id']}'/>
+					<input type='hidden' name='od_emp' value='{$row_order['emp_id']}'/>
 				</form>";
 			/*fill in blank row if the order have less than 3 items*/	
 			for($n=$num;$n<3;$n++){
@@ -121,7 +136,7 @@
 		<div class='paybtn'>
 			<span id="btn2<?php echo $row_order[0];?>">
 				<button type="button"  onclick="payOrder('<?php echo $row_order['id']."','".$row_order['cus_id']."','".$row_item['order_price'];?>')" class='btn btn-success'>Pay</button>
-				<button type="button" onclick="alert('<?php echo $row_order['employee_id'];?>')" class='btn btn-warning'>Rate</button>
+				<button type="button" onclick="alert('<?php echo $row_order['emp_id'];?>')" class='btn btn-warning'>Rate</button>
 				<button type='button' name='edit' onclick="submit('<?php echo $row_order[0];?>')"  class='btn btn-primary'>Edit</button>
 				<button type='button' onclick="deleteOrder('<?php echo $row_order['id'];?>')" class='btn btn-danger'>Del</button>
 				<form method='post' action=''>
@@ -164,7 +179,7 @@
 							<form method='post'>
 								<div class="form-group">
 									<label>Select Payer:</label>
-									<select class="form-control" name='payer' required>
+									<select class="form-control" name='payer' onchange='checkcus()' required>
 							<?php
 								//Get all cusotmer
 								$sql_cus = "SELECT id,username,CONCAT(FirstName,' ',LastName) AS realname FROM customer ORDER BY firstname, lastname";
@@ -173,6 +188,7 @@
 									echo "<option value='{$row_cus['id']}' $isdiabled>".$row_cus['username']." - ".$row_cus['realname']."</option>";
 								}
 							?>
+										<option value='NULL'>Unknown</option>
 									</select>
 								</div>
 							    <div class="form-group">
@@ -203,9 +219,22 @@
 		$cusId = inputCheck($_POST['payer']);
 		$paytype = inputCheck($_POST['paytype']);
 		$totprice = inputCheck($_POST['totprice']);
-		$discount = $paytype==1? '0.9':'1';
+		if($paytype==1){
+			$discount = '0.9';
+			$paid = $totprice*$discount;
+			$origBalance = $mysql->oneQuery("SELECT balance FROM customer WHERE id ='$cusId'");
+			if($origBalance < $paid){
+				echo "<script>alert('Banlance ($origBalance) is lower than price ($paid)')</script>";
+				return false;
+			}else{
+				$sql_redbalance = "UPDATE customer SET balance = balance-$paid WHERE id = '$cusId'";
+				$mysql->query($sql_redbalance);
+			}
+		}else{
+			$discount = '1';
+		}	
 		$empid = $_SESSION['userid'];
-		$sql_payment = "INSERT payment VALUES ('','$payId','$cusId','$totprice','$discount',NOW(),'$paytype','$empid')";
+		$sql_payment = "INSERT payment VALUES ('','$payId',$cusId,'$totprice','$discount',NOW(),'$paytype','$empid')";
 		$sql_updOrdStatus = "UPDATE orders SET status=4 WHERE id= $payId";
 		$mysql->query($sql_payment);
 		$mysql->query($sql_updOrdStatus);
