@@ -1,5 +1,9 @@
 <?php
+	session_start();
+	//error_reporting(E_ALL^E_NOTICE^E_WARNING^E_DEPRECATED);
+	date_default_timezone_set('PRC'); 
 	require("inc/db.php");
+	$_SESSION['userid']=1;
 	if (isset($_GET['page'])) {
 		$page = $_GET['page'];
 	} else {
@@ -19,6 +23,10 @@
 		include "create_order.php";
 	}else if($page == 'recharge'){
 		include "recharge.php";
+	}else if($page == 'payment'){
+		include "payment.php";
+	}else if($page == 'staff'){
+		include "staff.php";
 	}
 	include("inc/footer.php");
 

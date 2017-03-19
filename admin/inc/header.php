@@ -8,9 +8,11 @@
 		<meta name="description" content="">
 		<meta name="author" content="">
 		<title>YiJia System</title>
-       <link type="text/css" rel="stylesheet" href="../static/css/kube.css"/>
+        <link type="text/css" rel="stylesheet" href="../static/css/kube.css"/>
 		<link type="text/css" rel="stylesheet" href="../static/css/bootstrap.min.css"/>
 		<link type="text/css" rel="stylesheet" href="../static/css/admin.css"/>
+		<!-- Font Awesome -->
+		<link href="../static/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 		<script src="../static/js/jquery.min.js"></script>
   	  	<script src="../static/js/bootstrap.min.js"></script>
     </head>

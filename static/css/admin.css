@@ -1,4 +1,4 @@
-table,input,select,button{
+table,input,select,button,.mainblocks{
 	background:#fff;
 	color: black;
 	border-radius:5px;
@@ -8,6 +8,9 @@ table tr td:first-child,table tr th:first-child{
 }
 body{
     background-color: #333333;
+}
+.modal{
+	color: black;
 }
 .container{   
 	color: #fff;
@@ -124,7 +127,7 @@ input[type="number"]{-moz-appearance:textfield;}
 }
 .order_block{
 	width: 33%;
-	padding-right: 15px;
+	padding-right: 5px;
 	height: 300px;
 	float:left;  
 }
@@ -164,23 +167,52 @@ input[type="number"]{-moz-appearance:textfield;}
 	display: inline;
 	padding-left:0px;
 }
-#paybtn{
+.paybtn{
 	display: inline;
 	position: absolute;
 	padding-left: 10px;
 	margin-top: -60px;
 }
-#paybtn button{
+.paybtn button{
 	padding: 0px 15px 0px 15px;
 }
-#paybtn form{
-display: inline;
+.paybtn form{
+	display: inline;
 }
 #paid span{
 	color: #0ab159;	
 	visibility:hidden;
 }
-/** Recharge Page*/	
+/**Help tips*/
+.helptip{
+    position: absolute;
+    right: 10px;
+    top: -7px;
+    padding: 10px;
+    background: #f9f9f9;
+    border-radius: 5px;
+    z-index: 1000;
+    -webkit-animation: move-in-right cubic-bezier(.22,.58,.12,.98) .4s;
+    animation: move-in-right cubic-bezier(.22,.58,.12,.98) .4s;
+    box-shadow: 2px 2px 11px 0px rgba(0, 0, 0, 0.55);
+}
+.icona:focus,
+.icona:hover{
+	text-decoration:none;
+}
+@keyframes move-in-right{
+	0% {
+		opacity: 0;
+		-webkit-transform: translate(-5em,0);
+		transform: translate(-5em,0);
+	}
+	100% {
+		opacity: 1;
+		-webkit-transform: translate(0,0);
+		transform: translate(0,0);
+	}
+}
+/** Recharge Page*/
 	.cards{
 		background:#fff;
 		width:100%;
