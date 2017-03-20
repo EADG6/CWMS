@@ -21,7 +21,7 @@
 	</div>
 	<table class ='table table table-striped'>
 		<thead>
-			<th colspan='4'>Employee Information:</th>
+			<th colspan='9'>Employee Information:</th>
 			<tr>
 				<th>ID</th>
 				<th>Username</th>
