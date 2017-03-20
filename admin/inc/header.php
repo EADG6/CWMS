@@ -15,5 +15,6 @@
 		<link href="../static/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 		<script src="../static/js/jquery.min.js"></script>
   	  	<script src="../static/js/bootstrap.min.js"></script>
+  	  	<script src="../static/js/function.js"></script>
     </head>
     <body>
