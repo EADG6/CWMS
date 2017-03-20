@@ -227,15 +227,12 @@ if (isset ($_POST['name']) && isset($_POST['username']) && isset($_POST['passwor
 						<hr>
 					</div>
 					<div class="col-md-12 col-md-offset-10">
-<<<<<<< HEAD
 				    	<input type="submit" value="Submit">  
 				   	 	<input type="reset" value="delete">
 						<a href="login.php" >Back</a>
-=======
 				    	<a href="login.php" class="btn btn-primary" >Back</a>
 				    	<input type="submit" value="Submit" class="btn btn-primary">  
 				   	 	<input type="reset" value="Delete" class="btn btn-primary">
->>>>>>> origin/dev
 					</div>
 				</form>
         		</div>        
