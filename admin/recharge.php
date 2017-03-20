@@ -46,7 +46,7 @@ if(isset($_POST['price'])){
 	$newBalance = $origBalance + $recharge;
 	$sql_recharge = "UPDATE customer SET balance = $newBalance WHERE id = {$_POST['userid']}";
 	$mysql->query($sql_recharge);
-	$sql_rechargeLog = "INSERT recharge VALUES('','{$_POST['userid']}','{$_POST['price']}',NOW(),'{$_POST['paytype']}','{$_SESSION['userid']}')";
+	$sql_rechargeLog = "INSERT recharge VALUES('','{$_POST['userid']}','{$_POST['price']}',NOW(),'{$_POST['paytype']}','{$_SESSION['adminid']}')";
 	$mysql->query($sql_rechargeLog);
 	echo "<script>alert('Recharge \"$cusName\" RMB $recharge Successfully! \\n Curent Balance: $newBalance')</script>";
 }

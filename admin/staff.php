@@ -106,12 +106,12 @@
 			</div>
 <?php
 /**Get Real pwd hash*/
-	$pwdres = $mysql->fetch($mysql->query("SELECT pwdhash,salt FROM employee WHERE id = {$_SESSION['userid']}"));
+	$pwdres = $mysql->fetch($mysql->query("SELECT pwdhash,salt FROM employee WHERE id = {$_SESSION['adminid']}"));
 	if(isset($_POST['cfpwd'])){$inputpwd = MD5($_POST['cfpwd'].$pwdres['salt']);}
 /**Edit User's Role*/
 	if(isset($_POST['editid'])){		
 		if($inputpwd==$pwdres['pwdhash']){
-			if($_SESSION['userid']==$_POST['editid']){
+			if($_SESSION['adminid']==$_POST['editid']){
 				redirect("index.php?page=staff&action=info","You cannot edit your own role!");
 			}else{
 				$editid = inputCheck($_POST['editid']);
@@ -127,7 +127,7 @@
 /**Delete user*/	
 	if(isset($_POST['delid'])){
 		$delid = inputCheck($_POST['delid']);
-		if($_SESSION['userid']==$delid ){
+		if($_SESSION['adminid']==$delid ){
 			redirect("index.php?page=staff&action=info","You cannot delete your own role!");
 		}else{
 			$inputpwd = MD5($_POST['cfpwd'].$pwdres['salt']);

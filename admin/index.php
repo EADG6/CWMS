@@ -1,9 +1,17 @@
 <?php
 	session_start();
+	require("inc/db.php");
 	//error_reporting(E_ALL^E_NOTICE^E_WARNING^E_DEPRECATED);
 	date_default_timezone_set('PRC'); 
-	require("inc/db.php");
-	$_SESSION['userid']=1;
+	if(!isset($_SESSION['adminid'])){
+		header("Location:login.php");
+	}
+	if(isset($_GET['exit'])){
+		unset($_SESSION['admin']);
+		unset($_SESSION['adminid']);
+		session_destroy();
+		header("Location:login.php");
+	}
 	if (isset($_GET['page'])) {
 		$page = $_GET['page'];
 	} else {

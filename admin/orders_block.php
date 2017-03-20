@@ -233,7 +233,7 @@
 		}else{
 			$discount = '1';
 		}	
-		$empid = $_SESSION['userid'];
+		$empid = $_SESSION['adminid'];
 		$sql_payment = "INSERT payment VALUES ('','$payId',$cusId,'$totprice','$discount',NOW(),'$paytype','$empid')";
 		$sql_updOrdStatus = "UPDATE orders SET status=4 WHERE id= $payId";
 		$mysql->query($sql_payment);
