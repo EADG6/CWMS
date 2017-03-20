@@ -1,4 +1,4 @@
-		<center class="tab_out">
+		<div class="tab_out">
             <table class="table-stripped">
 		        <tr><td class='text-centered' id='tab'>
 				<nav>
@@ -34,7 +34,7 @@
 				</nav>
 				</tr></td>      
 		    </table>
-		</center>
+		</div>
 		<div class='col-xs-1'>
 			<div class="left_tab">
 				<a href='#'><img src='../static/img/icon/up.png'/></a><br/>

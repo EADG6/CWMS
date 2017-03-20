@@ -8,7 +8,7 @@
 		<meta name="description" content="">
 		<meta name="author" content="">
 		<title>YiJia System</title>
-        <link type="text/css" rel="stylesheet" href="../static/css/kube.css"/>
+        <!--<link type="text/css" rel="stylesheet" href="../static/css/kube.css"/>-->
 		<link type="text/css" rel="stylesheet" href="../static/css/bootstrap.min.css"/>
 		<link type="text/css" rel="stylesheet" href="../static/css/admin.css"/>
 		<!-- Font Awesome -->
