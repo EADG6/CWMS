@@ -90,7 +90,7 @@
 						<h3>Update Car Information</h3>
 					</div>
 					<form method="post">
-						<div class="col-md-4">
+						<div class="col-md-7">
 						<h4>First Car</h4>
 				   	 		<div class="form-group  col-md-offset-0">  
 				   			 	<label for='plate1'>Plate Number 1:</label>
@@ -108,7 +108,7 @@
 							</div>
 						</div>
 					
-						<div class="col-md-4">
+						<div class="col-md-7">
 						<h4>Second Car</h4>
 				   	 		<div class="form-group col-md-offset-0">  
 				   			 	<label for='plate2'>Plate Number 2:</label>
@@ -126,7 +126,7 @@
 							</div>
 						</div>
 						
-						<div class="col-md-4">
+						<div class="col-md-7">
 						<h4>Third Car</h4>
 				   	 		<div class="form-group col-md-offset-0">  
 				   			 	<label for='plate3'>Plate Number 3:</label>
@@ -143,7 +143,7 @@
 								<input type="text" class="form-control" name="type3" id='type3'>
 							</div>
 						</div>
-					<div class="col-md-12 col-md-offset-10">
+					<div class="col-md-12 col-md-offset-9">
 					    <a href="login.php" class="btn btn-primary" >Back</a>
 				    	<input type="submit" value="Submit" class="btn btn-primary">  
 				   	 	<input type="reset" value="Delete" class="btn btn-primary">

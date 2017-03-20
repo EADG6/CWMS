@@ -1,4 +1,3 @@
-
 <div class="container">
         <hr>
         <div class="row">
@@ -25,7 +24,7 @@
 				    </tr>
 				    </tfoot>    
 					<?php
-					$result = mysql_query("SELECT id,name,phone,plate,ordertime  FROM orders ORDER BY ordertime");
+					$result_order = mysql_query("SELECT customerid, carid  FROM orders ORDER BY ordertime");
 					//select information from database
 					while ($row = mysql_fetch_array($result)) {
 					?>
