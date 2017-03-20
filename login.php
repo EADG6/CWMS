@@ -59,6 +59,8 @@
 				if ($rows ==1){
 					session_start();
 					$_SESSION['customer_id']= $id;
+					$_SESSION['customer_name']= $name;
+					$_SESSION['customer_phone']= $phone;
 					$_SESSION['customer_username']= $username;
 					//Say right and go to home2 page
 					echo"<script type='text/javascript'>alert('ok');</script>"; 

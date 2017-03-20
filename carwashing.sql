@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Mar 16, 2017 at 11:48 AM
+-- Generation Time: Mar 20, 2017 at 09:16 AM
 -- Server version: 10.0.17-MariaDB
 -- PHP Version: 5.5.30
 
@@ -61,7 +61,7 @@ CREATE TABLE `customer` (
 --
 
 INSERT INTO `customer` (`id`, `name`, `username`, `password`, `phone`) VALUES
-(1, 'Leo', 'leo', 'leo', '15882394033'),
+(1, 'leo', 'leo', 'leo', 'leo'),
 (2, '1', '1', '1', '1'),
 (3, '2', '2', '2', '2'),
 (4, '3', '3', '3', '3'),
@@ -88,6 +88,20 @@ INSERT INTO `customercar` (`id`, `customerid`, `carid`) VALUES
 (2, 5, 2),
 (3, 5, 3);
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `orders`
+--
+
+CREATE TABLE `orders` (
+  `id` int(11) NOT NULL,
+  `customerid` int(11) NOT NULL,
+  `carid` int(11) NOT NULL,
+  `condidion` int(11) NOT NULL,
+  `time` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
 --
 -- Indexes for dumped tables
 --
@@ -111,6 +125,12 @@ ALTER TABLE `customercar`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `orders`
+--
+ALTER TABLE `orders`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -129,6 +149,11 @@ ALTER TABLE `customer`
 --
 ALTER TABLE `customercar`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+--
+-- AUTO_INCREMENT for table `orders`
+--
+ALTER TABLE `orders`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
