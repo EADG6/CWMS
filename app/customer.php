@@ -1,4 +1,11 @@
-    <div class="container">
+    <?php
+	if ($_SESSION['customer_id'] == 0 ){
+		unset($_SESSION['customer_id']);
+		session_destroy();
+		echo "<script>alert('Please Login First');location.href='login.php'</script>";
+	}
+    ?>
+	<div class="container">
         <div class="row">
 				<div class="col-md-12">
 				<h1>You Can Update Your Information</h1> 
@@ -46,7 +53,7 @@
 					<h3>Update Password</h3>
 				</div>
 				<?php
-				if (isset ($_POST['password']) && isset ($_POST['newpassword']) && isset ($_POST['newpasswordagain'])){
+				if (isset ($_POST['password'])){
 					$password_old = $cusinfo['password'];
 					$password = $_POST['password'];
 					$new_password = $_POST['newpassword'];
@@ -81,73 +88,69 @@
 				    	<input type="submit" value="Submit" class="btn btn-primary">  
 					</div>
 				</form>
+				<hr>
+				<div class="col-md-12">
+					<h3>Update Car Information</h3>
+				</div>
 				<?php
-				$sql_cuscarid = "SELECT customer.name,car.plate,car.color,car.type FROM customer INNER JOIN customercar ON customer.id = customercar.customerid INNER JOIN car ON customercar.carid = car.id WHERE customer.id=$id;";
+				$sql_cuscarid = "SELECT car.id,car.plate,car.color,car.type FROM customer INNER JOIN customercar ON customer.id = customercar.customerid INNER JOIN car ON customercar.carid = car.id WHERE customer.id='".$_SESSION['customer_id']."'";
 				$result_cuscarid = mysql_query($sql_cuscarid);
+				$rows = mysql_num_rows($result_cuscarid);
+				$num = 0;
+				while ($row_carinfo = mysql_fetch_array($result_cuscarid)) {
+					$num ++;
 				?>
-					<div class="col-md-12">
-						<hr>
-						<h3>Update Car Information</h3>
-					</div>
+				<?php
+				if (isset ($_POST['plate1'])){
+					$plate1 = $_POST['plate1'];
+					$plate2 = $_POST['plate2'];
+					$plate3 = $_POST['plate3'];
+					$color1 = $_POST['color1'];
+					$color2 = $_POST['color2'];
+					$color3 = $_POST['color3'];
+					$type1 = $_POST['type1'];
+					$type2 = $_POST['type2'];
+					$type3 = $_POST['type3'];
+					$id1 = $_POST['id1'];
+					$id2 = $_POST['id2'];
+					$id3 = $_POST['id3'];
+					$sql_updatecar1 = "UPDATE car SET plate = '$plate1', type = '$type1', color = '$color1' WHERE id = '$id1'";
+					$result_updatecar1 = mysql_query($sql_updatecar1);
+					$sql_updatecar2 = "UPDATE car SET plate = '$plate2', type = '$type2', color = '$color2' WHERE id = '$id2'";
+					$result_updatecar2 = mysql_query($sql_updatecar2);
+					$sql_updatecar3 = "UPDATE car SET plate = '$plate3', type = '$type3', color = '$color3' WHERE id = '$id3'";
+					$result_updatecar3 = mysql_query($sql_updatecar3);
+					
+					echo"<script type='text/javascript'>alert('Update Success'); location='index.php?page=customer';</script>";
+				}
+				?>
 					<form method="post">
-						<div class="col-md-7">
-						<h4>First Car</h4>
+						<div class="col-md-4">
+						<h4>Car Information<?php echo $num;?></h4>
 				   	 		<div class="form-group  col-md-offset-0">  
-				   			 	<label for='plate1'>Plate Number 1:</label>
-								<input type="text" class="form-control" name="plate1" id='plate1'>
+				   			 	<label for='plate'>Plate Number:</label>
+								<input type="text" class="form-control" name="plate<?php echo $num;?>" id='plate' value="<?php echo $row_carinfo['plate']; ?>">
+								<input type="hidden" name="id<?php echo $num;?>" value="<?php echo $row_carinfo['id']; ?>">
 							</div>
 					
 				    		<div class="form-group  col-md-offset-0">  
-				   			 	<label for='colol1'>Color:</label>
-								<input type="text" class="form-control" name="color1" id='color1'>
+				   			 	<label for='colol'>Color:</label>
+								<input type="text" class="form-control" name="color<?php echo $num;?>" id='color' value="<?php echo $row_carinfo['color']; ?>">
+								<input type="hidden" name="id<?php echo $num;?>" value="<?php echo $row_carinfo['id']; ?>">
 							</div>
 							
 				    		<div class="form-group  col-md-offset-0">  
-				   			 	<label for='type1'>Type:</label>
-								<input type="text" class="form-control" name="type1" id='type1'>
+				   			 	<label for='type'>Type:</label>
+								<input type="text" class="form-control" name="type<?php echo $num;?>" id='type' value="<?php echo $row_carinfo['type']; ?>">
+								<input type="hidden" name="id<?php echo $num;?>" value="<?php echo $row_carinfo['id']; ?>">
 							</div>
 						</div>
-					
-						<div class="col-md-7">
-						<h4>Second Car</h4>
-				   	 		<div class="form-group col-md-offset-0">  
-				   			 	<label for='plate2'>Plate Number 2:</label>
-								<input type="text" class="form-control" name="plate2" id='plate2'>
-							</div>
-					
-				    		<div class="form-group col-md-offset-0">  
-				   			 	<label for='color2'>Color:</label>
-								<input type="text" class="form-control" name="color2" id='color2'>
-							</div>
-							
-				    		<div class="form-group col-md-offset-0">  
-				   			 	<label for='type2'>Type:</label>
-								<input type="text" class="form-control" name="type2" id='type2'>
-							</div>
+					<?php
+				}
+					?>
+						<div class="col-md-12 col-md-offset-10">
+				    		<input type="submit" value="Submit" class="btn btn-primary">  
 						</div>
-						
-						<div class="col-md-7">
-						<h4>Third Car</h4>
-				   	 		<div class="form-group col-md-offset-0">  
-				   			 	<label for='plate3'>Plate Number 3:</label>
-								<input type="text" class="form-control" name="plate3" id='plate3'>
-							</div>
-					
-				    		<div class="form-group col-md-offset-0">  
-				   			 	<label for='color3'>Color:</label>
-								<input type="text" class="form-control" name="color3" id='color3'>
-							</div>
-							
-				    		<div class="form-group col-md-offset-0">  
-				   			 	<label for='type3'>Type:</label>
-								<input type="text" class="form-control" name="type3" id='type3'>
-							</div>
-						</div>
-					<div class="col-md-12 col-md-offset-9">
-					    <a href="login.php" class="btn btn-primary" >Back</a>
-				    	<input type="submit" value="Submit" class="btn btn-primary">  
-				   	 	<input type="reset" value="Delete" class="btn btn-primary">
-					</div>
-				</form>
+				  </form>
 		</div>        
 	</div>

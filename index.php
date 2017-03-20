@@ -2,10 +2,11 @@
 	 //Start the session
 	 session_start();
 	 //Make sure login
-	 if (isset($_SESSION['customer_username'])){
-	 } else {
-		 //Ask login
-	 	 echo"<script type='text/javascript'>alert('Please Login First');location='login.php';</script>";
+	 if (!isset($_SESSION['customer_id'])){
+		 	$_SESSION['customer_id'] = 0;
+			$_SESSION['customer_name']= 'unknown';
+			$_SESSION['customer_phone']= 'unknown';
+			$_SESSION['customer_username']= 'unknown';
 		 }
 	 //Connect database
 	 require "inc/db.php";
@@ -17,11 +18,9 @@
 		$page = 'home'; //If can't get page go to index.php
 	 }
 	 if(isset($_GET['logout'])){
-		unset($_SESSION['userid']);
-		unset($_SESSION['customer_username']);
-		unset($_SESSION['customer_name']);
+		unset($_SESSION['customer_id']);
 		session_destroy();
-		echo "<script>location.href='login.php'</script>";
+		echo "<script>location.href='index.php'</script>";
 		//redirect('login.php');
 	 }
 	 //show all the page's location
