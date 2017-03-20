@@ -30,6 +30,7 @@
 							</div>
 							<a href="login.php?new" class="btn btn-primary">Sign Up</a>&nbsp;&nbsp;
 							<input type="submit" value="Sign In" class="btn btn-primary">  
+							<a href="index.php?new" class="btn btn-primary">Back</a>&nbsp;&nbsp;
 					 	</form>
 			</div>
 		</div>
@@ -78,7 +79,7 @@
 ?> 
 <?php  
 require "inc/db.php";
-if (isset ($_POST['name']) && isset($_POST['username']) && isset($_POST['password']) && isset($_POST['passwordagain']) && isset($_POST['phone']) && isset($_POST['plate1']) && isset($_POST['color1']) && isset($_POST['type1']) && isset($_POST['plate2']) && isset($_POST['color2']) && isset($_POST['type2']) && isset($_POST['plate3']) && isset($_POST['color3']) && isset($_POST['type3'])) {
+if (isset ($_POST['name'])) {
 	$name = $_POST['name'];
 	$username = $_POST['username'];
 	$password = $_POST['password'];
@@ -132,8 +133,7 @@ if (isset ($_POST['name']) && isset($_POST['username']) && isset($_POST['passwor
 					  mysql_query($sql_cuscar1);
 					  mysql_query($sql_cuscar2);
 					  mysql_query($sql_cuscar3);	 
-				echo"<script type='text/javascript'>alert('You Can Login Now');location='login.php';  
-           	 </script>";  
+					  echo"<script type='text/javascript'>alert('You Can Login Now');location='login.php';  </script>";  
 			}
 		}  
 	}  
