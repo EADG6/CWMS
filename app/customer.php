@@ -82,7 +82,7 @@
 					</div>
 				</form>
 				<?php
-				$sql_cuscarid = "SELECT carid FROM customercar WHERE customerid = '".$_SESSION['customer_id']."'";
+				$sql_cuscarid = "SELECT customer.name,car.plate,car.color,car.type FROM customer INNER JOIN customercar ON customer.id = customercar.customerid INNER JOIN car ON customercar.carid = car.id WHERE customer.id=$id;";
 				$result_cuscarid = mysql_query($sql_cuscarid);
 				?>
 					<div class="col-md-12">
