@@ -12,27 +12,41 @@ var ifweek = function (){
 	}
 };
 </script>
-<form action="<?php $page?>" method='POST'>
-	<select name="timestamp" class="select-small" id='timestamp' onchange='ifweek()'>
-		<option value='today' selected>Today</option>
-		<option value='yesterday'>Yesterday</option>
-		<option value='this_week'>This Week</option>
-		<option value='this_month'>This Month</option>	
-		<option value='this_7_day'>In 7 Day</option>
-		<option value='all'>All Time</option>
-		<option value='input_week'>Input Week...</option>
-	</select>
+<form action="<?php $page?>" class='col-xs-12' method='POST'>
+    <div class='form-group col-sm-3'>
+		<select name="timestamp" class="form-control" id='timestamp' onchange='ifweek()'>
+			<option value='today' selected>Today</option>
+			<option value='yesterday'>Yesterday</option>
+			<option value='this_week'>This Week</option>
+			<option value='this_month'>This Month</option>	
+			<option value='this_7_day'>In 7 Day</option>
+			<option value='all'>All Time</option>
+			<option value='input_week'>Input Week...</option>
+		</select>
+	</div>
 <?php
 	$timeres = $mysql->fetch($mysql->query('select year(now()),week(now(),1)'));
 	$weeknum = $timeres[1];
 	$yearnum = $timeres[0];
 ?>
-	<div id='inputtime' style='display:none;'>
-		Week:<input type='number' name='weeknum' id='weeknum' placeholder='Week' min='0' max='53' value='<?php echo $weeknum;?>'/>
-		Year:<input type='number' name='yearnum' id='yearnum' placeholder='Year' min='2015' max='<?php echo $yearnum;?>' value='<?php echo $yearnum;?>'/>
+	<div class='form-group col-sm-9'>
+		<div id='inputtime' style='display:none;'>
+			<div class='col-sm-2'>
+				<label for='weeknum'>Week:</label>
+				<input type='number' name='weeknum' id='weeknum' class="form-control" placeholder='Week' min='0' max='53' value='<?php echo $weeknum;?>'/>
+			</div>
+			<div class='col-sm-2'>
+				<label for='yearnum'>Year:</label>
+				<input type='number' name='yearnum' id='yearnum' class="form-control" placeholder='Year' min='2015' max='<?php echo $yearnum;?>' value='<?php echo $yearnum;?>'/>
+			</div>
+		</div>
+		<div class='col-sm-2'>
+			<label>Unpaid only <input type='checkbox' name='unpaid'/></label> 
+		</div>
+		<div class='col-sm-2'>
+			<button type='submit' value='OK' class="btn btn-primary">OK</button>
+		</div>
 	</div>
-	 Unpaid only <input type='checkbox' name='unpaid'/>
-	<button type='submit' value='OK'>OK</button>
 </form>
 <?php
 	/**some sql condition to use*/
