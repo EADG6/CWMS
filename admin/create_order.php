@@ -39,6 +39,22 @@
 			document.getElementById(fid).style.backgroundColor = "rgba(10, 135, 84, 0.13)";
 		}
 	}
+	function changeEmpSele(){
+		boxs = $('input[type="checkbox"]');
+		ischeck = false;
+		for(i=0;i<boxs.length;i++){
+			if(boxs[i].checked){
+				ischeck = true;
+			}
+		}
+		if(ischeck){
+			$('#emp').attr('required',true);
+			$('#emp').attr('disabled',false);
+		}else{
+			$('#emp').attr('required',false);
+			$('#emp').attr('disabled',true);
+		}
+	}
 /**print time and refresh in every 1s*/		
 	function printTime(){
 		var d = new Date();
@@ -57,32 +73,37 @@
 		}  
 	}
 </script>
-
+	<div class='col-sm-7'>
 		<form id='order_table' action='index.php?page=create_order' method ='post'>
-			<div class='big form-group'><b>Customer:</b>
-				<select name='cus_id' id='cus' class='selectid'>
-					<option value='0'>--</option>
-				<?php 
-					while($row = $mysql->fetch($result_cusinfo)) {
-						echo "<option value=$row[0]>$row[1]</option>";
-					}	
-				?>
-				</select><br/>
-				<b>Employee:</b>
-				<select name='emp_id' id='emp' class='selectid'>
-					<option value='0'>--</option>
-				<?php 
-					$sql_employee = "SELECT * FROM employee";
-					$result_emp = $mysql->query($sql_employee);
-					while($row = $mysql->fetch($result_emp)) {
-						echo "<option value=$row[0]>$row[1]</option>";
-					}	
-				?>
-				</select>
-				<button id='createbtn' type='primary'>Create New</button>
+			<div class='col-sm-12'>
+				<div class='big form-group col-sm-9'>
+					<label for='cus'>Customer:</label>
+					<select name='cus_id' id='cus' class='form-control selectid'>
+						<option value='0'>--</option>
+					<?php 
+						while($row = $mysql->fetch($result_cusinfo)) {
+							echo "<option value=$row[0]>$row[1]</option>";
+						}	
+					?>
+					</select><br/>
+					<label for='emp'>Worker:</label>
+					<select name='emp_id' id='emp' class='form-control selectid' disabled>
+						<option value=''>--</option>
+					<?php 
+						$sql_employee = "SELECT * FROM employee";
+						$result_emp = $mysql->query($sql_employee);
+						while($row = $mysql->fetch($result_emp)) {
+							echo "<option value=$row[0]>$row[1]</option>";
+						}	
+					?>
+					</select>
+				</div>
+				<div class='col-xs-3 createbtns'>
+					<button id='createbtn' type='primary' class='btn btn-primary btn-lg'>Create New</button>
+				</div>
 			</div>
 			<div class='create_order'>
-				<table>
+				<table class='table table-striped'>
 	<?php
 /**output all the product items of each type of product*/
 		while($row_fcata = $mysql->fetch($result_fcata)) {
@@ -95,7 +116,7 @@
 						<td><b>Product ID</b></td>
 						<td><b>Product Name</b></td>	
 						<td><b>Product Price</b></td>
-						<td class='text-centered'><b>Quantity</b></td>
+						<td class='text-center'><b>Quantity</b></td>
 					</tr>";
             while($row_finfo = $mysql->fetch($result_finfo)) {
                 echo "<tr>
@@ -104,15 +125,21 @@
 						<td>&#165;".$row_finfo['price']." </td>";
 				if($cata_id==1){
 					echo "<td>
-								<label><input type='checkbox' id='checkbox{$row_finfo['id']}' onclick='var i=document.getElementById({$row_finfo['id']});i.value=(i.value==1)?0:1'> Select This Service</label>
+								<label><input type='checkbox' id='checkbox{$row_finfo['id']}' onclick='var i=document.getElementById({$row_finfo['id']});i.value=(i.value==1)?0:1' onchange='changeEmpSele()'> Select This Service</label>
 								<input type='hidden' id='{$row_finfo['id']}' name='odproduct[{$row_finfo['id']}]'>
 							</td>
 						</tr>";
 				}else{
 					echo "<td onmousemove='vis({$row_finfo['id']})' onmouseout='hide({$row_finfo['id']});check({$row_finfo['id']})'>
-							<button id='l{$row_finfo['id']}' class='bnum' type='button' onclick='m({$row_finfo['id']})' ><b>-</b></button>
-							<input type='number' id='{$row_finfo['id']}' name='odproduct[{$row_finfo['id']}]' min = '0' max = '999'/>
-							<button id='r{$row_finfo['id']}' class='bnum' type='button' onclick='a({$row_finfo['id']})' ><b>+</b></button>
+							<div class='col-sm-2'>	
+								<button id='l{$row_finfo['id']}' class='btn btn-primary bnum bnuml' type='button' onclick='m({$row_finfo['id']})' ><i class='fa fa-minus'></i></button>
+							</div>
+							<div class='col-sm-5 col-sm-offset-1'>	
+								<input type='number' id='{$row_finfo['id']}' name='odproduct[{$row_finfo['id']}]' min = '0' max = '999' class='form-control'/>
+							</div>
+							<div class='col-sm-2'>	
+								<button id='r{$row_finfo['id']}' class='btn btn-primary bnum bnumr' type='button' onclick='a({$row_finfo['id']})' ><i class='fa fa-plus'></i></button>
+							</div>
 						</td>
 					</tr>";
 				}
@@ -122,7 +149,9 @@
 				</table>
 			</div>
 		</form>
-<div id='create_page'>
+	</div>
+	
+<div id='create_page' class='col-sm-5'>
 	<?php 
 /**IT'S THE EDIT FUNCTION. When 'order_block.php' post this page,it can get the order data and write on the 'create order' input form;
 session['times'] is a counter to make sure session['order_id'] directly comes from 'order_block.php', otherwise, if user refersh,
@@ -164,7 +193,7 @@ session['times'] is a counter to make sure session['order_id'] directly comes fr
         $sql_productinfo = "SELECT id,product_name AS product_name,price FROM product_service WHERE price IS NOT NULL";
         $result = $mysql->query($sql_productinfo);
         $product_cata_info = array();
-        echo "<table>";  
+        echo "<table class='table table-bordered table-striped'>";  
         while($row = $mysql->fetch($result)) {
 	        $product_cata_info['name'][$row['id']] = $row['product_name'];
 	        $product_cata_info['price'][$row['id']] = $row['price'];
