@@ -1,10 +1,10 @@
 		<div class="tab_out">
             <table class="table-stripped">
-		        <tr><td class='text-centered' id='tab'>
+		        <tr><td class='text-centered tab'>
 				<nav>
 					<div class="left-menu">
-						<a href="index.php?page=create_order"><button class='btn-primary' type="button">Create Order</button></a>
-						<a href="index.php?page=current_orders"><button type="button">Current Orders</button></a>
+						<a href="index.php?page=create_order"><button class='btn btn-primary' type="button">Create Order</button></a>
+						<a href="index.php?page=current_orders"><button class='btn btn-default' type="button">Current Orders</button></a>
 					</div>
 					<div class="right-menu">
 						<div class="nav dropdown">
