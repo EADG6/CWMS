@@ -1,4 +1,10 @@
-    <?php
+   <?php
+   if (isset($_GET['id'])){
+   	$id =$_GET['id'];
+   	//delete the menu
+   	$result = mysql_query("DELETE FROM orders WHERE id = $id");
+   		echo"<script type='text/javascript'>alert('Menu Delete Now'); location='index.php?page=order';</script>"; 
+   }
 	if ($_SESSION['customer_id'] == 0 ){
 		unset($_SESSION['customer_id']);
 		session_destroy();
@@ -44,7 +50,7 @@
 					 <td><?php
 						 if ($row_orders['conditions']<=1){
 						 	?>
-							<a href ="javascript:if(confirm('Are You Sure to Delete?'))location='indexcms.php?page=deletem&id=<?php echo $row_orders['id']?>'">Delete </a>
+							<a href ="javascript:if(confirm('Are You Sure to Delete?'))location='index.php?page=order&id=<?php echo $row_orders['id']?>'">Delete </a>
 						<?php
 						 }else{
 							 echo"Order In Use";
