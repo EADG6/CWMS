@@ -28,9 +28,9 @@
 								<label for='password'>Password:</label>
 								<input type="password" name="password" class="form-control" style="width: 200px">  
 							</div>
-							<a href="login.php?new" class="btn btn-primary">Sign Up</a>&nbsp;&nbsp;
+							<a href="login.php?new" class="btn btn-primary">Sign Up</a>
 							<input type="submit" value="Sign In" class="btn btn-primary">  
-							<a href="index.php?new" class="btn btn-primary">Back</a>&nbsp;&nbsp;
+							<a href="index.php?new" class="btn btn-primary">Back</a>
 					 	</form>
 			</div>
 		</div>
