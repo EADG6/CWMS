@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Mar 20, 2017 at 09:16 AM
+-- Generation Time: Mar 21, 2017 at 06:10 AM
 -- Server version: 10.0.17-MariaDB
 -- PHP Version: 5.5.30
 
@@ -38,9 +38,9 @@ CREATE TABLE `car` (
 --
 
 INSERT INTO `car` (`id`, `plate`, `color`, `type`) VALUES
-(1, 'q', 'q', 'q'),
-(2, 'q', 'q', 'q'),
-(3, 'q', 'q', 'q');
+(46, 'plate 1 leo', 'color 1 leo', 'type 1 leo'),
+(47, '', '', ''),
+(48, '', '', '');
 
 -- --------------------------------------------------------
 
@@ -61,11 +61,7 @@ CREATE TABLE `customer` (
 --
 
 INSERT INTO `customer` (`id`, `name`, `username`, `password`, `phone`) VALUES
-(1, 'leo', 'leo', 'leo', 'leo'),
-(2, '1', '1', '1', '1'),
-(3, '2', '2', '2', '2'),
-(4, '3', '3', '3', '3'),
-(5, 'q', 'q', 'q', 'q');
+(10, 'leo', 'leo', '123', '15882345433');
 
 -- --------------------------------------------------------
 
@@ -84,9 +80,9 @@ CREATE TABLE `customercar` (
 --
 
 INSERT INTO `customercar` (`id`, `customerid`, `carid`) VALUES
-(1, 5, 1),
-(2, 5, 2),
-(3, 5, 3);
+(46, 10, 46),
+(47, 10, 47),
+(48, 10, 48);
 
 -- --------------------------------------------------------
 
@@ -138,17 +134,17 @@ ALTER TABLE `orders`
 -- AUTO_INCREMENT for table `car`
 --
 ALTER TABLE `car`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
 --
 -- AUTO_INCREMENT for table `customer`
 --
 ALTER TABLE `customer`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT for table `customercar`
 --
 ALTER TABLE `customercar`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
 --
 -- AUTO_INCREMENT for table `orders`
 --
