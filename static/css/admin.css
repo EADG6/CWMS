@@ -212,6 +212,22 @@ input[type="number"]{-moz-appearance:textfield;}
 		transform: translate(0,0);
 	}
 }
+/** Admin Login */
+.main{
+	background:#fff;
+	border-radius: 5px;
+	padding-top:10px;
+	box-shadow: 3px 3px 20px 1px black;
+}
+.sysTit{
+	color:#fff;
+}
+.seepwd{
+	position:absolute;
+	margin-top: -27px;
+	margin-left: 90%;
+	cursor:pointer;
+}
 /** Recharge Page*/
 	.cards{
 		background:#fff;

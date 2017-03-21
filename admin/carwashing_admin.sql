@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 2017-03-18 11:54:57
+-- Generation Time: 2017-03-20 16:54:40
 -- 服务器版本： 5.6.24
 -- PHP Version: 5.6.8
 
@@ -106,7 +106,7 @@ CREATE TABLE IF NOT EXISTS `orders` (
   `Time` time DEFAULT NULL,
   `status` tinyint(4) NOT NULL,
   `rate` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=latin1;
 
 --
 -- 转存表中的数据 `orders`
@@ -122,14 +122,14 @@ INSERT INTO `orders` (`id`, `cus_id`, `emp_id`, `car_id`, `Date`, `Time`, `statu
 (12, '5', 2, 0, '2017-02-21', '16:15:40', 0, 0),
 (13, '5', 2, 0, '2017-03-02', '12:27:19', 4, 0),
 (14, '5', 2, 0, '2017-03-03', '10:53:20', 0, 0),
-(15, '2', 1, 0, '2017-03-09', '13:20:25', 0, 0),
 (16, '5', 3, 0, '2017-03-09', '13:30:41', 0, 0),
 (17, '1', 2, 0, '2017-03-14', '16:56:55', 4, 0),
 (19, '0', 2, 0, '2017-03-14', '16:57:35', 4, 0),
 (20, '5', 2, 0, '2017-03-17', '23:46:39', 4, 0),
 (21, '5', 1, 0, '2017-03-18', '00:07:05', 4, 0),
 (22, '1', 1, 0, '2017-03-18', '16:28:18', 4, 0),
-(23, '1', 4, 0, '2017-03-18', '16:52:56', 4, 0);
+(23, '1', 4, 0, '2017-03-18', '16:52:56', 4, 0),
+(24, '2', 1, 0, '2017-03-20', '23:52:34', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -142,7 +142,7 @@ CREATE TABLE IF NOT EXISTS `order_product` (
   `order_id` int(10) unsigned DEFAULT NULL,
   `product_id` int(10) unsigned DEFAULT NULL,
   `Quantity` int(11) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=latin1;
 
 --
 -- 转存表中的数据 `order_product`
@@ -193,7 +193,9 @@ INSERT INTO `order_product` (`item_id`, `order_id`, `product_id`, `Quantity`) VA
 (44, 22, 3, 1),
 (45, 23, 4, 1),
 (46, 23, 5, 1),
-(47, 23, 10, 1);
+(47, 23, 10, 1),
+(48, 24, 3, 1),
+(49, 24, 10, 1);
 
 -- --------------------------------------------------------
 
@@ -501,12 +503,12 @@ ALTER TABLE `employee`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=24;
+  MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=25;
 --
 -- AUTO_INCREMENT for table `order_product`
 --
 ALTER TABLE `order_product`
-  MODIFY `item_id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=48;
+  MODIFY `item_id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=50;
 --
 -- AUTO_INCREMENT for table `order_status`
 --
