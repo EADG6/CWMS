@@ -53,19 +53,10 @@
 		}else{
 			$('#emp').attr('required',false);
 			$('#emp').attr('disabled',true);
+			$('#emp').val('')
 		}
 	}
 /**print time and refresh in every 1s*/		
-	function printTime(){
-		var d = new Date();
-		var year = d.getFullYear();
-		var day = d.getDate();
-		var month = d.getMonth()+1;
-		var hours = d.getHours();
-		var mins = d.getMinutes();
-		var secs = d.getSeconds();
-		document.getElementById('time').innerHTML=day+"/"+month+"/"+year+"&nbsp;"+hours+":"+mins+":"+secs;
-	}
 	setInterval(printTime,1000);
 	function reset() {  
 		if (confirm("Do you want to reset?")) {  
@@ -226,9 +217,10 @@ session['times'] is a counter to make sure session['order_id'] directly comes fr
 				$empname='Unknown';
 			}
 		}else{
-			$empname='Employee';
+			$empname='No Worker';
+			$emp_id = '0';
 		}
-		$datetime = date('d/m/y h:i:s',time());
+		$datetime = date('Y/m/d h:i:s',time());
 		echo "<tr class='bold'>
 				<td style='font-size: 26px;border-right:0px;' >".$cusname."&nbsp</td>
 				<td style='border-left:0;text-align:right;'>$empname</td>
@@ -275,19 +267,19 @@ print the product items and total price in a table, and hide the 'Create New' bu
 				 </table>
 			<script>document.getElementById('createbtn').style.display= 'none'</script>";
 		?>
-			<nav id='submitbtn'>
+			<nav class='submitbtn'>
 				<ul>
 					<li>
-						<button id='subord' type="primary" onclick="document.getElementById('newOrder').submit();">Submit</button>
+						<button id='subord' class='btn btn-success' type="primary" onclick="document.getElementById('newOrder').submit();">Submit</button>
 					</li>
 					<li>
-						<button onclick="printdiv('create_page')">Print</button>
+						<button id='modord' class='btn btn-primary' onclick ="history.go(-1)" outline>Modify</button>
 					</li>
 					<li>
-						<button id='modord' onclick ="history.go(-1)" outline>Modify</button>
+						<button class='btn btn-default' onclick="printdiv('create_page')">Print</button>
 					</li>
 					<li>
-						<button onclick ="reset()" outline>Reset</button>
+						<button class='btn btn-danger' onclick ="reset()" outline>Reset</button>
 					</li>
 				</ul>
 			</nav>

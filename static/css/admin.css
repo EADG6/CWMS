@@ -102,19 +102,19 @@ label{
 		margin-top: 60px;
 	}
 }
-#submitbtn ul li {
+.submitbtn button{
+	padding:10px 25px 10px 25px;
+}
+.submitbtn ul li {
 	list-style-type:none;
 	float: left;
-	padding-right: 10px;
+	padding-right: 2px;
 }
 #create_page{
 	background:#fff;
 	border-radius:5px;
 	padding:5px;
 	float:right;
-
-	/*margin-left: 50%;
-	position: fixed;*/
 }
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button{

@@ -25,9 +25,9 @@
 				$product__quantity=$_SESSION['product__quantity'];
 	            $cus_id = $_SESSION['cus_id'];	
 	            $emp_id = $_SESSION['emp_id'];	
+				unset($_SESSION['emp_id']);
 				unset($_SESSION['cus_id']);
 				unset($_SESSION['product__quantity']);
-				session_destroy();
 				if(isset($_POST['time']) && !empty($_POST['time'])){
 					$time = "'{$_POST['time']}'";	
 				}else{

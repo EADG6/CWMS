@@ -48,7 +48,7 @@
 		var hours = add0(d.getHours());
 		var mins = add0(d.getMinutes());
 		var secs = add0(d.getSeconds());
-		$('#curtime').html(year+'-'+month+'-'+day+'&nbsp;'+hours+':'+mins+':'+secs);
+		$('#time').html(year+'/'+month+'/'+day+'&nbsp;'+hours+':'+mins+':'+secs);
 	}
 	/* use ajax to Check username if exist */
 	function checkNewName(pg){
