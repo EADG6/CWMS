@@ -126,7 +126,6 @@ input[type="number"]{-moz-appearance:textfield;}
 	visibility: hidden;
 }
 .order_block{
-	width: 33%;
 	padding-right: 5px;
 	height: 300px;
 	float:left;  
@@ -136,8 +135,9 @@ input[type="number"]{-moz-appearance:textfield;}
 	height: 280px; 
 }
 .ob_nav table{
-	height: 274px;
+	height: 280px;
 	border-radius:5px;
+		width:100%;
 }
 .ob_nav table th{
 	background: #f8f8f8;
@@ -166,22 +166,25 @@ input[type="number"]{-moz-appearance:textfield;}
 .morerow{
 	display: inline;
 	padding-left:0px;
+	z-index:-1;
+	cursor:pointer;
+}
+.morerow a{
+	text-decoration:none;
 }
 .paybtn{
 	display: inline;
 	position: absolute;
 	padding-left: 10px;
-	margin-top: -60px;
-}
-.paybtn button{
-	padding: 0px 15px 0px 15px;
+	bottom: 20px;
 }
 .paybtn form{
 	display: inline;
 }
-#paid span{
+.paid span{
 	color: #0ab159;	
 	visibility:hidden;
+	z-index:9999;
 }
 /**Help tips*/
 .helptip{

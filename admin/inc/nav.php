@@ -53,6 +53,6 @@
 				<a href='#bottom'><img src='../static/img/icon/down.png'/></a>
 			</div>
 		</div>
-		<div class='col-xs-10'>
+		<div class='col-xs-11'>
            <dl class="container">
 				<dd class="row clearfix">

@@ -1,7 +1,8 @@
 <script>
 /**change block's style after click pay,edit,delete and more buttons*/	
 	function paidstyle(orid){	
-		$('#obnav'+orid+' *').css('background','rgba(166, 255, 209,1)');
+		$('#obnav'+orid+' table *').css('background','rgba(166, 255, 209,1)');
+		$('#obnav'+orid+' table').css('background','rgba(166, 255, 209,1)');
 		document.getElementById('paid'+orid).style.visibility='visible';
 		document.getElementById('btn2'+orid).style.display='none';
 		if(document.getElementById('more'+orid)){
@@ -24,8 +25,8 @@
 		}
 	}
 	function morebtn(orid,t){
-		document.getElementById('ob'+orid).style.height= ((40*(t-3))+300)+'px';
-		document.getElementById('obnav'+orid).style.height= ((40*(t-3))+280)+'px';
+		document.getElementById('ob'+orid).style.height= ((40*(t-3))+320)+'px';
+		document.getElementById('obnav'+orid).style.height= ((40*(t-3))+320)+'px';
 		document.getElementById('more'+orid).style.display='none';
 		document.getElementById('fold'+orid).style.display='inline';
 		var x = document.getElementsByClassName('obtd'+orid);
@@ -72,7 +73,7 @@
 		$cusname= empty($row_order['cusname']) ? 'Unknown': $row_order['cusname'];
 		$empname= empty($row_order['empname']) ? 'Unknown': $row_order['empname'];
 ?>
-<div class='order_block' id='ob<?php echo $row_order[0];?>'>
+<div class='order_block col-md-4' id='ob<?php echo $row_order[0];?>'>
 	<div class='ob_nav' id='obnav<?php echo $row_order[0];?>'>
 		<table id="ob_tbl<?php echo $row_order[0];?>">
 			<tr>
@@ -128,7 +129,7 @@
 				echo "<tr id='ob_tbl_tb'><td>&nbsp</td><td>&nbsp</td><td>&nbsp</td><td>&nbsp</td></tr>";
 			}		
 			echo "<tr id='ob_tbl_tb'>
-					<th colspan='2' id='paid'><span id='paid$row_order[0]'>Paid</span></th>
+					<th colspan='2' class='paid'><span id='paid$row_order[0]'>Paid</span></th>
 					<th class='text-right' colspan='2'>{$row_item['order_price']}&nbspRMB</th>
 				</tr>";
 		?>
@@ -147,10 +148,10 @@
 /**change style if more than 3 row*/
 			if($num > 3){	
 				echo "<div id='more$row_order[0]' class='morerow' onclick='morebtn($row_order[0],$num)'>
-						<a>More</a>
+						<a><i class='fa fa-angle-double-down fa-3x'></i></a>
 					</div>
 					<div id='fold$row_order[0]' class='morerow' style='display:none;' onclick='foldbtn($row_order[0])'>
-						<a>Fold</a>
+						<a><i class='fa fa-angle-double-up fa-3x'></i></a>
 					</div>";
 			}
 /**paid style*/
