@@ -32,7 +32,7 @@ if($action == 'cata'){
 		<a class='label label-primary'>E</a> Edit /
 		<a class='label label-danger'>X</a> Delete /
 	</div>
-	<table class ='table-stripped'>
+	<table class ='table table-stripped'>
 		<thead>
 			<th colspan='3'>Product catalogue:</th>
 			<tr>
@@ -81,7 +81,7 @@ if($action == 'cata'){
 			<a class='label label-primary'>E</a> Edit /
 			<a class='label label-danger'>X</a> Delete /
 		</div>
-		<table class ='table-stripped'>
+		<table class ='table table-stripped'>
 			<thead>
 				<th colspan='6'>Product Category:</th>
 				<tr>
@@ -127,7 +127,7 @@ if($action == 'cata'){
 		}
 }else if($action == 'sold'){
 /**Show product sold information*/
-	echo "<table class ='table-stripped'>"; 
+	echo "<table class ='table table-stripped'>"; 
 	while($row_fcata = $mysql->fetch($result_fcata)) {
 		$cata_id = $row_fcata['type_id'];	
         $sql_finfo = "select id,s.product_name as product_name,s.price from product_service as s where s.type_id = ".$cata_id." and s.price IS NOT NULL;";
@@ -151,10 +151,11 @@ if($action == 'cata'){
 	    }   
     }echo "</table>";
 }else if($action == 'new'){
-	echo "<form action='submit.php' method='post'>
-		<table>
+	echo "<form action='submit.php' method='post' class='form-inline'>
+		<table class='table'>
 			<th colspan='4'> 
-				<label>New Product&nbsp;<input type='radio' name='isCata' value='product' onclick='refresh()' checked>&nbsp; &nbsp;</label><label>&nbsp; &nbsp;
+				<label>New Product&nbsp;<input type='radio' name='isCata' value='product' onclick='refresh()' checked>&nbsp; &nbsp;</label>
+				<label>&nbsp; &nbsp;
 				New Product Category <input type='radio' name='isCata' value='cata' onclick='hideCata()'></label>
 			</th>
 		<script>
@@ -172,22 +173,24 @@ if($action == 'cata'){
 	$sql_LastproductID = 'SELECT id FROM product_service ORDER BY id DESC LIMIT 1';
 	$productId = $mysql->fetch($mysql->query($sql_LastproductID))[0]+1;
 	echo"		<tr>
-				<td class='bold' class='width-2'>Product ID</td>
-				<td class='width-2'>
-					<input type='number' name='origId' maxlength='6' value='$productId' disabled='disabled'/>
+				<th>Product ID</th>
+				<td>
+					<input type='number' class='form-control' name='origId' maxlength='6' value='$productId' disabled='disabled'/>
 					<input type='hidden' name='cataId' value='$productId' />
 					<!--save latest id number for insert new catalogue(set product.id = catalogue_id for each product cata) -->
 				</td>
 			</tr>
 			<tr>
-				<td class='bold'>Name<span class='req'> *</span></td>
+				<th>Name<span class='req'> *</span></th>
 				<td>
-					<input type='text' maxlength='30' name='productName' required/>
+					<input type='text' class='form-control' maxlength='30' name='productName' required/>
 				</td>
-				<td class='bold'><span class='hideCata'>Product Type<span class='req'> *</span></span></td>
-				<td class='width-4'><span class='hideCata'>
-					<div style='margin-left:-200px;'><b>Catalogue:</b>
-						<select name='productCata' class='width-6'>";
+			</tr>
+			<tr>
+				<th><span class='hideCata'>Product Type<span class='req'> *</span></span></th>
+				<td><span class='hideCata'>
+					<div><b>Catalogue:</b>
+						<select name='productCata' class='form-control'>";
 	$sql_productCata = "SELECT type_id,product_name FROM product_service WHERE price is NULL ORDER BY product_name";						
 	$result_productCata = $mysql->query($sql_productCata);	
 	$productCata = array();
@@ -200,15 +203,19 @@ if($action == 'cata'){
 				</td>
 			</tr>
 			<tr>
-				<td class='bold'><span class='hideCata'>Price<span class='req'> *</span></span></td>
+				<th><span class='hideCata'>Price<span class='req'> *</span></span></th>
 				<td><span class='hideCata'>
-					<label>&#165;&nbsp;</label><input type='number' min='0' max='999' name='price' required/>
+					<label>&#165;&nbsp;</label><input type='number' class='form-control' min='0' max='999' name='price' required/>
 				</span></td>
 			</tr>
+			<tr>
+				<td colspan=2>
+					<div class='col-md-4 col-md-offset-4'>
+						<button class='btn btn-block btn-primary' type='primary' name='submit'>Submit</button>
+					</div>
+				</td>
+			</tr>
 		</table>
-		<div class='text-right'>
-			<button class='submit' type='primary' name='submit'>Submit</button>
-		</div>
 	</form>";
 	if(isset($_POST['origproductEdit'])){
 		$origproduct = explode(',',$_POST['origproductEdit']);
@@ -258,10 +265,10 @@ if($action == 'cata'){
 	$weeknum = $timeres[1];
 	$yearnum = $timeres[0];
 	echo "<div class='my_show'>
-			<form method='post' action='index.php?page=product&action=weekly'>
-				Week:<input type='number' name='weeknum' id='weeknum' placeholder='Week' min='0' max='53' value='$weeknum'/>
-				Year:<input type='number' name='yearnum' id='yearnum' placeholder='Year' min='2010' max='$yearnum' value='$yearnum'/>
-				<button type='submit' value='OK' class='my_hidden'>OK</button>
+			<form method='post' action='index.php?page=product&action=weekly' class='form-group form-inline'>
+				<label for='weeknum'>Week:</label> <input type='number' name='weeknum' id='weeknum' class='form-control' placeholder='Week' min='0' max='53' value='$weeknum'/>
+				<label for='yearnum'>Year:</label> <input type='number' name='yearnum' id='yearnum' class='form-control' placeholder='Year' min='2010' max='$yearnum' value='$yearnum'/>
+				<button type='submit' value='OK' class='btn btn-primary'>OK</button>
 			</form>";
 	if(isset($_POST['weeknum'])&&$_POST['weeknum']!=''){$weeknum = inputCheck($_POST['weeknum']);}
 	if(!empty($_POST['yearnum'])){$yearnum = inputCheck($_POST['yearnum']);}
@@ -273,7 +280,7 @@ if($action == 'cata'){
 	$sql_subdate = "select DATE_ADD('$yearnum-01-01',INTERVAL (7*$weeknum-WEEKDAY('$yearnum-01-01')) DAY) AS start, DATE_ADD(DATE_ADD('$yearnum-01-01',INTERVAL (7*$weeknum-WEEKDAY('$yearnum-01-01')) DAY),INTERVAL 5 DAY) AS end;";
 	$subdate = $mysql->fetch($mysql->query($sql_subdate));
 /**show weekly report table*/
-	echo "<table class ='table-stripped'>
+	echo "<table class ='table table-stripped'>
 			<th style='font-size:1.6em' class='text-centered' colspan='10'>Weekly's selling Product Diary: {$subdate['start']} to {$subdate['end']}</th>"; 
 	while($row_fcata = $mysql->fetch($result_fcata)) {
 		$cata_id = $row_fcata['type_id'];	

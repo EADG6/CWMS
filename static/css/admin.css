@@ -42,7 +42,10 @@ label{
 	background: linear-gradient(top, rgb(12,12,12) 0%,#333333 100%);
    background: -moz-linear-gradient(top, rgb(12,12,12) 0%,#333333 100%);
 }
-
+.tab button{
+	margin-top:-5px;
+	padding:10px 25px 10px 25px;
+}
 .left-menu {
 	float: left;
 }

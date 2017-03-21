@@ -11,23 +11,23 @@ $sql_cusinfo = "SELECT id from customer order by id DESC;";
 	$row = $mysql->fetch($result);
 	$newnum = $row[0]+1;		
 	echo "
-	<form action='submit.php' method='post'>
-	<table>
+	<form action='submit.php' method='post' class='form-inline'>
+	<table class='table'>
 		<th colspan='4'>New Customer</th>
 		<tr>
 			<td class='bold' class='width-2'>Customer Number</td>
 			<td class='width-3'>
-				<input type='text' id='cusid' name='cusid' value='$newnum' disabled='disabled'/>
+				<input type='text' id='cusid' name='cusid' class='form-control' value='$newnum' disabled='disabled'/>
 			</td>
 		</tr>
 		<tr>
 			<td class='bold'>First Name<span class='req'> *</span></td>
 			<td>
-				<input type='text' maxlength='10' name='fname' required/>
+				<input type='text' maxlength='10' name='fname' class='form-control' required/>
 			</td>
 			<td class='bold'>Last Name</td>
 			<td>
-				<input type='text' maxlength='10' name='lname'/>
+				<input type='text' maxlength='10' name='lname' class='form-control'/>
 			</td>
 		</tr>
 		<tr>
@@ -39,19 +39,26 @@ $sql_cusinfo = "SELECT id from customer order by id DESC;";
 			</td>
 			<td class='bold'>Phone Number</td>
 			<td>
-				<input type='tel' maxlength='20' name='tel'/>
+				<input type='tel' maxlength='20' name='tel' class='form-control'/>
 			</td>
 		</tr>
 		<tr>
 			<td class='bold'>Address</td>
 			<td>
-				<input type='text' maxlength='200' name='address'/>
+				<input type='text' maxlength='200' name='address' class='form-control'/>
+			</td>
+			<td colspan=2>
+			</td>
+		</tr>
+		<tr>
+			<td colspan=4>
+				<div class='col-md-4 col-md-offset-4'>
+					<button class='btn btn-block btn-primary' type='primary' name='submit'>Submit</button>
+				</div>
 			</td>
 		</tr>
 	</table>
-	<div class='text-right'>
-		<button class='submit' type='primary' name='submit'>Submit</button>
-	</div>
+
 	</form>";	
 	if(isset($_POST['origCusEdit'])){
 			$origCus = explode(',',$_POST['origCusEdit']);
