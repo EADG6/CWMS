@@ -220,7 +220,7 @@ session['times'] is a counter to make sure session['order_id'] directly comes fr
 			$empname='No Worker';
 			$emp_id = '0';
 		}
-		$datetime = date('Y/m/d h:i:s',time());
+		$datetime = date('Y/m/d H:i:s',time());
 		echo "<tr class='bold'>
 				<td style='font-size: 26px;border-right:0px;' >".$cusname."&nbsp</td>
 				<td style='border-left:0;text-align:right;'>$empname</td>
