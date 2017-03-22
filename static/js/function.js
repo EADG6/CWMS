@@ -95,8 +95,9 @@
 				data:{"rate":starsnum,"orderid":orid},
 				type:'POST'
 			});
-			$('#rate29').attr('class','btn btn-default')
-			$('#rate29').html('Rated '+starsnum)
+			$('#rate'+orid).attr('class','btn btn-default')
+			$('#rate'+orid).html('Rated '+starsnum+"<i class='fa fa-star'></i>")
+			$('#rate'+orid).attr('onclick',"rateOrder('"+orid+"','"+starsnum+"')")
 		}$('#modal-rate').click()
 	}
 	/* Check password when sign up */

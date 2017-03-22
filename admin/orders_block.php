@@ -68,10 +68,15 @@
 		$('#modal-pay').click()
 		discountPrice()
 	}
-	function rateOrder(orid){
+	function rateOrder(orid,stars){
+		if(stars==0){
+			$('#stars').parent().attr('disabled',true)
+		}else{
+			$('[name="ratelevel"]').val(stars)
+			rateStar()
+		}
 		$('[name="rateordid"]').val(orid)
 		$('#modal-rate').click()
-		$('#stars').parent().attr('disabled',true)
 	}
 	function rateStar(){
 		starNum = $('[name="ratelevel"]').val();
@@ -167,7 +172,7 @@
 		<div class='paybtn'>
 			<span id="btn2<?php echo $row_order[0];?>">
 				<button type="button"  onclick="payOrder('<?php echo $row_order['id']."','".$row_order['cus_id']."','".$row_item['order_price'];?>')" class='btn btn-success'>Pay</button>
-				<button type="button" onclick="rateOrder('<?php echo $row_order['id'];?>')" class='btn btn-<?php echo $row_order['rate']==0?'warning':'default';?>' id='rate<?php echo $row_order['id'];?>' >Rate</button>
+				<button type="button" onclick="rateOrder('<?php echo $row_order['id']."','".$row_order['rate'];?>')" class='btn btn-<?php echo $row_order['rate']==0?'warning':'default';?>' id='rate<?php echo $row_order['id'];?>' ><?php echo $row_order['rate']==0?'Rate':'Rated '.$row_order['rate']."<i class='fa fa-star'></i>";?></button>
 				<button type='button' name='edit' onclick="submit('<?php echo $row_order[0];?>')"  class='btn btn-primary'>Edit</button>
 				<button type='button' onclick="deleteOrder('<?php echo $row_order['id'];?>')" class='btn btn-danger'>Del</button>
 				<form method='post' action=''>
