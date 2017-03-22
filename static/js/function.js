@@ -54,13 +54,12 @@
 	function checkNewName(pg){
 		$('[name="username"]').val($('[name="username"]').val().replace(" ",""))
 		if($('[name="username"]').val().length>0 && $('[name="sign"]').length>0){
-			var ajaxurl = pg=='cus'? 'ajax.php':'../ajax.php'
+			//var ajaxurl = pg=='cus'? 'ajax.php':'./ajax.php'
 			$.ajax({
-				url:ajaxurl,
+				url:'ajax.php',
 				data:{"usercheck":encodeURI(encodeURI($('[name="username"]').val())),"page":pg},
 				success:function(data){
 					if(data.used=='used'){
-						alert('Username has been used!')
 						$('[name="username"]').attr('class','form-control alert-danger')
 						$('[name="username"]').next().attr('class','seepwd alert-danger')
 						$('[name="username"]').next().children('i').attr('class','fa fa-close')
@@ -165,7 +164,7 @@
 						$('#upres label').html(per+'%')
 						$('#upres div').css('width',per+'%')
 					}
-					xhr.open('post','../ajax.php');
+					xhr.open('post','./ajax.php');
 					xhr.send(data)
 				}
 			}

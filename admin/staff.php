@@ -42,9 +42,9 @@
 		$res_empInfo = $mysql->query($sql_empInfo);
 		while($row=$mysql->fetch($res_empInfo)){
 			switch($row['gender']){
-				case 0: $gender ='Female';break;
+				case 0: $gender ='Unknown';break;
 				case 1: $gender ='Male';break;
-				case 1: $gender ='Unknown';break;
+				case 2: $gender ='Female';break;
 			}
 			echo "<tr>
 				<td>".$row['id']."</td>

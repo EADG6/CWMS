@@ -28,6 +28,9 @@
 							  <li><a href="index.php?page=product&action=detail">Product Items</a></li>
 							  <li><a href="index.php?page=product&action=cata">Product Categories</a></li>
 							  <li><a href="index.php?page=product&action=new">New Product</a></li>
+							  <li class="divider"></li>
+							  <li class="dropdown-header">Current User</li>							  
+							  <li><a href="index.php?exit">Log out</a></li>
 						    </ul>
 						  </div>
 					</div>

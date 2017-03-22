@@ -19,6 +19,9 @@
 	}
 	include("inc/header.php");
 	include("inc/nav.php");
+	if($_SESSION['role']==4){
+		echo "<script>alert('Your account is not validated,\\n so you cannot use more management function\\n until super administrator give you permission!')</script>";
+	}
 	if ($page == 'default') {
 		include "orders_block.php";
 	} else if ($page == 'product') {

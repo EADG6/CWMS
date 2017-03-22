@@ -6,7 +6,7 @@
 <div>
   <dl>
 	<dd class="row clearfix">
-	<h1 class='sysTit text-center'><a href='../index.php'><img src='' height=100></a>&nbsp;Ferrari Content Management System</h1>
+	<h1 class='sysTit text-center'><a href='../index.php'><img src='../static/img/logo.jpg' height=100></a>&nbsp;Car Washing Managemnet System</h1>
 		<div class="col-md-6 col-md-offset-3 main">
 			<form method="post" class='col-md-10 col-md-offset-1'>
 				<h2 class="text-center">Log in or Sign up</h2>
@@ -31,6 +31,17 @@
 						<div class="form-group col-md-6">
 							<label>First name</label><input type="text" class="form-control" name='fname' maxlength=20/>
 						</div>
+						<div class="form-group col-md-6">
+							<label>Birthdate</label><input type="date" class="form-control" name='birth' maxlength=20/>
+						</div>
+						<div class="form-group col-md-6">
+							<label>Gender</label>
+							<select class="form-control" name='gender'>
+								<option value="0">Unknown</option> 
+								<option value="1">Male</option> 
+								<option value="2">Female</option> 
+							</select>
+						</div>
 						<div class="form-group">
 							<label>Job Type</label>
 							<select class="form-control" name='role'>
@@ -40,17 +51,14 @@
 						$sql_queryRole = "SELECT * FROM role";
 						$res_queryRole = $mysql->query($sql_queryRole);
 						while($row_queryRole = $mysql->fetch($res_queryRole)){
-							$valid = $row_queryRole['pid']>3 ? $row_queryRole['id']:"'' disabled";
-							echo "<option value=$valid>{$row_queryRole['name']}</option>";
+							$valid = $row_queryRole['id']==4 ? $row_queryRole['id']:"'' disabled";
+							echo "<option value=$valid>{$row_queryRole['role']}</option>";
 						}
 					?>
 							</select>
 						</div>
 						<div class="form-group">
 							<label>Phone Number</label><input type="tel" class="form-control" name='tel' maxlength=30/>
-						</div>
-						<div class="form-group">
-							<label>Email</label><input type="email" class="form-control" name='email' maxlength=30/>
 						</div>
 					</span>
 					<div class="form-group col-md-6" style='padding:0'>
@@ -109,12 +117,14 @@
 			$pwdhash = MD5($pwd.$salt); //MD5 of pwd+salt
 			$lname = inputCheck($_POST['lname']);
 			$fname = inputCheck($_POST['fname']);
-			$role = inputCheck($_POST['role']);
+			//$role = inputCheck($_POST['role']);
+			$role = 4;
 			$tel = inputCheck($_POST['tel']);
-			//$email = inputCheck($_POST['email']);
+			$sex = inputCheck($_POST['gender']);
+			$birth = inputCheck($_POST['birth']);
 			//$userIP = getenv("REMOTE_ADDR");
-		//	$mysql->query("INSERT loginlog VALUES('','$userIP','$username','$pwdhash',NOW(),1)");
-			$sql_newUser = "INSERT employee(username,pwdhash,salt,firstname,lastname,role_id,phone) VALUES ('$username','$pwdhash','$salt','$fname','$lname','$role','$tel')";
+			//$mysql->query("INSERT loginlog VALUES('','$userIP','$username','$pwdhash',NOW(),1)");
+			$sql_newUser = "INSERT employee(username,pwdhash,salt,gender,firstname,lastname,phone,role_id,hiredate) VALUES ('$username','$pwdhash','$salt','$sex','$fname','$lname','$tel','$role',NOW())";
 			$mysql->query($sql_newUser);
 			$_SESSION['admin'] = $username;
 			$_SESSION['adminid'] =  mysql_insert_id();
