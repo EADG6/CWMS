@@ -3,12 +3,8 @@
 	function paidstyle(orid){	
 		$('#obnav'+orid+' table *').css('background','rgba(166, 255, 209,1)');
 		$('#obnav'+orid+' table').css('background','rgba(166, 255, 209,1)');
-		document.getElementById('paid'+orid).style.visibility='visible';
-		document.getElementById('btn2'+orid).style.display='none';
-		if(document.getElementById('more'+orid)){
-			document.getElementById('more'+orid).style.marginLeft='200px'; 
-			document.getElementById('fold'+orid).style.marginLeft='200px';
-		}		
+		$('#paid'+orid).css('visibility','visible');
+		$('#btn2'+orid+' button:not(.btn-warning)').css('visibility','hidden');	
 	}
 	function submit(orid){
 		document.getElementById('formd'+orid).submit();
@@ -25,8 +21,8 @@
 		}
 	}
 	function morebtn(orid,t){
-		document.getElementById('ob'+orid).style.height= ((40*(t-3))+320)+'px';
-		document.getElementById('obnav'+orid).style.height= ((40*(t-3))+320)+'px';
+		document.getElementById('ob'+orid).style.height= ((50*(t-3))+300)+'px';
+		document.getElementById('obnav'+orid).style.height= ((50*(t-3))+300)+'px';
 		document.getElementById('more'+orid).style.display='none';
 		document.getElementById('fold'+orid).style.display='inline';
 		var x = document.getElementsByClassName('obtd'+orid);
@@ -172,7 +168,7 @@
 		<div class='paybtn'>
 			<span id="btn2<?php echo $row_order[0];?>">
 				<button type="button"  onclick="payOrder('<?php echo $row_order['id']."','".$row_order['cus_id']."','".$row_item['order_price'];?>')" class='btn btn-success'>Pay</button>
-				<button type="button" onclick="rateOrder('<?php echo $row_order['id']."','".$row_order['rate'];?>')" class='btn btn-<?php echo $row_order['rate']==0?'warning':'default';?>' id='rate<?php echo $row_order['id'];?>' ><?php echo $row_order['rate']==0?'Rate':'Rated '.$row_order['rate']."<i class='fa fa-star'></i>";?></button>
+				<button type="button" onclick="rateOrder('<?php echo $row_order['id']."','".$row_order['rate'];?>')" class='btn btn-warning' id='rate<?php echo $row_order['id'];?>' ><?php echo $row_order['rate']==0?'Rate':'Rated '.$row_order['rate']."<i class='fa fa-star'></i>";?></button>
 				<button type='button' name='edit' onclick="submit('<?php echo $row_order[0];?>')"  class='btn btn-primary'>Edit</button>
 				<button type='button' onclick="deleteOrder('<?php echo $row_order['id'];?>')" class='btn btn-danger'>Del</button>
 				<form method='post' action=''>
@@ -182,12 +178,12 @@
 			<?php
 /**change style if more than 3 row*/
 			if($num > 3){	
-				echo "<div id='more$row_order[0]' class='morerow' onclick='morebtn($row_order[0],$num)'>
+				echo "<span id='more$row_order[0]' class='morerow' onclick='morebtn($row_order[0],$num)'>
 						<a><i class='fa fa-angle-double-down fa-3x'></i></a>
-					</div>
-					<div id='fold$row_order[0]' class='morerow' style='display:none;' onclick='foldbtn($row_order[0])'>
+					</span>
+					<span id='fold$row_order[0]' class='morerow' style='display:none;' onclick='foldbtn($row_order[0])'>
 						<a><i class='fa fa-angle-double-up fa-3x'></i></a>
-					</div>";
+					</span>";
 			}
 /**paid style*/
 			if($row_order['status']==4){
@@ -261,7 +257,7 @@
 						</div>
 						<div class="modal-body">	
 								<div class="form-group">
-									<label>Select Rate Level:</label>
+									<label>How did customer rate the order:</label>
 									<select class="form-control" name='ratelevel' onchange='rateStar()' required>
 										<option value='0' selected>Select a Level...</option>
 										<option value='5'>Perfect</option>

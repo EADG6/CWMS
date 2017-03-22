@@ -95,7 +95,6 @@
 				data:{"rate":starsnum,"orderid":orid},
 				type:'POST'
 			});
-			$('#rate'+orid).attr('class','btn btn-default')
 			$('#rate'+orid).html('Rated '+starsnum+"<i class='fa fa-star'></i>")
 			$('#rate'+orid).attr('onclick',"rateOrder('"+orid+"','"+starsnum+"')")
 		}$('#modal-rate').click()

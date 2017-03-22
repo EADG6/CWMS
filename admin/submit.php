@@ -1,19 +1,10 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Submit</title>
-        <link type="text/css" rel="stylesheet" href="../static/css/kube.css"/>
-		<link type="text/css" rel="stylesheet" href="../static/css/admin.css"/>
-    </head>
-    <body><br/><br/><br/><br/>
-        <row centered>
-        <column cols="6">
         <?php
 			session_start();
-			include "inc/db.php";
-			echo "<div class='forms'>
-					<fieldset class='alert alert-success'>
-					<legend class='fat'>";
+			require "inc/db.php";
+			include "inc/header.php";
+			echo "<div class='col-sm-6 col-sm-offset-3'>
+					<div class='alert alert-success'>
+					<div class='fat'>";
             if(isset($_SESSION['product__quantity']) && !isset($_POST['fname']) && !isset($_POST['isCata'])){
 				if(isset($_SESSION['order_id'])){
 /**To edit an order, first need to DELETE previous order*/
@@ -44,7 +35,7 @@
                     $mysql->query($sql_insertf);
                 }
                 echo "Create Order Successfully";  
-                header("refresh:1;url='index.php?page=current_orders'");		
+               header("refresh:1;url='index.php?page=current_orders'");		
             }else if(isset($_POST['fname'])){
 /**cheack info and create a new customer*/	
 				$fname = preg_replace("/\s/","",(string)$_POST['fname']);
@@ -99,13 +90,14 @@
 					echo "Wrong!<script>history.go(-1);</script>";
 				}
 			}
-			echo "		</legend>
+			echo "		</div>
 						<p>Back to Home Page in 1 seconds...</p>
 						<a href='index.php'>Back to Homepage immdiately</a>
 					</fieldset>
 				</div>";
         ?>
-        </column>
-        </row>
-    </body>
+				</dd>
+			</dl>
+		</div>
+	</body>
 </html>

@@ -150,12 +150,15 @@ session['times'] is a counter to make sure session['order_id'] directly comes fr
 		if(isset($_POST['fd_quan'])){
 			$fd_quan= $_POST['fd_quan'];
 			$od_cus = $_POST['od_cus'];
-			$emp_id = inputCheck($_POST['od_emp']);
+			$emp_id = empty($_POST['od_emp'])? '':inputCheck($_POST['od_emp']);
 			$order_id=array_keys($od_cus)[0];
 			$_SESSION['order_id']=$order_id;
 			$cus_id=$od_cus[$order_id];
-			echo "<script>document.getElementById('cus').value=$cus_id;
-							document.getElementById('emp').value=$emp_id;
+			echo "<script>$('#cus').val($cus_id);
+							$('#emp').val($emp_id);
+							if('$emp_id'!=0){
+								$('#emp').attr('disabled',false)
+							}
 				</script>";
 			for($i=0;$i<count($fd_quan);$i++){
 				$product_id=array_keys($fd_quan)[$i];
