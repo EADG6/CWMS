@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 2017-03-20 16:54:40
+-- Generation Time: 2017-03-22 18:00:08
 -- 服务器版本： 5.6.24
 -- PHP Version: 5.6.8
 
@@ -57,8 +57,8 @@ CREATE TABLE IF NOT EXISTS `customer` (
 --
 
 INSERT INTO `customer` (`id`, `username`, `pwdhash`, `salt`, `FirstName`, `LastName`, `sex`, `tel`, `address`, `balance`) VALUES
-(1, 'cus1', '4037f3d099eb4e3cd9e657df21936662', 'f018f9', 'Hao', 'Liu', 1, '123456789001', 'CDUTSong2-562', 365),
-(2, 'cus2', 'f056d6a7a5ec600efee50537bd50549f', 'd13ca1', 'Yuan', 'Tian', 1, '1829444332', 'CDUTSong2-334', 43),
+(1, 'cus1', '4037f3d099eb4e3cd9e657df21936662', 'f018f9', 'Hao', 'Liu', 1, '123456789001', 'CDUTSong2-562', 63.80000000000001),
+(2, 'cus2', 'f056d6a7a5ec600efee50537bd50549f', 'd13ca1', 'Yuan', 'Tian', 1, '1829444332', 'CDUTSong2-334', 40.3),
 (5, 'kevin', '9abe16a3aa0abd091d9dfb9649080e37', '9879f9', 'Kevin', 'He', 3, '23333', 'CDUT562', 32);
 
 -- --------------------------------------------------------
@@ -79,7 +79,7 @@ CREATE TABLE IF NOT EXISTS `employee` (
   `phone` varchar(50) NOT NULL,
   `role_id` int(11) DEFAULT NULL,
   `hiredate` date DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
 --
 -- 转存表中的数据 `employee`
@@ -89,7 +89,8 @@ INSERT INTO `employee` (`id`, `username`, `pwdhash`, `salt`, `gender`, `birth`, 
 (1, 'Marshall', '434aebd7567c6a76dab0267bd10ddc10', 'c38142', 1, '1996-06-18', 'Marshall', 'Liu', '1234567890', 3, '2016-12-01'),
 (2, 'Cary', '1252b17fb65291ece0f4ea4fa019de8f', 'e5b4c0', 1, '1996-02-13', 'Carry', 'Tian', '1234567890', 1, '2016-12-01'),
 (3, 'Leo', '018e3904257d20399c7842526fc67c54', 'a99149', 1, '1995-04-23', 'Leo', 'Li', '1234567890', 2, '2016-12-01'),
-(4, 'Kevin', 'ba16456bd49a53c1f3248055c0f0492e', '531ea7', 0, '1996-03-15', 'Kevin', 'He', '1234567890', 2, '2016-12-01');
+(4, 'Kevin', 'ba16456bd49a53c1f3248055c0f0492e', '531ea7', 0, '1996-03-15', 'Kevin', 'He', '1234567890', 2, '2016-12-01'),
+(5, 'test', '893f36fb98332a57d9bd7566323c0caa', 'vPBVBlZ2', 1, NULL, '1', '1', '1', 4, '2017-03-22');
 
 -- --------------------------------------------------------
 
@@ -106,7 +107,7 @@ CREATE TABLE IF NOT EXISTS `orders` (
   `Time` time DEFAULT NULL,
   `status` tinyint(4) NOT NULL,
   `rate` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=latin1;
 
 --
 -- 转存表中的数据 `orders`
@@ -118,10 +119,9 @@ INSERT INTO `orders` (`id`, `cus_id`, `emp_id`, `car_id`, `Date`, `Time`, `statu
 (5, '1', 2, 0, '2017-01-22', '18:51:38', 4, 0),
 (8, '1', 4, 0, '2017-01-24', '02:51:16', 4, 0),
 (9, '1', 3, 0, '2017-01-25', '17:17:28', 4, 0),
-(11, '1', 4, 0, '2017-02-19', '14:22:50', 0, 0),
+(11, '1', 4, 0, '2017-02-19', '14:22:50', 4, 0),
 (12, '5', 2, 0, '2017-02-21', '16:15:40', 0, 0),
 (13, '5', 2, 0, '2017-03-02', '12:27:19', 4, 0),
-(14, '5', 2, 0, '2017-03-03', '10:53:20', 0, 0),
 (16, '5', 3, 0, '2017-03-09', '13:30:41', 0, 0),
 (17, '1', 2, 0, '2017-03-14', '16:56:55', 4, 0),
 (19, '0', 2, 0, '2017-03-14', '16:57:35', 4, 0),
@@ -129,7 +129,11 @@ INSERT INTO `orders` (`id`, `cus_id`, `emp_id`, `car_id`, `Date`, `Time`, `statu
 (21, '5', 1, 0, '2017-03-18', '00:07:05', 4, 0),
 (22, '1', 1, 0, '2017-03-18', '16:28:18', 4, 0),
 (23, '1', 4, 0, '2017-03-18', '16:52:56', 4, 0),
-(24, '2', 1, 0, '2017-03-20', '23:52:34', 0, 0);
+(24, '2', 1, 0, '2017-03-20', '23:52:34', 0, 2),
+(28, '0', 0, 0, '2017-03-21', '19:55:03', 4, 0),
+(30, '5', 2, 0, '2017-03-23', '00:29:30', 0, 0),
+(37, '1', 1, 0, '2017-03-23', '00:45:35', 0, 0),
+(39, '5', 0, 0, '2017-03-23', '00:55:55', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -142,7 +146,7 @@ CREATE TABLE IF NOT EXISTS `order_product` (
   `order_id` int(10) unsigned DEFAULT NULL,
   `product_id` int(10) unsigned DEFAULT NULL,
   `Quantity` int(11) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=97 DEFAULT CHARSET=latin1;
 
 --
 -- 转存表中的数据 `order_product`
@@ -195,7 +199,54 @@ INSERT INTO `order_product` (`item_id`, `order_id`, `product_id`, `Quantity`) VA
 (46, 23, 5, 1),
 (47, 23, 10, 1),
 (48, 24, 3, 1),
-(49, 24, 10, 1);
+(49, 24, 10, 1),
+(50, 25, 3, 1),
+(51, 26, 3, 1),
+(52, 26, 4, 1),
+(53, 26, 16, 1),
+(54, 26, 17, 1),
+(55, 26, 9, 1),
+(56, 26, 7, 2),
+(57, 26, 8, 2),
+(58, 26, 15, 1),
+(59, 27, 3, 1),
+(60, 27, 10, 1),
+(61, 28, 15, 1),
+(62, 29, 11, 1),
+(63, 30, 3, 1),
+(64, 30, 4, 1),
+(65, 30, 16, 1),
+(66, 30, 17, 1),
+(67, 30, 5, 1),
+(68, 30, 6, 1),
+(69, 30, 9, 1),
+(70, 30, 7, 2),
+(71, 30, 8, 2),
+(72, 30, 11, 1),
+(73, 30, 15, 1),
+(74, 30, 13, 1),
+(75, 30, 14, 1),
+(76, 31, 7, 1),
+(77, 31, 11, 1),
+(78, 32, 3, 1),
+(79, 32, 7, 1),
+(80, 32, 11, 1),
+(81, 33, 3, 1),
+(82, 33, 7, 1),
+(83, 33, 11, 1),
+(84, 34, 3, 1),
+(85, 34, 7, 1),
+(86, 34, 11, 1),
+(87, 35, 3, 1),
+(88, 35, 7, 1),
+(89, 35, 11, 1),
+(90, 36, 7, 1),
+(91, 36, 11, 1),
+(92, 37, 3, 1),
+(93, 37, 7, 1),
+(94, 37, 11, 1),
+(95, 38, 11, 1),
+(96, 39, 11, 1);
 
 -- --------------------------------------------------------
 
@@ -233,7 +284,7 @@ CREATE TABLE IF NOT EXISTS `payment` (
   `pay_time` datetime DEFAULT NULL,
   `pay_type_id` int(11) DEFAULT NULL,
   `emp_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 
 --
 -- 转存表中的数据 `payment`
@@ -243,7 +294,9 @@ INSERT INTO `payment` (`id`, `order_id`, `cus_id`, `price`, `discount`, `pay_tim
 (1, 21, 5, 30, 0.9, '2017-03-18 16:13:25', 1, 1),
 (2, 22, 1, 25, 0.9, '2017-03-18 17:17:41', 1, 1),
 (3, 23, 5, 185, 1, '2017-03-18 17:17:55', 4, 1),
-(6, 19, NULL, 25, 1, '2017-03-18 18:30:09', 2, 1);
+(6, 19, NULL, 25, 1, '2017-03-18 18:30:09', 2, 1),
+(7, 11, 1, 468, 0.9, '2017-03-21 15:01:05', 1, 2),
+(8, 28, 2, 3, 0.9, '2017-03-22 18:38:42', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -315,7 +368,7 @@ CREATE TABLE IF NOT EXISTS `recharge` (
   `datetime` datetime DEFAULT NULL,
   `pay_type_id` int(11) DEFAULT NULL,
   `emp_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
 
 --
 -- 转存表中的数据 `recharge`
@@ -332,7 +385,8 @@ INSERT INTO `recharge` (`id`, `cus_id`, `price`, `datetime`, `pay_type_id`, `emp
 (8, 2, 21, '2017-03-03 00:21:00', 2, 1),
 (9, 2, 12, '2017-03-11 16:10:58', 4, 1),
 (10, 5, 12, '2017-03-18 16:27:59', 4, 1),
-(11, 5, 10, '2017-03-18 17:20:03', 4, 1);
+(11, 5, 10, '2017-03-18 17:20:03', 4, 1),
+(12, 1, 120, '2017-03-21 15:00:43', 4, 2);
 
 -- --------------------------------------------------------
 
@@ -344,16 +398,17 @@ CREATE TABLE IF NOT EXISTS `role` (
   `id` int(11) NOT NULL,
   `role` varchar(20) DEFAULT NULL,
   `pid` int(11) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 --
 -- 转存表中的数据 `role`
 --
 
 INSERT INTO `role` (`id`, `role`, `pid`) VALUES
-(1, 'Manager', 1),
-(2, 'Worker', 2),
-(3, 'Super Admin', 0);
+(1, 'Manager', 3),
+(2, 'Worker', 1),
+(3, 'Super Admin', 0),
+(4, 'Unvalidated', 2);
 
 -- --------------------------------------------------------
 
@@ -498,17 +553,17 @@ ALTER TABLE `customer`
 -- AUTO_INCREMENT for table `employee`
 --
 ALTER TABLE `employee`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=25;
+  MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=40;
 --
 -- AUTO_INCREMENT for table `order_product`
 --
 ALTER TABLE `order_product`
-  MODIFY `item_id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=50;
+  MODIFY `item_id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=97;
 --
 -- AUTO_INCREMENT for table `order_status`
 --
@@ -518,7 +573,7 @@ ALTER TABLE `order_status`
 -- AUTO_INCREMENT for table `payment`
 --
 ALTER TABLE `payment`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=9;
 --
 -- AUTO_INCREMENT for table `pay_type`
 --
@@ -533,12 +588,12 @@ ALTER TABLE `product_service`
 -- AUTO_INCREMENT for table `recharge`
 --
 ALTER TABLE `recharge`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=13;
 --
 -- AUTO_INCREMENT for table `role`
 --
 ALTER TABLE `role`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `salary_category`
 --
