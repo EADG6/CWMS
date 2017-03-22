@@ -68,6 +68,26 @@
 		$('#modal-pay').click()
 		discountPrice()
 	}
+	function rateOrder(orid){
+		$('[name="rateordid"]').val(orid)
+		$('#modal-rate').click()
+		$('#stars').parent().attr('disabled',true)
+	}
+	function rateStar(){
+		starNum = $('[name="ratelevel"]').val();
+		for(i=0;i<$('#stars').children().length;i++){
+			if(i<starNum){
+				$($('#stars').children()[i]).css('color','yellow')
+			}else{
+				$($('#stars').children()[i]).css('color','#ffffff')
+			}
+		}
+		if(starNum==0){
+			$('#stars').parent().attr('disabled',true)
+		}else{
+			$('#stars').parent().attr('disabled',false)
+		}
+	}
 	function deleteOrder(orid){
 		if(confirm('Do you want to Delete order No.'+orid+'?')){
 			document.getElementById('del'+orid).click();
@@ -77,7 +97,7 @@
 <?php
 	include 'timecond.php';
 /**query all the orders and customer information in limited condition*/	
-	$sql_orders = "SELECT o.id,o.cus_id,CONCAT(c.firstname,' ',c.lastname) AS cusname,emp_id,CONCAT(e.firstname,' ',e.lastname) AS empname,Date,Time,status FROM orders as o LEFT JOIN customer as c ON o.cus_id = c.id LEFT JOIN employee as e ON o.emp_id = e.id $condition ORDER BY Date DESC,time DESC";
+	$sql_orders = "SELECT o.id,o.cus_id,CONCAT(c.firstname,' ',c.lastname) AS cusname,emp_id,CONCAT(e.firstname,' ',e.lastname) AS empname,Date,Time,status,rate FROM orders as o LEFT JOIN customer as c ON o.cus_id = c.id LEFT JOIN employee as e ON o.emp_id = e.id $condition ORDER BY Date DESC,time DESC";
 	$result = $mysql->query($sql_orders);
 	while($row_order = $mysql->fetch($result)) {
 		$cusname= empty($row_order['cusname']) ? 'Unknown': $row_order['cusname'];
@@ -147,7 +167,7 @@
 		<div class='paybtn'>
 			<span id="btn2<?php echo $row_order[0];?>">
 				<button type="button"  onclick="payOrder('<?php echo $row_order['id']."','".$row_order['cus_id']."','".$row_item['order_price'];?>')" class='btn btn-success'>Pay</button>
-				<button type="button" onclick="alert('<?php echo $row_order['emp_id'];?>')" class='btn btn-warning'>Rate</button>
+				<button type="button" onclick="rateOrder('<?php echo $row_order['id'];?>')" class='btn btn-<?php echo $row_order['rate']==0?'warning':'default';?>' id='rate<?php echo $row_order['id'];?>' >Rate</button>
 				<button type='button' name='edit' onclick="submit('<?php echo $row_order[0];?>')"  class='btn btn-primary'>Edit</button>
 				<button type='button' onclick="deleteOrder('<?php echo $row_order['id'];?>')" class='btn btn-danger'>Del</button>
 				<form method='post' action=''>
@@ -219,6 +239,43 @@
 								<input type='hidden' name='totprice'/>
 								<button type='submit' class='btn btn-success btn-block'/>Submit</button>
 							</form>
+						</div>
+					</div>	
+				</div>
+			</div>
+<!-- Rate Order Form -->	
+			<input type='hidden' id='modal-rate' href='#modal-container-1' data-toggle='modal'/>
+			<div class="modal fade" id="modal-container-1" role="dialog" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+							<h1 class="modal-title text-center" id='popFormLabel'>
+								Rate Order
+							</h1>
+						</div>
+						<div class="modal-body">	
+								<div class="form-group">
+									<label>Select Rate Level:</label>
+									<select class="form-control" name='ratelevel' onchange='rateStar()' required>
+										<option value='0' selected>Select a Level...</option>
+										<option value='5'>Perfect</option>
+										<option value='4'>Very Good</option>
+										<option value='3'>Not Bad</option>
+										<option value='2'>Bad</option>
+										<option value='1'>Very Bad</option>
+									</select>
+								</div>
+								<input type='hidden' name='rateordid'/>
+								<button type='button' class='btn btn-success btn-block' onclick='changeRate()' disabled/>
+								   <span id='stars'>
+									<i class='fa fa-star'></i>
+									<i class='fa fa-star'></i>
+									<i class='fa fa-star'></i>
+									<i class='fa fa-star'></i>
+									<i class='fa fa-star'></i>
+								  </span>
+								</button>
 						</div>
 					</div>	
 				</div>

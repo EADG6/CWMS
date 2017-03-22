@@ -85,21 +85,20 @@
 			$('[name="username"]').next().attr('class','seepwd hidden')
 		}
 	}
-	/* use ajax to change test drive request status */
-	/* function changeStatus(ele,id){
-		if(confirm('Did you contact the customer?')){
+	/* use ajax to change order rate */
+	function changeRate(){
+		if(confirm('Did you want to Rate the order?')){
+			starsnum = $('[name="ratelevel"]').val();
+			orid = $('[name="rateordid"]').val();
 			$.ajax({
-				url:'../ajax.php',
-				data:{requestId:id},
-				success:function(data){
-					var status = data.status==0 ? 'default':'success';
-					$(ele).attr('class','label label-'+status)
-				},
-				type:'POST',
-				dataType:'json'
+				url:'ajax.php',
+				data:{"rate":starsnum,"orderid":orid},
+				type:'POST'
 			});
-		}
-	} */
+			$('#rate29').attr('class','btn btn-default')
+			$('#rate29').html('Rated '+starsnum)
+		}$('#modal-rate').click()
+	}
 	/* Check password when sign up */
 	function checkpwd(){
 		var pwd = document.getElementsByName('pwd')[0];

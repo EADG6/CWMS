@@ -14,4 +14,12 @@
 		$resp = ['used'=>$isNameUsed];
 		echo json_encode($resp);
 	}
+	/**function of rate order*/
+	if(isset($_POST['rate'])){
+		$rateLevel = inputCheck($_POST['rate']);
+		$rateordid = inputCheck($_POST['orderid']);
+		$sql_rateOrd = "UPDATE orders SET rate = '$rateLevel' WHERE id = '$rateordid'";
+		$mysql->query($sql_rateOrd);
+
+	}
 ?>
