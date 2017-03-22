@@ -119,7 +119,7 @@ $sql_cusinfo = "SELECT id from customer order by id DESC;";
 					case 0: $sex='Female';break;
 					default: $sex='Unknown';
 				}
-				$balance=(empty($row['balance']))? 0:$row['balance'];
+				$balance=(empty($row['balance']))? 0:round($row['balance'],2);
 				$credit=(empty($row_cre['credit']))? 0:$row_cre['credit'];
 			echo "	<td>".$row['id']."</td>
 					<td>".$row['FirstName']."</td>

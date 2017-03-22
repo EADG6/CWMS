@@ -46,17 +46,27 @@
 			$('[name="paytype"] option:first').attr('disabled',false)
 			$('[name="paytype"]').val(1);
 		}
+		discountPrice()
+	}
+	function discountPrice(){
+		origPri = $('[name="totprice"]').val()
+		if($('[name="paytype"]').val()==1){
+			$('#payordid').html(origPri*0.9)
+		}else{
+			$('#payordid').html($('[name="totprice"]').val())
+		}
 	}
  	function payOrder(orid,cusid,totprice){
 		if(cusid==0){
 			cusid='NULL';
 			noBalance();
 		}
-		$('#payordid').html(orid)
+		$('#payordid').html(totprice)
 		$('[name="payordid"]').val(orid)
 		$('[name="totprice"]').val(totprice)
 		$('[name="payer"]').val(cusid)
 		$('#modal-pay').click()
+		discountPrice()
 	}
 	function deleteOrder(orid){
 		if(confirm('Do you want to Delete order No.'+orid+'?')){
@@ -173,7 +183,7 @@
 						<div class="modal-header">
 							 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 							<h1 class="modal-title text-center" id='popFormLabel'>
-								Pay a Order <span id='payordid'></span>
+								Pay a RMB <span class='label label-warning' id='payordid'></span>
 							</h1>
 						</div>
 						<div class="modal-body">	
@@ -194,7 +204,7 @@
 								</div>
 							    <div class="form-group">
 									<label>Select Pay Type:</label>
-									<select class="form-control" name='paytype' required>
+									<select class="form-control" name='paytype' onchange='discountPrice()' required>
 							<?php
 								//Get all pay type
 								$sql_payType = "SELECT * FROM pay_type ORDER BY id";
@@ -239,7 +249,7 @@
 		$sql_updOrdStatus = "UPDATE orders SET status=4 WHERE id= $payId";
 		$mysql->query($sql_payment);
 		$mysql->query($sql_updOrdStatus);
-		echo "<script>paidstyle('$payId');</script>";
+		echo "<script>paidstyle('$payId');alert('Payed Successfully!')</script>";
 	}
 /**function of delete order*/
 	if(isset($_POST['deloid'])){
