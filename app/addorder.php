@@ -5,54 +5,50 @@
 This form is to add order 
 </div>
 	<?php
-	if (isset($_GET['id'])){
-		$customer_id = $_GET['id'];
-	}
-	if (isset($_POST['carid']) && isset($_POST['time'])) {
+	if (isset($_POST['id']) && isset($_POST['date']) && isset($_POST['time'])) {
 		//save info from $_post to local variables
-		$carid = $_POST['carid'];
+		$carid = $_POST['id'];
+		$customerid = $_SESSION['customer_id'];
+		$date = $_POST['date'];
 		$time = $_POST['time'];
-		$condition = '1';
+		$conditions = 1;
 		//creat SQL and execute qurty
-		$sql = "UPDATE orders SET customerid = '$customer_id', link = '$menu_link', orders = '$menu_orders' WHERE id = '$menu_id'";
-		echo"<script type='text/javascript'>alert('Update a Success'); location='home2.php?page=checkmenu';</script>"; 
-		$result = mysql_query($sql) or die(mysql_error());
+		$sql_order= "INSERT INTO orders (customerid, carid, order_date, order_time, conditions) VALUES ('$customerid', '$carid', '$date', '$time', '$conditions')";
+		mysql_query($sql_order);
+		echo"<script type='text/javascript'>alert(''); location='index.php?page=order';</script>"; 
 	}
 	?>
 	<div class"col-sm-12 col-md-offset-2">
-						<form method="post">
 		<?php
-		$sql_orders = "SELECT customer.name, customer.phone, car.plate, car.color, car.type, orders.id, orders.time, orders.conditions FROM customer INNER JOIN orders ON customer.id=orders.customerid INNER JOIN car ON car.id=orders.carid WHERE customer.id='".$_SESSION['customer_id']."'"; 
+		$sql_orders = "SELECT car.id,car.plate,customer.name FROM customer INNER JOIN customercar ON customer.id = customercar.customerid INNER JOIN car ON customercar.carid = car.id WHERE customer.id='".$_SESSION['customer_id']."'";
 		$result_orders = mysql_query($sql_orders);
 		$row_orders = mysql_fetch_array($result_orders);
 		?>
-						</form>
 	</div>
 		<div class"col-sm-12">
 			Name:
-			<?php echo $row_orders['name']; ?>
-		</div>
-		<div class"col-sm-12">
-			Phone:
-			<?php echo $row_orders['phone']; ?>
+			<?php echo $row_orders['name'];?>
 		</div>
 		<div class"col-sm-12 col-md-offset-2">
-			<form action="" method="get"> 
+			<form method="post"> 
 				Choose Car:
-				<select name=""> 
+				<select name="id"> 
 					<?php
-					$num = 0;
 					while ($row_orders = mysql_fetch_array($result_orders)){
-						$num ++;
 					?>
-					<option value="<?php echo $num; ?>"><?php echo $row_orders['plate']; ?></option> 
+					<option value="<?php echo $row_orders['id']; ?>"><?php echo $row_orders['plate']; ?></option> 
 						<?php
 					}
 						?>
 				</select> 
-			</form>
 	    </div>
 		<div class"col-sm-12">
-			Time:
-			<input type="date">
+			Date:
+			<input type="date" name="date">
 		</div>
+		<div class"col-sm-12">
+			Time:
+			<input type="time" name="time">
+		</div>
+		<input type="submit" value="Submit" class="btn btn-primary">
+		</form>
