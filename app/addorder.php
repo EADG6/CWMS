@@ -22,27 +22,37 @@ This form is to add order
 	<div class"col-sm-12 col-md-offset-2">
 						<form method="post">
 		<?php
-		if (isset($_GET['id'])){
-			$id =$_GET['id'];
-			$result = mysql_query("SELECT id,name,link,orders  FROM menu WHERE id = $id");
-			//select information from database
-			while ($row = mysql_fetch_array($result)) {
+		$sql_orders = "SELECT customer.name, customer.phone, car.plate, car.color, car.type, orders.id, orders.time, orders.conditions FROM customer INNER JOIN orders ON customer.id=orders.customerid INNER JOIN car ON car.id=orders.carid WHERE customer.id='".$_SESSION['customer_id']."'"; 
+		$result_orders = mysql_query($sql_orders);
+		$row_orders = mysql_fetch_array($result_orders);
 		?>
-							<label for="name">Menu Name</label>
-	    					<input type="text" name="menu_name" class="form-control" placeholder="<?php echo $row{'name'}; ?>"><br/><br/>
 						</form>
 	</div>
-    	<?php 
-			}
-		}
-		?>
+		<div class"col-sm-12">
+			Name:
+			<?php echo $row_orders['name']; ?>
+		</div>
+		<div class"col-sm-12">
+			Phone:
+			<?php echo $row_orders['phone']; ?>
+		</div>
 		<div class"col-sm-12 col-md-offset-2">
 			<form action="" method="get"> 
-				<label>car</label> 
+				Choose Car:
 				<select name=""> 
-					<option value="0">1234</option> 
-					<option value="1">2345</option>
-					<option value="1">3456</option> 
+					<?php
+					$num = 0;
+					while ($row_orders = mysql_fetch_array($result_orders)){
+						$num ++;
+					?>
+					<option value="<?php echo $num; ?>"><?php echo $row_orders['plate']; ?></option> 
+						<?php
+					}
+						?>
 				</select> 
 			</form>
 	    </div>
+		<div class"col-sm-12">
+			Time:
+			<input type="datetime"／>
+		</div>
