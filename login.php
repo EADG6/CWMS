@@ -12,21 +12,22 @@
 	 }
  	if($action == 'login'){
 ?>
+    <body background="../CWMS/static/img/bg3.jpg">
 	    <div class="container">
 	        <hr>
-	        <div class="row">
+	        <div class="row" style="margin-left: 450px;">	
 					<h1>PLEASE LOGIN</h1>
 					<br> </br>
 						<form method="post">  
 							<!-- input the user name -->
 							<div class="form-group col-md-offset-0">
 								<label for='username'>Username:</label>
-								<input type="text" name="username" class="form-control" style="width: 200px">  
+								<input type="text" name="username" class="form-control" style="width: 200px;">  
 							</div> 
 							<!-- input the password -->
 							<div class="form-group col-md-offset-0">
 								<label for='password'>Password:</label>
-								<input type="password" name="password" class="form-control" style="width: 200px">  
+								<input type="password" name="password" class="form-control" style="width: 200px;">  
 							</div>
 							<a href="login.php?new" class="btn btn-primary">Sign Up</a>
 							<input type="submit" value="Sign In" class="btn btn-primary">  
@@ -137,9 +138,11 @@ if (isset ($_POST['name'])) {
 			}
 		}  
 	}  
+	
 }
 ?>  
  	<hr>
+	<body background="../CWMS/static/img/bg3.jpg">
     <div class="container">
         <div class="row">
 				<h1>Please Enter Your Information</h1>  
@@ -228,10 +231,7 @@ if (isset ($_POST['name'])) {
 					<div class="col-md-12">
 						<hr>
 					</div>
-					<div class="col-md-12 col-md-offset-10">
-				    	<input type="submit" value="Submit">  
-				   	 	<input type="reset" value="delete">
-						<a href="login.php" >Back</a>
+					<div class="col-md-4 col-md-offset-8">
 				    	<a href="login.php" class="btn btn-primary" >Back</a>
 				    	<input type="submit" value="Submit" class="btn btn-primary">  
 				   	 	<input type="reset" value="Delete" class="btn btn-primary">
@@ -242,4 +242,3 @@ if (isset ($_POST['name'])) {
 	<?php
 }
 	?>
-
