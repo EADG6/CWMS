@@ -27,13 +27,14 @@
 							<th>Name</th>
 							<th>Phone</th>
 							<th>Plate</th>
+							<th>Date</th>
 							<th>Time</th>
 							<th>Condition</th>
 							<th>Delete</th>
 						<tr>
 					</thead>
 						<?php
-					$sql_orders = "SELECT customer.name, customer.phone, car.plate, car.color, car.type, orders.id, orders.time, orders.conditions FROM customer INNER JOIN orders ON customer.id=orders.customerid INNER JOIN car ON car.id=orders.carid WHERE customer.id='".$_SESSION['customer_id']."'"; 
+					$sql_orders = "SELECT customer.name, customer.phone, car.plate, car.color, car.type, orders.id, orders.order_time, orders.order_date, orders.conditions FROM customer INNER JOIN orders ON customer.id=orders.customerid INNER JOIN car ON car.id=orders.carid WHERE customer.id='".$_SESSION['customer_id']."'"; 
 					$result_orders = mysql_query($sql_orders);
 					while ($row_orders = mysql_fetch_array($result_orders)){
 						?>							       
@@ -42,7 +43,8 @@
 		             <td><?php echo $row_orders['name']; ?></td>
 					 <td><?php echo $row_orders['phone']; ?></td>
 		   	         <td><?php echo $row_orders['plate']; ?></td>
-					 <td><?php echo $row_orders['time']; ?></td>
+					 <td><?php echo $row_orders['order_date']; ?></td>
+					 <td><?php echo $row_orders['order_time']; ?></td>
 					 <td><?php echo $row_orders['conditions']; ?></td>
 					 <td><?php
 						 if ($row_orders['conditions']<=1){
