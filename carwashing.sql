@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Mar 21, 2017 at 06:10 AM
+-- Generation Time: Mar 23, 2017 at 05:39 AM
 -- Server version: 10.0.17-MariaDB
 -- PHP Version: 5.5.30
 
@@ -39,8 +39,8 @@ CREATE TABLE `car` (
 
 INSERT INTO `car` (`id`, `plate`, `color`, `type`) VALUES
 (46, 'plate 1 leo', 'color 1 leo', 'type 1 leo'),
-(47, '', '', ''),
-(48, '', '', '');
+(47, 'plate 2 leo', 'color 2 leo', 'type 2 leo'),
+(48, 'plate 3 leo', 'color 3 leo', 'type 3 leo');
 
 -- --------------------------------------------------------
 
@@ -94,9 +94,18 @@ CREATE TABLE `orders` (
   `id` int(11) NOT NULL,
   `customerid` int(11) NOT NULL,
   `carid` int(11) NOT NULL,
-  `condidion` int(11) NOT NULL,
+  `conditions` int(11) NOT NULL,
   `time` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `orders`
+--
+
+INSERT INTO `orders` (`id`, `customerid`, `carid`, `conditions`, `time`) VALUES
+(2, 10, 48, 2, '2017-03-17 03:31:59'),
+(3, 10, 46, 3, '2017-03-16 00:00:00'),
+(4, 10, 46, 1, '2017-03-09 00:00:00');
 
 --
 -- Indexes for dumped tables
@@ -149,7 +158,7 @@ ALTER TABLE `customercar`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

@@ -54,5 +54,5 @@ This form is to add order
 	    </div>
 		<div class"col-sm-12">
 			Time:
-			<input type="datetime"／>
+			<input type="date">
 		</div>
