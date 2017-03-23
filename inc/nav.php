@@ -25,10 +25,16 @@
                     </li>
                     <li>
                         <a href="index.php?page=customer">Customer</a>
-                    </li>          
+                    </li> 
+					<?php
+				    if ($_SESSION['customer_id'] != 0 ){
+					?>         
                     <li>
                         <a href="index.php?logout">Logout</a>
                     </li>
+					<?php
+				}
+					?>
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
