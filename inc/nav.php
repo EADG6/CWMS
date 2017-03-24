@@ -15,9 +15,6 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li>
-                        <a href="index.php?page=services">Services</a>
-                    </li>
-                    <li>
                         <a href="index.php?page=order">Order</a>
                     </li>
                     <li>
@@ -25,10 +22,19 @@
                     </li>
                     <li>
                         <a href="index.php?page=customer">Customer</a>
-                    </li>          
+                    </li> 
+                    <li>
+                        <a href="index.php?page=services">About</a>
+                    </li>
+					<?php
+				    if ($_SESSION['customer_id'] != 0 ){
+					?>         
                     <li>
                         <a href="index.php?logout">Logout</a>
                     </li>
+					<?php
+				}
+					?>
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
