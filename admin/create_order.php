@@ -2,7 +2,7 @@
 /**save product catalogue and customers full name into arrays*/
 	$sql_fcata = "SELECT type_id,product_name FROM product_service WHERE price IS NULL ORDER BY type_id";
 	$result_fcata = $mysql->query($sql_fcata);
-	$sql_cusinfo = "SELECT id,CONCAT(firstname,' ',lastname) FROM customer ORDER BY firstname, lastname";
+	$sql_cusinfo = "SELECT id,CONCAT(FirstName,' ',LastName) as realname,username FROM customer ORDER BY firstname, lastname";
 	$result_cusinfo = $mysql->query($sql_cusinfo);
 ?>
 <script>
@@ -49,13 +49,21 @@
 		}
 		if(ischeck){
 			$('#emp').attr('required',true);
+			$('#carselect').attr('required',true);
 			$('#emp').attr('disabled',false);
+			$('#emp').parent().show()
+			$('#carselect').parent().show()
 		}else{
 			$('#emp').attr('required',false);
+			$('#carselect').attr('required',false);
 			$('#emp').attr('disabled',true);
-			$('#emp').val('')
+			$('#emp').parent().hide()
+			$('#carselect').parent().hide()
 		}
 	}
+	$(document).ready(function () {
+		changeEmpSele();
+	});
 /**print time and refresh in every 1s*/		
 	setInterval(printTime,1000);
 	function reset() {  
@@ -63,34 +71,61 @@
 				window.location.href='index.php?page=create_order';
 		}  
 	}
+/**When select customer, print it in lable*/
+	function selectCus(ele,id,labelid){
+		if(ele.value.length>0){
+			name = $('#'+id).children('[value='+ele.value+']').html()
+			if(name!='undefined'){
+				$('#'+labelid).html(name)
+			}else{
+				$(ele).val('')
+			}
+		}else{
+			$(ele).val('')
+		}
+	}
 </script>
 	<div class='col-sm-7'>
 		<form id='order_table' action='index.php?page=create_order' method ='post'>
 			<div class='col-sm-12'>
-				<div class='big form-group col-sm-9'>
-					<label for='cus'>Customer:</label>
-					<select name='cus_id' id='cus' class='form-control selectid'>
-						<option value='0'>--</option>
-					<?php 
-						while($row = $mysql->fetch($result_cusinfo)) {
-							echo "<option value=$row[0]>$row[1]</option>";
-						}	
-					?>
-					</select><br/>
-					<label for='emp'>Worker:</label>
-					<select name='emp_id' id='emp' class='form-control selectid' disabled>
-						<option value=''>--</option>
-					<?php 
-						$sql_employee = "SELECT * FROM employee";
-						$result_emp = $mysql->query($sql_employee);
-						while($row = $mysql->fetch($result_emp)) {
-							echo "<option value=$row[0]>$row[1]</option>";
-						}	
-					?>
-					</select>
+				<div class='col-sm-10'>
+					<div class='col-sm-12 form-group'>
+						<label for='cus'>Customer: <span id='cusName'></span></label>
+						<input name='cus_id' id='cus' class='form-control selectid' onchange="selectCus(this,'cusQueryRes','cusName')" placeholder="ID/Username" list='cusQueryRes' autocomplete="off"/>
+						<datalist id="cusQueryRes">  
+							<option value='0'>Unknown</option>
+						<?php 
+							while($row = $mysql->fetch($result_cusinfo)) {
+								echo "<option value=".$row['id'].">".$row['username']." - ".$row['realname']."</option>";
+							}	
+						?>
+						</datalist>
+					</div>
+					<div class='col-sm-6'>
+						<label for='carselect'>Car:</label>
+						<select name='car_id' id='carselect' class='form-control selectid'>
+							<option value=''>--</option>
+						<?php 
+								
+						?>
+						</select><br/>
+					</div>
+					<div class='col-sm-6'>
+						<label for='emp'>Worker: <span id='empName'></span></label>
+						<input name='emp_id' id='emp' class='form-control selectid' onchange="selectCus(this,'empQueryRes','empName')" list='empQueryRes' placeholder="ID/Username" autocomplete="off" disabled>
+							<datalist id="empQueryRes">  
+						<?php 
+							$sql_employee = "SELECT * FROM employee";
+							$result_emp = $mysql->query($sql_employee);
+							while($row = $mysql->fetch($result_emp)) {
+								echo "<option value=".$row['id'].">".$row['username']." - ".$row['firstname']." ".$row['lastname']."</option>";
+							}	
+						?>
+							</datalist>
+					</div>
 				</div>
-				<div class='col-xs-3 createbtns'>
-					<button id='createbtn' type='primary' class='btn btn-primary btn-lg'>Create New</button>
+				<div class='form-group col-xs-2 createbtns'>
+					<button id='createbtn' type='primary' class='btn btn-primary btn-lg'>Create</button>
 				</div>
 			</div>
 			<div class='create_order'>
@@ -198,9 +233,13 @@ session['times'] is a counter to make sure session['order_id'] directly comes fr
 			if(!empty($_POST['cus_id'])){
 				$cus_id = (int)$_POST['cus_id'];
 				$sql_cusinfo = "SELECT firstname,lastname,tel from customer where id = $cus_id;";
-				$result_cus = $mysql->query($sql_cusinfo);  
-				$row_cus = $mysql->fetch($result_cus);
-				$cusname=$row_cus[0]."&nbsp".$row_cus[1];
+				$result_cus = $mysql->query($sql_cusinfo); 
+				if(mysql_num_rows($result_cus)==0){
+					echo "<script>alert('Customer ID Not Found!');history.go(-1)</script>";
+				}else{
+					$row_cus = $mysql->fetch($result_cus);
+					$cusname=$row_cus[0]."&nbsp".$row_cus[1];
+				}
 			}else{
 				$cus_id = '0';
 				$cusname='Unknown';
@@ -212,9 +251,13 @@ session['times'] is a counter to make sure session['order_id'] directly comes fr
 			if(!empty($_POST['emp_id'])){
 				$emp_id = (int)$_POST['emp_id'];
 				$sql_empinfo = "SELECT firstname,lastname from employee where id = $emp_id;";
-				$result_emp = $mysql->query($sql_empinfo);  
-				$row_emp = $mysql->fetch($result_emp);
-				$empname=$row_emp[0]."&nbsp".$row_emp[1];
+				$result_emp = $mysql->query($sql_empinfo);
+				if(mysql_num_rows($result_emp)==0){
+					echo "<script>alert('Employee ID Not Found!');history.go(-1)</script>";
+				}else{
+					$row_emp = $mysql->fetch($result_emp);
+					$empname=$row_emp[0]."&nbsp".$row_emp[1];
+				}
 			}else{
 				$emp_id = '0';
 				$empname='Unknown';
@@ -276,7 +319,7 @@ print the product items and total price in a table, and hide the 'Create New' bu
 						<button id='subord' class='btn btn-success' type="primary" onclick="document.getElementById('newOrder').submit();">Submit</button>
 					</li>
 					<li>
-						<button id='modord' class='btn btn-primary' onclick ="history.go(-1)" outline>Modify</button>
+						<button id='modord' class='btn btn-primary' onclick ="history.go(-1);" outline>Modify</button>
 					</li>
 					<li>
 						<button class='btn btn-default' onclick="printdiv('create_page')">Print</button>
