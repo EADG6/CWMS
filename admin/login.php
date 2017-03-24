@@ -11,7 +11,7 @@
 			<form method="post" class='col-md-10 col-md-offset-1'>
 				<h2 class="text-center">Log in or Sign up</h2>
 					<div class="form-group">
-						 <label>Username</label><input type="text" class="form-control" name='username' maxlength=20 placeholder='admin' oninput="checkNewName('admin')" required/><kbd class='seepwd hidden'><i class=''></i></kbd>
+						 <label>Username</label><input type="text" class="form-control" name='username' maxlength=20 placeholder='Marshall' oninput="checkNewName('admin')" required/><kbd class='seepwd hidden'><i class=''></i></kbd>
 					</div>
 					<div class="form-group">
 						 <label>Password </label>

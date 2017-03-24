@@ -34,8 +34,8 @@ $sql_cusinfo = "SELECT id from customer order by id DESC;";
 			<td class='bold'>Gender</td>
 			<td>
 				<label>Male:<input type='radio' name='sex' value=1/></label> 
-				<label>Female:<input type='radio' name='sex' value=0/></label> 
-				<label>Unknown:<input type='radio' name='sex' value=3 checked/></label>
+				<label>Female:<input type='radio' name='sex' value=2/></label> 
+				<label>Unknown:<input type='radio' name='sex' value=0 checked/></label>
 			</td>
 			<td class='bold'>Phone Number</td>
 			<td>
@@ -116,8 +116,8 @@ $sql_cusinfo = "SELECT id from customer order by id DESC;";
 				$row_cre=$mysql->fetch($res_cre);
 				switch($row['sex']){
 					case 1: $sex='Male';break;
-					case 0: $sex='Female';break;
-					default: $sex='Unknown';
+					case 2: $sex='Female';break;
+					case 0: $sex='Unknown';break;
 				}
 				$balance=(empty($row['balance']))? 0:round($row['balance'],2);
 				$credit=(empty($row_cre['credit']))? 0:$row_cre['credit'];

@@ -38,6 +38,8 @@
 		include "payment.php";
 	}else if($page == 'staff'){
 		include "staff.php";
+	}else if($page == 'profile'){
+		include "profile.php";
 	}
 	include("inc/footer.php");
 

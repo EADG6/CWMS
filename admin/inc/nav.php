@@ -29,7 +29,8 @@
 							  <li><a href="index.php?page=product&action=cata">Product Categories</a></li>
 							  <li><a href="index.php?page=product&action=new">New Product</a></li>
 							  <li class="divider"></li>
-							  <li class="dropdown-header">Current User</li>							  
+							  <li class="dropdown-header">Hello, <?php echo ucwords($_SESSION['admin']);?></li>							  
+							  <li><a href="index.php?page=profile">My Profile</a></li>
 							  <li><a href="index.php?exit">Log out</a></li>
 						    </ul>
 						  </div>
