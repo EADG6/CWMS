@@ -5,6 +5,9 @@ table,input,select,button,.mainblocks{
 }
 table tr td:first-child,table tr th:first-child{
 	padding:15px;
+	border-top:0px;
+	border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
 }
 body{
     background-color: #333333;

@@ -100,7 +100,7 @@ $sql_cusinfo = "SELECT id from customer order by id DESC;";
 					<th>Tel</th>
 					<th>Address</th>
 					<th>Balance</th>
-					<th>Credit</th>
+					<th>Payed</th>
 					<th>
 						Operation <a href='javascript:void(0);' onclick="$('#helptip_info').toggle()" class="glyphicon glyphicon-question-sign icona"></a>
 					</th>
