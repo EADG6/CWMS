@@ -5,7 +5,7 @@
 This form is to add order 
 </div>
 	<?php
-	if (isset($_POST['id']) && isset($_POST['date']) && isset($_POST['time'])) {
+	if (isset($_POST['id'])){
 		//save info from $_post to local variables
 		$carid = $_POST['id'];
 		$customerid = $_SESSION['customer_id'];

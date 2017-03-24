@@ -30,6 +30,7 @@
 							<th>Date</th>
 							<th>Time</th>
 							<th>Condition</th>
+							<th>Rate</th>
 							<th>Delete</th>
 						<tr>
 					</thead>
@@ -46,7 +47,26 @@
 					 <td><?php echo $row_orders['order_date']; ?></td>
 					 <td><?php echo $row_orders['order_time']; ?></td>
 					 <td><?php echo $row_orders['conditions']; ?></td>
-					 <td><?php
+					 <td>
+						 <?php
+						 	if (isset($_POST['name'])){
+								$feedback = $_POST['name'];
+								$sql_feedback= "INSERT INTO orders (feedback) VALUES ('$feedback')";
+								mysql_query($sql_feedback); 
+							}
+						 ?>
+						 <form method="post"> 
+						 	<script type="text/javascript">
+						 		function disp_prompt(){
+    						 	   var name = prompt("Write down your","");
+						 	  }
+  						 	</script>
+						 	 <input type="button" onClick="disp_prompt()" value="feedback" />
+						 </form>
+					 </td>
+					 
+					 <td>
+						 <?php
 						 if ($row_orders['conditions']<=1){
 						 	?>
 							<a href ="javascript:if(confirm('Are You Sure to Delete?'))location='index.php?page=order&id=<?php echo $row_orders['id']?>'">Delete </a>
@@ -55,8 +75,8 @@
 							 echo"Order In Use";
 						}
 							?>
-						</td>
-					 </tr>
+					 </td>
+					</tr>
 		 				<?php
 		 			}
 		 				?>
