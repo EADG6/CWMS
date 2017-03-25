@@ -40,14 +40,29 @@
 					$address = preg_replace("/\s/","",(string)$_POST['address']);
 					$tel = preg_replace("/\s/","",(string)$_POST['tel']);
 					$sex = (int)$_POST['sex'];
+					for($i=1;$i<=3;$i++){
+						$carid = 'carid'.$i;
+						$plate = 'plate'.$i;
+						$brand = 'brand'.$i;
+						$color = 'color'.$i;
+						$$carid = inputCheck($_POST['carid'.$i]);
+						$$plate = inputCheck($_POST['plate'.$i]);
+						$$brand = inputCheck($_POST['brand'.$i]);
+						$$color = inputCheck($_POST['color'.$i]);
+					}
 					if(isset($_POST['cusid'])){
-						$cusid = $_POST['cusid'];
+						$cusid = inputCheck($_POST['cusid']);
 						$sql_editcus = "UPDATE customer SET firstname = '$fname',lastname = '$lname',tel = '$tel',sex = $sex,address = '$address' WHERE id = '$cusid'";
 						$mysql->query($sql_editcus);
+						$mysql->query("UPDATE car SET plate='$plate1',brand='$brand1',color='$color1' WHERE id = '$carid1'");
+						$mysql->query("UPDATE car SET plate='$plate2',brand='$brand2',color='$color2' WHERE id = '$carid2'");
+						$mysql->query("UPDATE car SET plate='$plate3',brand='$brand3',color='$color3' WHERE id = '$carid3'");
 						echo 'Update Customer Successfully';
 					}else{
 						$sql_newcus= "INSERT customer (firstname,lastname,sex,tel,address) VALUE ('$fname','$lname',$sex,'$tel','$address')";
 						$mysql->query($sql_newcus);
+						$cusid = mysql_insert_id();
+						$mysql->query("INSERT car VALUES ('','$plate1','$brand1','$color1','$cusid'),('','$plate2','$brand2','$color2','$cusid'),('','$plate3','$brand3','$color3','$cusid')");
 						echo "Add Customer Successfully";
 					}
 					header("refresh:1;url='index.php?page=customer&action=info'");

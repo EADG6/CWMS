@@ -13,7 +13,7 @@ $sql_cusinfo = "SELECT id from customer order by id DESC;";
 	echo "
 	<form action='submit.php' method='post' class='form-inline'>
 	<table class='table'>
-		<th colspan='4'>New Customer</th>
+		<th colspan='4' id='formtitle'>New Customer</th>
 		<tr>
 			<td class='bold' class='width-2'>Customer Number</td>
 			<td class='width-3'>
@@ -51,6 +51,46 @@ $sql_cusinfo = "SELECT id from customer order by id DESC;";
 			</td>
 		</tr>
 		<tr>
+			<td class='bold'>Bind Car 1</td>
+			<input type='hidden' name='carid1'/>
+			<td>
+				<input type='text' name='plate1' maxlength='50' placeholder='Car Plate' class='form-control'/>
+			</td>
+			<td>
+				<input type='text' name='brand1' maxlength='50' placeholder='Car Brand' class='form-control'/>
+			</td>
+			<td>
+				<input type='text' name='color1' maxlength='50' placeholder='Car Color' class='form-control'/>
+			</td>
+		</tr>
+		<tr>
+			<td class='bold'>Bind Car 2</td>
+			<input type='hidden' name='carid2'/>
+			<td>
+				<input type='text' name='plate2' maxlength='50' placeholder='Car Plate' class='form-control'/>
+			</td>
+			<td>
+				<input type='text' name='brand2' maxlength='50' placeholder='Car Brand' class='form-control'/>
+			</td>
+			<td>
+				<input type='text' name='color2' maxlength='50' placeholder='Car Color' class='form-control'/>
+			</td>
+		</tr>
+		<tr>
+			<td class='bold'>Bind Car 3</td>
+			<input type='hidden' name='carid3'/>
+			<td>
+				<input type='text' name='plate3' maxlength='50' placeholder='Car Plate' class='form-control'/>
+			</td>
+			<td>
+				<input type='text' name='brand3' maxlength='50' placeholder='Car Brand' class='form-control'/>
+			</td>
+			<td>
+				<input type='text' name='color3' maxlength='50' placeholder='Car Color' class='form-control'/>
+			</td>
+		</tr>
+		
+		<tr>
 			<td colspan=4>
 				<div class='col-md-4 col-md-offset-4'>
 					<button class='btn btn-block btn-primary' type='primary' name='submit'>Submit</button>
@@ -58,7 +98,6 @@ $sql_cusinfo = "SELECT id from customer order by id DESC;";
 			</td>
 		</tr>
 	</table>
-
 	</form>";	
 	if(isset($_POST['origCusEdit'])){
 			$origCus = explode(',',$_POST['origCusEdit']);
@@ -76,12 +115,26 @@ $sql_cusinfo = "SELECT id from customer order by id DESC;";
 					var gender = document.getElementsByName('sex');
 					if({$origCus[4]}==1) gender[0].checked=true;
 					if({$origCus[4]}==0) gender[1].checked=true;	
-					if({$origCus[4]}==3) gender[2].checked=true;	
+					if({$origCus[4]}==3) gender[2].checked=true;
+					$('#formtitle').html('Edit Customer')
 				</script>";
+			$sql_carinfo = "SELECT * FROM car WHERE cus_id = '".$origCus[0]."'";
+			$res_carinfo = $mysql->query($sql_carinfo);
+			$carnum = 0;
+			while($row_carinfo=$mysql->fetch($res_carinfo)){
+				$carnum++;
+				echo "<script>
+					$('[name=\"carid$carnum\"]').val('{$row_carinfo['id']}')
+					$('[name=\"plate$carnum\"]').val('{$row_carinfo['plate']}')
+					$('[name=\"brand$carnum\"]').val('{$row_carinfo['brand']}')
+					$('[name=\"color$carnum\"]').val('{$row_carinfo['color']}')
+				</script>";
+				
+			}
 	}
 }else if($action == 'info'){
 /**show all customer's information*/
-		$sql_cusinfo = "SELECT * FROM customer;";
+		$sql_cusinfo = "SELECT c.*,COUNT(car.id) AS cars FROM customer AS c LEFT JOIN car ON car.cus_id=c.id GROUP BY car.cus_id";
 		$result = $mysql->query($sql_cusinfo);
 ?>		
 	<div class="col-md-12 mainblocks">
@@ -91,13 +144,14 @@ $sql_cusinfo = "SELECT id from customer order by id DESC;";
 		</div>
 		<table class ='table table table-striped'>
 			<thead>
-				<th colspan='10'>Customer Information:</th>
+				<th colspan='11'>Customer Information:</th>
 				<tr>
 					<th>Customer ID</th>
 					<th>First Name</th>
 					<th>Last Nmae</th>
 					<th>Sex</th>
 					<th>Tel</th>
+					<th>Cars</th>
 					<th>Address</th>
 					<th>Balance</th>
 					<th>Payed</th>
@@ -126,6 +180,7 @@ $sql_cusinfo = "SELECT id from customer order by id DESC;";
 					<td>".$row['LastName']."</td>
 					<td>".$sex."</td>
 					<td>".$row['tel']."</td>
+					<td>".$row['cars']."/3</td>
 					<td>".$row['address']."</td>
 					<td>&#165;$balance</td>
 					<td>&#165;$credit</td>";

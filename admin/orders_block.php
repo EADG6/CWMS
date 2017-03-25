@@ -103,7 +103,7 @@
 	$result = $mysql->query($sql_orders);
 	while($row_order = $mysql->fetch($result)) {
 		$cusname= empty($row_order['cusname']) ? 'Unknown': $row_order['cusname'];
-		$empname= empty($row_order['empname']) ? 'Unknown': $row_order['empname'];
+		$empname= empty($row_order['empname']) ? '': '(Worker: '.$row_order['empname'].")";
 		$car_info = inputCheck($row_order['plate']);
 ?>
 <div class='order_block col-md-4' id='ob<?php echo $row_order[0];?>'>
@@ -254,7 +254,7 @@
 						<div class="modal-header">
 							 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 							<h1 class="modal-title text-center" id='popFormLabel'>
-								Rate Order (Worker: <span id='worker'></span>)
+								Rate Order <span id='worker'></span>
 							</h1>
 						</div>
 						<div class="modal-body">	
