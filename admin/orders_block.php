@@ -99,7 +99,7 @@
 <?php
 	include 'timecond.php';
 /**query all the orders and customer information in limited condition*/	
-	$sql_orders = "SELECT o.id,o.cus_id,car.plate,CONCAT(c.firstname,' ',c.lastname) AS cusname,emp_id,CONCAT(e.firstname,' ',e.lastname) AS empname,Date,Time,status,rate FROM orders as o LEFT JOIN customer as c ON o.cus_id = c.id LEFT JOIN employee as e ON o.emp_id = e.id LEFT JOIN car ON o.car_id = car.id $condition ORDER BY Date DESC,time DESC";
+	$sql_orders = "SELECT o.id,o.cus_id,car.plate,CONCAT(c.firstname,' ',c.lastname) AS cusname,os.emp_id,CONCAT(e.firstname,' ',e.lastname) AS empname,Date,Time,status,rate FROM orders as o LEFT JOIN customer as c ON o.cus_id = c.id INNER JOIN order_service AS os ON o.id=os.order_id LEFT JOIN employee as e ON os.emp_id = e.id LEFT JOIN car ON os.car_id = car.id $condition ORDER BY Date DESC,time DESC";
 	$result = $mysql->query($sql_orders);
 	while($row_order = $mysql->fetch($result)) {
 		$cusname= empty($row_order['cusname']) ? 'Unknown': $row_order['cusname'];
@@ -309,13 +309,15 @@
 		$sql_updOrdStatus = "UPDATE orders SET status=4 WHERE id= $payId";
 		$mysql->query($sql_payment);
 		$mysql->query($sql_updOrdStatus);
-		echo "<script>paidstyle('$payId');alert('Payed Successfully!')</script>";
+		echo "<script>paidstyle('$payId');</script>";
 	}
 /**function of delete order*/
 	if(isset($_POST['deloid'])){
 			$delId = $_POST['deloid'];
 			echo "<script>document.getElementById('obnav'+$delId).style.display='none';</script>";
-			$mysql->query("DELETE FROM orders WHERE id = $delId");
+			$mysql->query("DELETE FROM orders WHERE id = '$delId'");
+			$mysql->query("DELTE FROM order_product WHERE order_id = '$delId'");
+			$mysql->query("DELTE FROM order_service WHERE order_id = '$delId'");
 		}
 /**if row_item is not empty,row_order must not be empty(no orders).Because it's outside of while loop,so it only can use row_item*/		
 	if(empty($row_item)){

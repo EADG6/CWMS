@@ -15,9 +15,13 @@ $sql_cusinfo = "SELECT id from customer order by id DESC;";
 	<table class='table'>
 		<th colspan='4' id='formtitle'>New Customer</th>
 		<tr>
-			<td class='bold' class='width-2'>Customer Number</td>
-			<td class='width-3'>
+			<td>Customer Number</td>
+			<td>
 				<input type='text' id='cusid' name='cusid' class='form-control' value='$newnum' disabled='disabled'/>
+			</td>
+			<td>Username<span class='req'> *</span></td>
+			<td>
+				<input type='text' class='form-control' maxlength=20 name='username' oninput='checkCusName()' autocomplete='off' required/><kbd style='position:absolute;margin:6px 0 0 -25px'class='hidden'><i></i></kbd>
 			</td>
 		</tr>
 		<tr>
@@ -112,6 +116,9 @@ $sql_cusinfo = "SELECT id from customer order by id DESC;";
 					document.getElementsByName('lname')[0].value = '{$origCus[2]}';
 					document.getElementsByName('tel')[0].value = '{$origCus[3]}';
 					document.getElementsByName('address')[0].value = '{$origCus[5]}';
+					document.getElementsByName('username')[0].value = '{$origCus[6]}';
+					document.getElementsByName('username')[0].required = false;
+					document.getElementsByName('username')[0].disabled = true;
 					var gender = document.getElementsByName('sex');
 					if({$origCus[4]}==1) gender[0].checked=true;
 					if({$origCus[4]}==0) gender[1].checked=true;	
@@ -191,7 +198,7 @@ $sql_cusinfo = "SELECT id from customer order by id DESC;";
 					</td>
 				</tr>
 				<form action='index.php?page=customer&action=new' method='post' id='editCus<?php echo $row['id'];?>'>
-					<input type='hidden' name='origCusEdit' value='<?php echo $row['id'].','.$row['FirstName'].','.$row['LastName'].','.$row['tel'].','.$row['sex'].','.$row['address'];?>'/>
+					<input type='hidden' name='origCusEdit' value='<?php echo $row['id'].','.$row['FirstName'].','.$row['LastName'].','.$row['tel'].','.$row['sex'].','.$row['address'].','.$row['username'];?>'/>
 				</form>
 				<form action='' method='post' id='deleteCus<?php echo $row['id'];?>'>
 					<input type='hidden' name='origCusDel' value='<?php echo $row['id'];?>'/>

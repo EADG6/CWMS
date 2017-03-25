@@ -8,8 +8,10 @@
             if(isset($_SESSION['product__quantity']) && !isset($_POST['fname']) && !isset($_POST['isCata'])){
 				if(isset($_SESSION['order_id'])){
 /**To edit an order, first need to DELETE previous order*/
-					$sql_del="DELETE FROM orders WHERE id={$_SESSION['order_id']}";
+					$sql_del="DELETE FROM orders WHERE id='{$_SESSION['order_id']}'";
 					$mysql->query($sql_del);
+					$mysql->query("DELTE FROM order_product WHERE order_id = '{$_SESSION['order_id']}'");
+					$mysql->query("DELTE FROM order_service WHERE order_id = '{$_SESSION['order_id']}'");
 					unset($_SESSION['order_id']);
 				}
 /**save new order info into array, create new order and INSERT each product item*/
@@ -21,9 +23,12 @@
 				unset($_SESSION['product__quantity']);
                 $itemnum = count($product__quantity);
 				$car_id = inputCheck($_POST["carid"]);
-                $sql_inserto = "INSERT orders(cus_id,emp_id,car_id,date,time,status) VALUE($cus_id,$emp_id,$car_id,curdate(),curtime(),0)";
+                $sql_inserto = "INSERT orders(cus_id,date,time,status) VALUE($cus_id,curdate(),curtime(),0)";
                 $mysql->query($sql_inserto);
 				$order_id = mysql_insert_id();
+				if(!empty($emp_id)&&!empty($car_id)){
+					$mysql->query("INSERT order_service(emp_id,car_id,order_id) VALUE('$emp_id','$car_id','$order_id')");
+				}
                 for ($itemcount=0;$itemcount<$itemnum;$itemcount++) {
 					$product_id = array_keys($product__quantity)[$itemcount];
 					$quantity = $product__quantity[$product_id];
@@ -59,7 +64,10 @@
 						$mysql->query("UPDATE car SET plate='$plate3',brand='$brand3',color='$color3' WHERE id = '$carid3'");
 						echo 'Update Customer Successfully';
 					}else{
-						$sql_newcus= "INSERT customer (firstname,lastname,sex,tel,address) VALUE ('$fname','$lname',$sex,'$tel','$address')";
+						$username = inputCheck(preg_replace("/\s/","",$_POST['username']));
+						$salt=base64_encode(mcrypt_create_iv(6,MCRYPT_DEV_RANDOM)); //Add random salt
+						$pwdhash = MD5('1234'.$salt); //MD5 of pwd+salt
+						$sql_newcus= "INSERT customer (firstname,lastname,sex,tel,address,username,salt,pwdhash) VALUE ('$fname','$lname',$sex,'$tel','$address','$username','$salt','$pwdhash')";
 						$mysql->query($sql_newcus);
 						$cusid = mysql_insert_id();
 						$mysql->query("INSERT car VALUES ('','$plate1','$brand1','$color1','$cusid'),('','$plate2','$brand2','$color2','$cusid'),('','$plate3','$brand3','$color3','$cusid')");

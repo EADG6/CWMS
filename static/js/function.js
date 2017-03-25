@@ -99,6 +99,42 @@
 			$('#rate'+orid).attr('onclick',"rateOrder('"+orid+"','"+starsnum+"')")
 		}$('#modal-rate').click()
 	}
+	/* use ajax to check customer username */
+	function checkCusName(){
+		$('[name="username"]').val($('[name="username"]').val().replace(" ",""))
+		if($('[name="username"]').val().length>0){
+			$.ajax({
+				url:'ajax.php',
+				data:{"usercheck":encodeURI(encodeURI($('[name="username"]').val())),"page":'employee'},
+				success:function(data){
+					if(data.used=='used'){
+						$('[name="username"]').attr('class','form-control alert-danger')
+						$('[name="username"]').next().attr('class','alert-danger')
+						$('[name="username"]').next().children('i').attr('class','fa fa-close')
+						$('[name="submit"]').attr('disabled',true)
+					}else if(data.used=='ok'){
+						$('[name="username"]').attr('class','form-control alert-success')
+						$('[name="username"]').next().attr('class','alert-success')
+						$('[name="username"]').next().children('i').attr('class','fa fa-check')
+						$('[name="submit"]').attr('disabled',false)
+					}else if(data.used=='empty'){
+						$('[name="username"]').attr('class','form-control')
+						$('[name="username"]').next().attr('class','hidden')
+						$('[name="submit"]').attr('disabled',true)
+					}
+				},
+				type:'POST',
+				dataType:'json',
+				beforeSend:function(){
+					$('[name="username"]').next().attr('class','seepwd btn-warning')
+					$('[name="username"]').next().children('i').attr('class','fa fa-spinner fa-spin')
+				}
+			});
+		}else{
+			$('[name="username"]').attr('class','form-control')
+			$('[name="username"]').next().attr('class','seepwd hidden')
+		}
+	}
 	/* Check password when sign up */
 	function checkpwd(){
 		var pwd = document.getElementsByName('pwd')[0];
