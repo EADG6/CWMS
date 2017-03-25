@@ -8,10 +8,10 @@
             if(isset($_SESSION['product__quantity']) && !isset($_POST['fname']) && !isset($_POST['isCata'])){
 				if(isset($_SESSION['order_id'])){
 /**To edit an order, first need to DELETE previous order*/
-					$sql_del="DELETE FROM orders WHERE id='{$_SESSION['order_id']}'";
-					$mysql->query($sql_del);
 					$mysql->query("DELETE FROM order_product WHERE order_id = '{$_SESSION['order_id']}'");
 					$mysql->query("DELETE FROM order_service WHERE order_id = '{$_SESSION['order_id']}'");
+					$sql_del="DELETE FROM orders WHERE id='{$_SESSION['order_id']}'";
+					$mysql->query($sql_del);
 					unset($_SESSION['order_id']);
 				}
 /**save new order info into array, create new order and INSERT each product item*/
@@ -23,7 +23,7 @@
 				unset($_SESSION['product__quantity']);
                 $itemnum = count($product__quantity);
 				$car_id = inputCheck($_POST["carid"]);
-                $sql_inserto = "INSERT orders(cus_id,date,time,status) VALUE($cus_id,curdate(),curtime(),0)";
+                $sql_inserto = "INSERT orders(cus_id,date,time,status) VALUE($cus_id,curdate(),curtime(),3)";
                 $mysql->query($sql_inserto);
 				$order_id = mysql_insert_id();
 				if(!empty($emp_id)&&!empty($car_id)){

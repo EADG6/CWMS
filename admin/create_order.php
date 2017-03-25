@@ -294,7 +294,7 @@ session['times'] is a counter to make sure session['order_id'] directly comes fr
 					$cusname=$row_cus[0]."&nbsp".$row_cus[1];
 				}
 			}else{
-				$cus_id = '0';
+				$cus_id = 'NULL';
 				$cusname='Unknown';
 			}
 		}else{
@@ -320,7 +320,7 @@ session['times'] is a counter to make sure session['order_id'] directly comes fr
 			$emp_id = '0';
 		}
 		$datetime = date('Y/m/d H:i:s',time());
-		$carid = isset($_POST['car_id'])?inputCheck($_POST['car_id']):0;
+		$carid = isset($_POST['car_id'])?inputCheck($_POST['car_id']):'NULL';
 		$carinfo = isset($_POST['car_info'])?inputCheck($_POST['car_info']):'Unknown Car';
 		echo "<tr class='bold'>
 				<td style='border-right:0px;'><span style='font-size:26px;'>".$cusname."&nbsp</span><br/>$carinfo</td>
