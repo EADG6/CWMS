@@ -64,13 +64,14 @@
 		$('#modal-pay').click()
 		discountPrice()
 	}
-	function rateOrder(orid,stars){
+	function rateOrder(orid,stars,empname){
 		if(stars==0){
 			$('#stars').parent().attr('disabled',true)
 		}else{
 			$('[name="ratelevel"]').val(stars)
 			rateStar()
 		}
+		$('#worker').html(empname)
 		$('[name="rateordid"]').val(orid)
 		$('#modal-rate').click()
 	}
@@ -98,11 +99,12 @@
 <?php
 	include 'timecond.php';
 /**query all the orders and customer information in limited condition*/	
-	$sql_orders = "SELECT o.id,o.cus_id,CONCAT(c.firstname,' ',c.lastname) AS cusname,emp_id,CONCAT(e.firstname,' ',e.lastname) AS empname,Date,Time,status,rate FROM orders as o LEFT JOIN customer as c ON o.cus_id = c.id LEFT JOIN employee as e ON o.emp_id = e.id $condition ORDER BY Date DESC,time DESC";
+	$sql_orders = "SELECT o.id,o.cus_id,car.plate,CONCAT(c.firstname,' ',c.lastname) AS cusname,emp_id,CONCAT(e.firstname,' ',e.lastname) AS empname,Date,Time,status,rate FROM orders as o LEFT JOIN customer as c ON o.cus_id = c.id LEFT JOIN employee as e ON o.emp_id = e.id LEFT JOIN car ON o.car_id = car.id $condition ORDER BY Date DESC,time DESC";
 	$result = $mysql->query($sql_orders);
 	while($row_order = $mysql->fetch($result)) {
 		$cusname= empty($row_order['cusname']) ? 'Unknown': $row_order['cusname'];
 		$empname= empty($row_order['empname']) ? 'Unknown': $row_order['empname'];
+		$car_info = inputCheck($row_order['plate']);
 ?>
 <div class='order_block col-md-4' id='ob<?php echo $row_order[0];?>'>
 	<div class='ob_nav' id='obnav<?php echo $row_order[0];?>'>
@@ -114,7 +116,7 @@
 			$res=$mysql->query($sql_order_price);
 			$row_item=$mysql->fetch($res);
 			$num=$row_item['num'];
-			echo "<th colspan='2'>$cusname  <samp><small>$empname</small></samp></th>
+			echo "<th colspan='2'>$cusname <small>$car_info</small></th>
 					<th class='text-right' colspan='2'>".substr($row_order['Date'],5)." ".substr($row_order['Time'],0,5)."</th>";
 			?>
 			</tr>
@@ -168,7 +170,7 @@
 		<div class='paybtn'>
 			<span id="btn2<?php echo $row_order[0];?>">
 				<button type="button"  onclick="payOrder('<?php echo $row_order['id']."','".$row_order['cus_id']."','".$row_item['order_price'];?>')" class='btn btn-success'>Pay</button>
-				<button type="button" onclick="rateOrder('<?php echo $row_order['id']."','".$row_order['rate'];?>')" class='btn btn-warning' id='rate<?php echo $row_order['id'];?>' ><?php echo $row_order['rate']==0?'Rate':'Rated '.$row_order['rate']."<i class='fa fa-star'></i>";?></button>
+				<button type="button" onclick="rateOrder('<?php echo $row_order['id']."','".$row_order['rate']."','".$empname;?>')" class='btn btn-warning' id='rate<?php echo $row_order['id'];?>' ><?php echo $row_order['rate']==0?'Rate':'Rated '.$row_order['rate']."<i class='fa fa-star'></i>";?></button>
 				<button type='button' name='edit' onclick="submit('<?php echo $row_order[0];?>')"  class='btn btn-primary'>Edit</button>
 				<button type='button' onclick="deleteOrder('<?php echo $row_order['id'];?>')" class='btn btn-danger'>Del</button>
 				<form method='post' action=''>
@@ -252,7 +254,7 @@
 						<div class="modal-header">
 							 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 							<h1 class="modal-title text-center" id='popFormLabel'>
-								Rate Order
+								Rate Order (Worker: <span id='worker'></span>)
 							</h1>
 						</div>
 						<div class="modal-body">	
