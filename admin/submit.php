@@ -10,8 +10,8 @@
 /**To edit an order, first need to DELETE previous order*/
 					$sql_del="DELETE FROM orders WHERE id='{$_SESSION['order_id']}'";
 					$mysql->query($sql_del);
-					$mysql->query("DELTE FROM order_product WHERE order_id = '{$_SESSION['order_id']}'");
-					$mysql->query("DELTE FROM order_service WHERE order_id = '{$_SESSION['order_id']}'");
+					$mysql->query("DELETE FROM order_product WHERE order_id = '{$_SESSION['order_id']}'");
+					$mysql->query("DELETE FROM order_service WHERE order_id = '{$_SESSION['order_id']}'");
 					unset($_SESSION['order_id']);
 				}
 /**save new order info into array, create new order and INSERT each product item*/

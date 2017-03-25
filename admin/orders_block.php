@@ -99,7 +99,7 @@
 <?php
 	include 'timecond.php';
 /**query all the orders and customer information in limited condition*/	
-	$sql_orders = "SELECT o.id,o.cus_id,car.plate,CONCAT(c.firstname,' ',c.lastname) AS cusname,os.emp_id,CONCAT(e.firstname,' ',e.lastname) AS empname,Date,Time,status,rate FROM orders as o LEFT JOIN customer as c ON o.cus_id = c.id INNER JOIN order_service AS os ON o.id=os.order_id LEFT JOIN employee as e ON os.emp_id = e.id LEFT JOIN car ON os.car_id = car.id $condition ORDER BY Date DESC,time DESC";
+	$sql_orders = "SELECT o.id,o.cus_id,car.plate,CONCAT(c.firstname,' ',c.lastname) AS cusname,os.emp_id,os.car_id,CONCAT(e.firstname,' ',e.lastname) AS empname,Date,Time,status,rate FROM orders as o LEFT JOIN customer as c ON o.cus_id = c.id LEFT JOIN order_service AS os ON o.id=os.order_id LEFT JOIN employee as e ON os.emp_id = e.id LEFT JOIN car ON os.car_id = car.id $condition ORDER BY Date DESC,time DESC";
 	$result = $mysql->query($sql_orders);
 	while($row_order = $mysql->fetch($result)) {
 		$cusname= empty($row_order['cusname']) ? 'Unknown': $row_order['cusname'];
@@ -156,6 +156,7 @@
 			}
 			echo "<input type='hidden' name='od_cus[{$row_order['id']}]' value='{$row_order['cus_id']}'/>
 					<input type='hidden' name='od_emp' value='{$row_order['emp_id']}'/>
+					<input type='hidden' name='od_car' value='{$row_order['car_id']}'/>
 				</form>";
 			/*fill in blank row if the order have less than 3 items*/	
 			for($n=$num;$n<3;$n++){

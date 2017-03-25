@@ -120,11 +120,15 @@
 					$('#car1').val('0')
 					$('#car1').html('Unknown')
 				}
-				$('#carselect').val($('#car1').val())
+				if($('#carselect').val()==undefined){
+					$('#carselect').val($('#car1').val())
+				}
+				if(editcarid>0){
+					$('#carselect').val(editcarid);
+				}
 			},
 			type:'POST',
-			dataType:'json',
-			beforeSend:function(){}
+			dataType:'json'
 		});
 	}
 /**Car info*/
@@ -232,12 +236,14 @@ session['times'] is a counter to make sure session['order_id'] directly comes fr
 		if(isset($_POST['fd_quan'])){
 			$fd_quan= $_POST['fd_quan'];
 			$od_cus = $_POST['od_cus'];
+			$car_id = isset($_POST['od_car'])?$_POST['od_car']:'0';
 			$emp_id = empty($_POST['od_emp'])? '':inputCheck($_POST['od_emp']);
 			$order_id=array_keys($od_cus)[0];
 			$_SESSION['order_id']=$order_id;
 			$cus_id=$od_cus[$order_id];
 			echo "<script>$('#cus').val($cus_id);
 							$('#emp').val($emp_id);
+							editcarid = $car_id;
 							if('$emp_id'!=0){
 								$('#emp').attr('disabled',false)
 							}
@@ -333,7 +339,7 @@ session['times'] is a counter to make sure session['order_id'] directly comes fr
 print the product items and total price in a table, and hide the 'Create New' button*/
 		$totalp = 0;
 		if(isset($_POST['odproduct'])){
-			$product__quantity = array_filter($_POST['odproduct']);//The array_filter without call back functon, default delte empty array items
+			$product__quantity = array_filter($_POST['odproduct']);//The array_filter without call back functon, default delete empty array items
 			if(!empty($product__quantity)){
 				for($i=0;$i < count($product__quantity);$i++){
 					$f_id = array_keys($product__quantity)[$i];
