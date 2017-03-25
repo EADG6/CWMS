@@ -19,13 +19,9 @@
 				unset($_SESSION['emp_id']);
 				unset($_SESSION['cus_id']);
 				unset($_SESSION['product__quantity']);
-				if(isset($_POST['time']) && !empty($_POST['time'])){
-					$time = "'{$_POST['time']}'";	
-				}else{
-					$time = 'curtime()';
-				}
                 $itemnum = count($product__quantity);
-                $sql_inserto = "INSERT orders(cus_id,emp_id,date,time) VALUE($cus_id,$emp_id,curdate(),$time)";
+				$car_id = inputCheck($_POST["carid"]);
+                $sql_inserto = "INSERT orders(cus_id,emp_id,car_id,date,time,status) VALUE($cus_id,$emp_id,$car_id,curdate(),curtime(),0)";
                 $mysql->query($sql_inserto);
 				$order_id = mysql_insert_id();
                 for ($itemcount=0;$itemcount<$itemnum;$itemcount++) {

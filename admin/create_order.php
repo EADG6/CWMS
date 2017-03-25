@@ -39,12 +39,15 @@
 			document.getElementById(fid).style.backgroundColor = "rgba(10, 135, 84, 0.13)";
 		}
 	}
+	ischeck = false;
 	function changeEmpSele(){
 		boxs = $('input[type="checkbox"]');
-		ischeck = false;
 		for(i=0;i<boxs.length;i++){
 			if(boxs[i].checked){
 				ischeck = true;
+				break;
+			}else{
+				ischeck = false;
 			}
 		}
 		if(ischeck){
@@ -53,9 +56,12 @@
 			$('#emp').attr('disabled',false);
 			$('#emp').parent().show()
 			$('#carselect').parent().show()
+			queryCars();
 		}else{
 			$('#emp').attr('required',false);
+			$('#emp').val('');
 			$('#carselect').attr('required',false);
+			$('#carselect').val('');
 			$('#emp').attr('disabled',true);
 			$('#emp').parent().hide()
 			$('#carselect').parent().hide()
@@ -72,17 +78,58 @@
 		}  
 	}
 /**When select customer, print it in lable*/
-	function selectCus(ele,id,labelid){
+	function selectCus(ele,id,labelid,ifQuery=false){
 		if(ele.value.length>0){
 			name = $('#'+id).children('[value='+ele.value+']').html()
 			if(name!='undefined'){
 				$('#'+labelid).html(name)
+				if(ifQuery&&ischeck){
+					queryCars()
+				}
 			}else{
 				$(ele).val('')
 			}
 		}else{
 			$(ele).val('')
 		}
+	}
+/**Use Ajax to query customer's cars*/
+	function queryCars(){
+		cusid = $('#cus').val()
+		$('#car1').val('');$('#car2').val('');$('#car3').val('');
+		$('#car1').html('');$('#car2').html('');$('#car3').html('');
+		$('#car2').hide();$('#car3').hide();
+		$.ajax({
+			url:'ajax.php',
+			data:{"cusid":cusid},
+			success:function(data){
+				if(data.status > 0){
+					$('#car1').val(data.car1.id)
+					$('#car1').html(data.car1.carinfo)
+					if(data.status > 1){
+						$('#car2').val(data.car2.id)
+						$('#car2').html(data.car2.carinfo)
+						$('#car2').show()
+						if(data.status > 2){
+							$('#car3').val(data.car3.id)
+							$('#car3').html(data.car3.carinfo)
+							$('#car3').show()
+						}
+					}
+				}else{
+					$('#car1').val('0')
+					$('#car1').html('Unknown')
+				}
+				$('#carselect').val($('#car1').val())
+			},
+			type:'POST',
+			dataType:'json',
+			beforeSend:function(){}
+		});
+	}
+/**Car info*/
+	function carinfo(){
+		$('#car_info').val($('#carselect').children('[value=\"'+$('#carselect').val()+'\"]').html())
 	}
 </script>
 	<div class='col-sm-7'>
@@ -91,7 +138,7 @@
 				<div class='col-sm-10'>
 					<div class='col-sm-12 form-group'>
 						<label for='cus'>Customer: <span id='cusName'></span></label>
-						<input name='cus_id' id='cus' class='form-control selectid' onchange="selectCus(this,'cusQueryRes','cusName')" placeholder="ID/Username" list='cusQueryRes' autocomplete="off"/>
+						<input name='cus_id' id='cus' class='form-control selectid' onchange="selectCus(this,'cusQueryRes','cusName',true)" onfocus="this.autocomplete='off'" onblur="this.autocomplete='on'" placeholder="ID/Username" list='cusQueryRes' required/>
 						<datalist id="cusQueryRes">  
 							<option value='0'>Unknown</option>
 						<?php 
@@ -101,18 +148,18 @@
 						?>
 						</datalist>
 					</div>
-					<div class='col-sm-6'>
+					<div class='form-group col-sm-6'>
 						<label for='carselect'>Car:</label>
-						<select name='car_id' id='carselect' class='form-control selectid'>
-							<option value=''>--</option>
-						<?php 
-								
-						?>
-						</select><br/>
+						<select name='car_id' id='carselect' class='form-control selectid' onchange="carinfo()"  autocomplete='on'>
+							<option value id='car1'></option>
+							<option value id='car2'></option>
+							<option value id='car3'></option>
+						</select>
+						<input type='hidden' name='car_info' id='car_info'>
 					</div>
-					<div class='col-sm-6'>
+					<div class='form-group col-sm-6'>
 						<label for='emp'>Worker: <span id='empName'></span></label>
-						<input name='emp_id' id='emp' class='form-control selectid' onchange="selectCus(this,'empQueryRes','empName')" list='empQueryRes' placeholder="ID/Username" autocomplete="off" disabled>
+						<input name='emp_id' id='emp' class='form-control selectid' onchange="selectCus(this,'empQueryRes','empName')" list='empQueryRes' placeholder="ID/Username" onfocus="this.autocomplete='off'" onblur="this.autocomplete='on'" disabled>
 							<datalist id="empQueryRes">  
 						<?php 
 							$sql_employee = "SELECT * FROM employee";
@@ -124,7 +171,7 @@
 							</datalist>
 					</div>
 				</div>
-				<div class='form-group col-xs-2 createbtns'>
+				<div class='form-group col-xs-2 createbtns' onfocus='carinfo();' onmouseover="carinfo();selectCus($('#cus')[0],'cusQueryRes','cusName');selectCus($('#emp')[0],'empQueryRes','empName')">
 					<button id='createbtn' type='primary' class='btn btn-primary btn-lg'>Create</button>
 				</div>
 			</div>
@@ -161,7 +208,7 @@
 								<button id='l{$row_finfo['id']}' class='btn btn-primary bnum bnuml' type='button' onclick='m({$row_finfo['id']})' ><i class='fa fa-minus'></i></button>
 							</div>
 							<div class='col-sm-5 col-sm-offset-1'>	
-								<input type='number' id='{$row_finfo['id']}' name='odproduct[{$row_finfo['id']}]' min = '0' max = '999' class='form-control'/>
+								<input type='number' id='{$row_finfo['id']}' name='odproduct[{$row_finfo['id']}]' onchange='check({$row_finfo['id']})' min = '0' max = '999' class='form-control'/>
 							</div>
 							<div class='col-sm-2'>	
 								<button id='r{$row_finfo['id']}' class='btn btn-primary bnum bnumr' type='button' onclick='a({$row_finfo['id']})' ><i class='fa fa-plus'></i></button>
@@ -267,26 +314,21 @@ session['times'] is a counter to make sure session['order_id'] directly comes fr
 			$emp_id = '0';
 		}
 		$datetime = date('Y/m/d H:i:s',time());
+		$carid = isset($_POST['car_id'])?inputCheck($_POST['car_id']):0;
+		$carinfo = isset($_POST['car_info'])?inputCheck($_POST['car_info']):'Unknown Car';
 		echo "<tr class='bold'>
-				<td style='font-size: 26px;border-right:0px;' >".$cusname."&nbsp</td>
+				<td style='border-right:0px;'><span style='font-size:26px;'>".$cusname."&nbsp</span><br/>$carinfo</td>
 				<td style='border-left:0;text-align:right;'>$empname</td>
 				<td colspan='2' style='border-left:0;text-align:right;' id='time' onclick='inputTime()'>$datetime</td>
 				<td colspan='2' style='border-left:0;text-align:right;display:none;' id='timeNew'>
-					<form action='submit.php' method='post' id='newOrder'>
-						<input type='time' name='time'/>
-					</form>
 				</td>
+					<form action='submit.php' method='post' id='newOrder'>
+						<input type='hidden' name='carid' value='$carid'/>
+					</form>
 			</tr>
             <tr class='fat'>
 				<td>Product Name</td><td>Price</td><td>Quantity</td>
 			</tr>"; 
-		echo "<script>
-				function inputTime(){
-					document.getElementById('time').style.display='none';
-					document.getElementById('timeNew').style.display='inline';
-					
-				}
-			</script>";
 /**Save all the product id and quantity in an Array, and filter the empty items,if the array is still not empty, 
 print the product items and total price in a table, and hide the 'Create New' button*/
 		$totalp = 0;

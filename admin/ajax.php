@@ -20,6 +20,22 @@
 		$rateordid = inputCheck($_POST['orderid']);
 		$sql_rateOrd = "UPDATE orders SET rate = '$rateLevel' WHERE id = '$rateordid'";
 		$mysql->query($sql_rateOrd);
-
+	}
+	/**Query customer's cars*/
+	if(isset($_POST['cusid'])){
+		$cusid = inputCheck($_POST['cusid']);
+		$sql_queryCars = "SELECT id,CONCAT(plate,' ',brand,' ',color) AS carinfo FROM car WHERE cus_id = $cusid";
+		$res_cars = $mysql->query($sql_queryCars);
+		if(mysql_num_rows($res_cars)){
+			$i = 0;
+			$carinfo['status'] = mysql_num_rows($res_cars);
+			while($row = $mysql->fetch($res_cars)){
+				$i++;
+				$carinfo['car'.$i] = ['id'=>$row['id'],'carinfo'=>$row['carinfo']];
+			}
+			echo json_encode($carinfo);
+		}else{
+			echo json_encode(['status'=>0]);
+		}
 	}
 ?>
