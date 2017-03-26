@@ -2,7 +2,7 @@
    if (isset($_GET['id'])){
    	$id =$_GET['id'];
    	//delete the menu
-   	$result = mysql_query("DELETE FROM orders WHERE id = $id");
+   	$result = $mysql->query("DELETE FROM orders WHERE id = $id");
    		echo"<script type='text/javascript'>alert('Menu Delete Now'); location='index.php?page=order';</script>"; 
    }
 	if ($_SESSION['customer_id'] == 0 ){
@@ -36,8 +36,8 @@
 					</thead>
 						<?php
 					$sql_orders = "SELECT customer.name, customer.phone, car.plate, car.color, car.type, orders.id, orders.order_time, orders.order_date, orders.conditions FROM customer INNER JOIN orders ON customer.id=orders.customerid INNER JOIN car ON car.id=orders.carid WHERE customer.id='".$_SESSION['customer_id']."'"; 
-					$result_orders = mysql_query($sql_orders);
-					while ($row_orders = mysql_fetch_array($result_orders)){
+					$result_orders = $mysql->query($sql_orders);
+					while ($row_orders = $mysql->fetch($result_orders)){
 						?>							       
 		            <tr>
 					 <td><?php echo $row_orders['id']; ?></td>
@@ -52,7 +52,7 @@
 						 	if (isset($_POST['name'])){
 								$feedback = $_POST['name'];
 								$sql_feedback= "INSERT INTO orders (feedback) VALUES ('$feedback')";
-								mysql_query($sql_feedback); 
+								$mysql->query($sql_feedback); 
 							}
 						 ?>
 						 <form method="post"> 

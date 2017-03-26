@@ -78,23 +78,14 @@
 		$res_pwd = $mysql->query("SELECT id,pwdhash,salt,role_id FROM employee WHERE username = '$username'"); 
 		$adminInfo = $mysql->fetch($res_pwd);
 		$pwdhash = MD5($pwd.$adminInfo['salt']);
-		$userIP = getenv("REMOTE_ADDR");
 		if(mysql_num_rows($res_pwd)){
 			$rightpwd = $adminInfo['pwdhash'];
 			if($pwdhash == $rightpwd){
-				//Before login, get the last success login records from loginlog table
-				//$res_lastLogin = $mysql->fetch($mysql->query("SELECT loginip,logintime FROM loginlog WHERE success = 1 AND username = '$username' ORDER BY logintime DESC LIMIT 1"));
-				//Storage the last login records in employee table
-				//$mysql->query("UPDATE employee SET lastloginip='{$res_lastLogin['loginip']}',lastlogindate='{$res_lastLogin['logintime']}' WHERE id = {$adminInfo['id']}");
-				//Create new login records as curent login info, store in loginlog table
-				//$mysql->query("INSERT loginlog VALUES('','$userIP','$username','$pwdhash',NOW(),1)");
-				//log in
 				$_SESSION['admin'] = $username;
 				$_SESSION['adminid'] = $adminInfo['id'];
 				$_SESSION['role'] = $adminInfo['role_id'];
 				echo "<script>$('[name=\"username\"').addClass('alert-success');$('[name=\"pwd\"').addClass('alert-success');</script>";
 			}else{
-				//$mysql->query("INSERT loginlog VALUES('','$userIP','$username','$pwd',NOW(),0)");
 				echo "<script>$('[name=\"username\"').addClass('alert-success')
 					$('[name=\"pwd\"').addClass('alert-danger')
 					$('[name=\"username\"').val('$username')
@@ -102,7 +93,6 @@
 				</script>";
 			}
 		}else{
-			//$mysql->query("INSERT loginlog VALUES('','$userIP','$username','$pwd',NOW(),0)");
 			echo "<script>$('[name=\"username\"').addClass('alert-danger');$('[name=\"username\"').focus();alert('Username not found')</script>";
 		}	
 	}
