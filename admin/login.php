@@ -1,6 +1,6 @@
 <?php 
 	session_start();
-	require "inc/db.php";
+	require "../inc/db.php";
 	include 'inc/header.php';
 ?>
 <div>

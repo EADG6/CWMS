@@ -1,6 +1,6 @@
 <?php
 	session_start();
-	require("inc/db.php");
+	require("../inc/db.php");
 	//error_reporting(E_ALL^E_NOTICE^E_WARNING^E_DEPRECATED);
 	date_default_timezone_set('PRC'); 
 	if(!isset($_SESSION['adminid'])){

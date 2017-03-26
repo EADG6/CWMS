@@ -9,7 +9,7 @@
 			$_SESSION['customer_username']= 'unknown';
 		 }
 	 //Connect database
-	 require "admin/inc/db.php";
+	 require "inc/db.php";
 	 include "inc/header.php";
 	 include "inc/nav.php";
 	 if(isset($_GET['page'])){

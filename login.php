@@ -3,7 +3,7 @@
 	 //Start the session
 	 session_start();
 	 //Connect database
-	 require "admin/inc/db.php";
+	 require "inc/db.php";
 	 include "inc/header.php";
  	if(isset($_GET['new'])){
 		$action = 'sign';
@@ -22,12 +22,12 @@
 							<!-- input the user name -->
 							<div class="form-group col-md-offset-0">
 								<label for='username'>Username:</label>
-								<input type="text" name="username" class="form-control" style="width: 200px;" placeholder='test1'>  
+								<input type="text" name="username" class="form-control" style="width: 200px;" placeholder='cus1'>  
 							</div> 
 							<!-- input the password -->
 							<div class="form-group col-md-offset-0">
 								<label for='password'>Password:</label>
-								<input type="password" name="password" class="form-control" style="width: 200px;" placeholder='123'>  
+								<input type="password" name="password" class="form-control" style="width: 200px;" placeholder='1234'>  
 							</div>
 							<a href="login.php?new" class="btn btn-primary">Sign Up</a>
 							<input type="submit" value="Sign In" class="btn btn-primary">  
@@ -37,7 +37,6 @@
 		</div>
 		<!-- This page used to check the username & password -->
 	<?php  
-		//require('db.php');
 		// get username & password
 		if(isset($_POST['username'])&&isset($_POST['password'])){
 			$username = strtolower(inputCheck($_POST['username'])); 
