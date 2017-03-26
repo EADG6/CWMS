@@ -20,7 +20,7 @@
 	include("inc/header.php");
 	include("inc/nav.php");
 	if($_SESSION['role']==4){
-		echo "<script>alert('Your account is not validated,\\n so you cannot use more management function\\n until super administrator give you permission!')</script>";
+		redirect('index.php?exit','Sign up Successfully, But your account is not validated,\\n so you cannot management function\\n until super administrator give you permission!');
 	}
 	if ($page == 'default') {
 		include "orders_block.php";
