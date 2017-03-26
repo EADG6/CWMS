@@ -1,6 +1,6 @@
 <?php
 	session_start();
-	require "inc/db.php";
+	require "../inc/db.php";
 	/**Check if username have been used when sign up*/
 	if(isset($_POST['usercheck'])){
 		$usercheck = inputCheck(strtolower(preg_replace("/\s/","",$_POST['usercheck'])));
