@@ -383,9 +383,9 @@
 	if(isset($_POST['deloid'])){
 			$delId = $_POST['deloid'];
 			echo "<script>document.getElementById('obnav'+$delId).style.display='none';</script>";
+			$mysql->query("DELETE FROM order_product WHERE order_id = '$delId'");
+			$mysql->query("DELETE FROM order_service WHERE order_id = '$delId'");
 			$mysql->query("DELETE FROM orders WHERE id = '$delId'");
-			$mysql->query("DELTE FROM order_product WHERE order_id = '$delId'");
-			$mysql->query("DELTE FROM order_service WHERE order_id = '$delId'");
 		}
 /**if row_item is not empty,row_order must not be empty(no orders).Because it's outside of while loop,so it only can use row_item*/		
 	if(empty($row_item)){
