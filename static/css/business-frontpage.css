@@ -11,8 +11,8 @@ body {
 /* Header Image Background - Change the URL below to your image path (example: ../images/background.jpg) */
 
 .business-header {
-    height: 400px;
-    background: url('http://placehold.it/1920x400') center center no-repeat scroll;
+    height: 800px;
+    background: url('../img/5.jpg') center center no-repeat scroll;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     background-size: cover;
@@ -23,7 +23,7 @@ body {
 
 .tagline {
     text-shadow: 0 0 10px #000;
-    color: #fff;
+    color: rgb(205, 208, 45);
 }
 
 .img-center {

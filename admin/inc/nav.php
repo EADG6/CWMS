@@ -1,10 +1,10 @@
-		<center class="tab_out">
+		<div class="tab_out">
             <table class="table-stripped">
-		        <tr><td class='text-centered' id='tab'>
+		        <tr><td class='text-centered tab'>
 				<nav>
 					<div class="left-menu">
-						<a href="index.php?page=create_order"><button class='btn-primary' type="button">Create order</button></a>
-						<a href="index.php?page=current_orders"><button type="button">Current orders</button></a>
+						<a href="index.php?page=create_order"><button class='btn btn-primary' type="button">Create Order</button></a>
+						<a href="index.php?page=current_orders"><button class='btn btn-default' type="button">Current Orders</button></a>
 					</div>
 					<div class="right-menu">
 						<div class="nav dropdown">
@@ -12,29 +12,33 @@
 						    <span class="caret"></span></button>
 						    <ul class="dropdown-menu">
 						      <li class="dropdown-header">Overviews</li>
-							  <li><a href="index.php?page=product&action=sold">Product sold</a></li>
+							  <li><a href="index.php?page=product&action=sold">Product Sold</a></li>
 							  <li><a href="index.php?page=product&action=weekly">Weekly Report</a></li>
 						      <li class="divider"></li>
 						      <li class="dropdown-header">Customer</li>
-						      <li><a href="index.php?page=customer&action=info">Customer info</a></li>
-							  <li><a href="index.php?page=customer&action=new">New customer</a></li>
+						      <li><a href="index.php?page=customer&action=info">Customer Info</a></li>
+							  <li><a href="index.php?page=customer&action=new">New Customer</a></li>
 							  <li><a href="index.php?page=recharge">Recharge</a></li>
 							  <li><a href="index.php?page=payment">Payment</a></li>
 							  <li class="divider"></li>
 							  <li class="dropdown-header">Staff</li>
-							  <li><a href="index.php?page=staff&action=info">Staff info</a></li>
+							  <li><a href="index.php?page=staff&action=info">Staff Info</a></li>
 						      <li class="divider"></li>
 							  <li class="dropdown-header">Product</li>							  
-							  <li><a href="index.php?page=product&action=detail">Product items</a></li>
-							  <li><a href="index.php?page=product&action=cata">Product categories</a></li>
+							  <li><a href="index.php?page=product&action=detail">Product Items</a></li>
+							  <li><a href="index.php?page=product&action=cata">Product Categories</a></li>
 							  <li><a href="index.php?page=product&action=new">New Product</a></li>
+							  <li class="divider"></li>
+							  <li class="dropdown-header">Hello, <?php echo ucwords($_SESSION['admin']);?></li>							  
+							  <li><a href="index.php?page=profile">My Profile</a></li>
+							  <li><a href="index.php?exit">Log out</a></li>
 						    </ul>
 						  </div>
 					</div>
 				</nav>
 				</tr></td>      
 		    </table>
-		</center>
+		</div>
 		<div class='col-xs-1'>
 			<div class="left_tab">
 				<a href='#'><img src='../static/img/icon/up.png'/></a><br/>
@@ -53,6 +57,6 @@
 				<a href='#bottom'><img src='../static/img/icon/down.png'/></a>
 			</div>
 		</div>
-		<div class='col-xs-10'>
+		<div class='col-xs-11'>
            <dl class="container">
 				<dd class="row clearfix">

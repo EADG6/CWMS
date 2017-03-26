@@ -1,57 +1,58 @@
-<h1>Add Order!</h1><br/>This form is to add order <br/><br/>
+<div class="col-sm-8 col-sm-offset-2">
+<h1>Add Order!</h1>
+</div>
+<div class="col-sm-8 col-sm-offset-2">
+This form is to add order 
+</div>
 	<?php
-	if (isset($_GET['id'])){
-		$customer_id = $_GET['id'];
-	}
-	if (isset($_POST['menu_name']) && isset($_POST['menu_link']) && isset($_POST['menu_orders'])) {
+	if (isset($_POST['id'])){
 		//save info from $_post to local variables
-		$menu_name = $_POST['menu_name'];
-		$menu_link = $_POST['menu_link'];
-		$menu_orders = $_POST['menu_orders'];
-	
-		if($menu_name == "")  
-		{    
-		// check vaule
-		     echo"<script type='text/javascript'>alert('Write Name');location='home2.php?page=updatem&id=$menu_id'; </script>";            
-		}  
-		elseif($menu_link == "")  
-		{  
-  
-		// check vaule
-		    echo"<script type='text/javascript'>alert('Write Link');location='home2.php?page=updatem&id=$menu_id'; </script>";  
-      
-		}  
-		elseif($menu_orders == "")  
-		{  
-  
-		// check vaule
-		    echo"<script type='text/javascript'>alert('Write Orders');location='home2.php?page=updatem&id=$menu_id'; </script>";  
-      
-		} 
-		else  
+		$carid = $_POST['id'];
+		$customerid = $_SESSION['customer_id'];
+		$date = $_POST['date'];
+		$time = $_POST['time'];
 		//creat SQL and execute qurty
-		$sql = "UPDATE menu SET name = '$menu_name', link = '$menu_link', orders = '$menu_orders' WHERE id = '$menu_id'";
-		echo"<script type='text/javascript'>alert('Update a Success'); location='home2.php?page=checkmenu';</script>"; 
-		$result = mysql_query($sql) or die(mysql_error());
+		$num_pending = $mysql->oneQuery("SELECT COUNT(ID) FROM orders WHERE status < 4");
+		$sql_order= "INSERT INTO orders (cus_id,Date,Time,status,rate) VALUES ('$customerid','$date','$time','1','')";	
+		$mysql->query($sql_order); 		
+		$order_id = mysql_insert_id();
+		$mysql->query("INSERT INTO order_service(car_id,order_id) VALUES('$carid','$order_id')");
+		echo"<script type='text/javascript'>alert('There have ".$num_pending." people before'); location='index.php?page=order';</script>"; 
 	}
 	?>
-						<form method="post">
+	<div class="col-sm-10 col-md-offset-2">
 		<?php
-		if (isset($_GET['id'])){
-			$id =$_GET['id'];
-			$result = mysql_query("SELECT id,name,link,orders  FROM menu WHERE id = $id");
-			//select information from database
-			while ($row = mysql_fetch_array($result)) {
+		$sql_orders = "SELECT c.*,cu.username FROM car AS c INNER JOIN customer AS cu ON c.cus_id=cu.id WHERE cus_id ='".$_SESSION['customer_id']."'";
+		$result_orders = $mysql->query($sql_orders);
+		$row_orders = $mysql->fetch($result_orders);
 		?>
-							<label for="name">Menu Name</label>
-	    					<input type="text" name="menu_name" class="form-control" placeholder="<?php echo $row{'name'}; ?>"><br/><br/>
-							
-						</form>
-    	<?php 
-			}
-		}
-		?>
-					</div>
-				</div>
-			</div>
+	</div>
+		<div class="col-sm-10 col-md-offset-2">
+			Name:
+			<?php echo $row_orders['username'];?>
 		</div>
+		<div class="col-sm-10 col-md-offset-2">
+			<form method="post"> 
+				Choose Car:
+				<select name="id"> 
+					<?php
+					while ($row_orders = $mysql->fetch($result_orders)){
+					?>
+					<option value="<?php echo $row_orders['id']; ?>"><?php echo $row_orders['plate']; ?></option> 
+						<?php
+					}
+						?>
+				</select> 
+	    </div>
+		<div class="col-sm-10 col-md-offset-2">
+			Date:
+			<input type="date" name="date">
+		</div>
+		<div class="col-sm-10 col-md-offset-2">
+			Time:
+			<input type="time" name="time">
+		</div>
+		<div class="col-sm-10 col-md-offset-2">
+			<input type="submit" value="Submit" class="btn btn-primary">
+		</div>
+		</form>

@@ -1,13 +1,25 @@
 <script>
 /**change block's style after click pay,edit,delete and more buttons*/	
 	function paidstyle(orid){	
-		$('#obnav'+orid+' *').css('background','rgba(166, 255, 209,1)');
-		document.getElementById('paid'+orid).style.visibility='visible';
-		document.getElementById('btn2'+orid).style.display='none';
-		if(document.getElementById('more'+orid)){
-			document.getElementById('more'+orid).style.marginLeft='200px'; 
-			document.getElementById('fold'+orid).style.marginLeft='200px';
-		}		
+		$('#obnav'+orid+' table *').css('background','rgba(166, 255, 209,1)');
+		$('#obnav'+orid+' table').css('background','rgba(166, 255, 209,1)');
+		$('#paid'+orid).css('visibility','visible');
+		$('#btn2'+orid+' button:not(.btn-warning)').css('visibility','hidden');	
+		$('#rate'+orid).show();$('#status'+orid).hide();
+	}
+	function unpaidstyle(orid){
+		$('#rate'+orid).hide();
+		$('#status'+orid).show();
+		$('#paybtn'+orid).show();
+	}
+	function normalstyle(orid,status){
+		$('#rate'+orid).hide();
+		$('#status'+orid).show();
+		$('#paybtn'+orid).hide();
+		//$('#paid'+orid).css('visibility','visible');
+		if(status==2){
+			$('#status'+orid).html("<i class='fa fa-spinner fa-spin'></i> "+$('#status'+orid).html())
+		}
 	}
 	function submit(orid){
 		document.getElementById('formd'+orid).submit();
@@ -24,8 +36,8 @@
 		}
 	}
 	function morebtn(orid,t){
-		document.getElementById('ob'+orid).style.height= ((40*(t-3))+300)+'px';
-		document.getElementById('obnav'+orid).style.height= ((40*(t-3))+280)+'px';
+		document.getElementById('ob'+orid).style.height= ((50*(t-3))+300)+'px';
+		document.getElementById('obnav'+orid).style.height= ((50*(t-3))+300)+'px';
 		document.getElementById('more'+orid).style.display='none';
 		document.getElementById('fold'+orid).style.display='inline';
 		var x = document.getElementsByClassName('obtd'+orid);
@@ -45,17 +57,61 @@
 			$('[name="paytype"] option:first').attr('disabled',false)
 			$('[name="paytype"]').val(1);
 		}
+		discountPrice()
+	}
+	function discountPrice(){
+		origPri = $('[name="totprice"]').val()
+		if($('[name="paytype"]').val()==1){
+			$('#payordid').html(origPri*0.9)
+		}else{
+			$('#payordid').html($('[name="totprice"]').val())
+		}
 	}
  	function payOrder(orid,cusid,totprice){
 		if(cusid==0){
 			cusid='NULL';
 			noBalance();
 		}
-		$('#payordid').html(orid)
+		$('#payordid').html(totprice)
 		$('[name="payordid"]').val(orid)
 		$('[name="totprice"]').val(totprice)
 		$('[name="payer"]').val(cusid)
 		$('#modal-pay').click()
+		discountPrice()
+	}
+	function rateOrder(orid,stars,empname){
+		if(stars==0){
+			$('#stars').parent().attr('disabled',true)
+		}else{
+			$('[name="ratelevel"]').val(stars)
+			rateStar()
+		}
+		$('#worker').html(empname)
+		$('[name="rateordid"]').val(orid)
+		$('#modal-rate').click()
+	}
+	function rateStar(){
+		starNum = $('[name="ratelevel"]').val();
+		for(i=0;i<$('#stars').children().length;i++){
+			if(i<starNum){
+				$($('#stars').children()[i]).css('color','yellow')
+			}else{
+				$($('#stars').children()[i]).css('color','#ffffff')
+			}
+		}
+		if(starNum==0){
+			$('#stars').parent().attr('disabled',true)
+		}else{
+			$('#stars').parent().attr('disabled',false)
+		}
+	}
+	function changeStatus(orid,origstatus){
+		$('[name="ordstatusid"]').val(orid)
+		$('[name="orderstatus"]').val(origstatus)
+		$('#modal-status').click()
+	}
+	function changestatusname(ele){
+		$('[name="statusname"]').val($(ele).children('[value='+ele.value+']').html())
 	}
 	function deleteOrder(orid){
 		if(confirm('Do you want to Delete order No.'+orid+'?')){
@@ -66,13 +122,14 @@
 <?php
 	include 'timecond.php';
 /**query all the orders and customer information in limited condition*/	
-	$sql_orders = "SELECT o.id,o.cus_id,CONCAT(c.firstname,' ',c.lastname) AS cusname,emp_id,CONCAT(e.firstname,' ',e.lastname) AS empname,Date,Time,status FROM orders as o LEFT JOIN customer as c ON o.cus_id = c.id LEFT JOIN employee as e ON o.emp_id = e.id $condition ORDER BY Date DESC,time DESC";
+	$sql_orders = "SELECT o.id,o.cus_id,car.plate,CONCAT(c.firstname,' ',c.lastname) AS cusname,os.emp_id,os.car_id,CONCAT(e.firstname,' ',e.lastname) AS empname,Date,Time,o.status,ost.status AS status_name,rate FROM orders as o LEFT JOIN customer as c ON o.cus_id = c.id LEFT JOIN order_service AS os ON o.id=os.order_id LEFT JOIN employee as e ON os.emp_id = e.id LEFT JOIN car ON os.car_id = car.id LEFT JOIN order_status AS ost ON o.status = ost.id $condition ORDER BY Date DESC,time DESC";
 	$result = $mysql->query($sql_orders);
 	while($row_order = $mysql->fetch($result)) {
 		$cusname= empty($row_order['cusname']) ? 'Unknown': $row_order['cusname'];
-		$empname= empty($row_order['empname']) ? 'Unknown': $row_order['empname'];
+		$empname= empty($row_order['empname']) ? '': '(Worker: '.$row_order['empname'].")";
+		$car_info = inputCheck($row_order['plate']);
 ?>
-<div class='order_block' id='ob<?php echo $row_order[0];?>'>
+<div class='order_block col-md-4' id='ob<?php echo $row_order[0];?>'>
 	<div class='ob_nav' id='obnav<?php echo $row_order[0];?>'>
 		<table id="ob_tbl<?php echo $row_order[0];?>">
 			<tr>
@@ -82,7 +139,7 @@
 			$res=$mysql->query($sql_order_price);
 			$row_item=$mysql->fetch($res);
 			$num=$row_item['num'];
-			echo "<th colspan='2'>$cusname  <samp><small>$empname</small></samp></th>
+			echo "<th colspan='2'>$cusname <small>$car_info</small></th>
 					<th class='text-right' colspan='2'>".substr($row_order['Date'],5)." ".substr($row_order['Time'],0,5)."</th>";
 			?>
 			</tr>
@@ -122,21 +179,31 @@
 			}
 			echo "<input type='hidden' name='od_cus[{$row_order['id']}]' value='{$row_order['cus_id']}'/>
 					<input type='hidden' name='od_emp' value='{$row_order['emp_id']}'/>
+					<input type='hidden' name='od_car' value='{$row_order['car_id']}'/>
 				</form>";
 			/*fill in blank row if the order have less than 3 items*/	
 			for($n=$num;$n<3;$n++){
 				echo "<tr id='ob_tbl_tb'><td>&nbsp</td><td>&nbsp</td><td>&nbsp</td><td>&nbsp</td></tr>";
 			}		
 			echo "<tr id='ob_tbl_tb'>
-					<th colspan='2' id='paid'><span id='paid$row_order[0]'>Paid</span></th>
+					<th colspan='2' class='paid'><span id='paid$row_order[0]'>Paid</span></th>
 					<th class='text-right' colspan='2'>{$row_item['order_price']}&nbspRMB</th>
 				</tr>";
+			if($row_order['rate']==0){
+				$ratedstars = 'Rate';
+			}else{
+				$ratedstars = '';
+				for($v=0; $v < $row_order['rate']; $v++){
+					$ratedstars .= "<i class='fa fa-star'></i>";
+				}
+			}
 		?>
 		</table>
 		<div class='paybtn'>
 			<span id="btn2<?php echo $row_order[0];?>">
-				<button type="button"  onclick="payOrder('<?php echo $row_order['id']."','".$row_order['cus_id']."','".$row_item['order_price'];?>')" class='btn btn-success'>Pay</button>
-				<button type="button" onclick="alert('<?php echo $row_order['emp_id'];?>')" class='btn btn-warning'>Rate</button>
+				<button type="button"  onclick="payOrder('<?php echo $row_order['id']."','".$row_order['cus_id']."','".$row_item['order_price'];?>')" id='paybtn<?php echo $row_order['id'];?>' class='btn btn-success'>Pay</button>
+				<button type="button" onclick="rateOrder('<?php echo $row_order['id']."','".$row_order['rate']."','".$empname;?>')" class='btn btn-warning' id='rate<?php echo $row_order['id'];?>' style='display:none'><?php echo $ratedstars;?></button>
+				<button type="button" onclick="changeStatus('<?php echo $row_order['id']."','".$row_order['status'];?>')" class='btn btn-warning' id='status<?php echo $row_order['id'];?>'><?php echo $row_order['status_name'];?></button>
 				<button type='button' name='edit' onclick="submit('<?php echo $row_order[0];?>')"  class='btn btn-primary'>Edit</button>
 				<button type='button' onclick="deleteOrder('<?php echo $row_order['id'];?>')" class='btn btn-danger'>Del</button>
 				<form method='post' action=''>
@@ -146,16 +213,20 @@
 			<?php
 /**change style if more than 3 row*/
 			if($num > 3){	
-				echo "<div id='more$row_order[0]' class='morerow' onclick='morebtn($row_order[0],$num)'>
-						<a>More</a>
-					</div>
-					<div id='fold$row_order[0]' class='morerow' style='display:none;' onclick='foldbtn($row_order[0])'>
-						<a>Fold</a>
-					</div>";
+				echo "<span id='more$row_order[0]' class='morerow' onclick='morebtn($row_order[0],$num)'>
+						<a><i class='fa fa-angle-double-down fa-3x'></i></a>
+					</span>
+					<span id='fold$row_order[0]' class='morerow' style='display:none;' onclick='foldbtn($row_order[0])'>
+						<a><i class='fa fa-angle-double-up fa-3x'></i></a>
+					</span>";
 			}
 /**paid style*/
-			if($row_order['status']==4){
-				echo "<script>paidstyle('$row_order[0]')</script>";
+			if($row_order['status'] == 4){
+				echo "<script>paidstyle('$row_order[0]');</script>";
+			}else if($row_order['status'] == 3){
+				echo "<script>unpaidstyle('$row_order[0]')</script>";
+			}else if($row_order['status'] <= 2){
+				echo "<script>normalstyle('$row_order[0]','".$row_order['status']."')</script>";
 			}
 			?>
 		</div>
@@ -172,7 +243,7 @@
 						<div class="modal-header">
 							 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 							<h1 class="modal-title text-center" id='popFormLabel'>
-								Pay a Order <span id='payordid'></span>
+								Pay a RMB <span class='label label-warning' id='payordid'></span>
 							</h1>
 						</div>
 						<div class="modal-body">	
@@ -185,7 +256,7 @@
 								$sql_cus = "SELECT id,username,CONCAT(FirstName,' ',LastName) AS realname FROM customer ORDER BY firstname, lastname";
 								$res_cus = $mysql->query($sql_cus);
 								while($row_cus = $mysql->fetch($res_cus)){
-									echo "<option value='{$row_cus['id']}' $isdiabled>".$row_cus['username']." - ".$row_cus['realname']."</option>";
+									echo "<option value='{$row_cus['id']}'>".$row_cus['username']." - ".$row_cus['realname']."</option>";
 								}
 							?>
 										<option value='NULL'>Unknown</option>
@@ -193,13 +264,13 @@
 								</div>
 							    <div class="form-group">
 									<label>Select Pay Type:</label>
-									<select class="form-control" name='paytype' required>
+									<select class="form-control" name='paytype' onchange='discountPrice()' required>
 							<?php
 								//Get all pay type
 								$sql_payType = "SELECT * FROM pay_type ORDER BY id";
 								$res_payType = $mysql->query($sql_payType);
 								while($row_payType = $mysql->fetch($res_payType)){
-									echo "<option value='{$row_payType['id']}' $isdiabled>{$row_payType['type']}</option>";
+									echo "<option value='{$row_payType['id']}'>{$row_payType['type']}</option>";
 								}
 							?>
 									</select>
@@ -208,6 +279,74 @@
 								<input type='hidden' name='totprice'/>
 								<button type='submit' class='btn btn-success btn-block'/>Submit</button>
 							</form>
+						</div>
+					</div>	
+				</div>
+			</div>
+<!-- Rate Order Form -->	
+			<input type='hidden' id='modal-rate' href='#modal-container-1' data-toggle='modal'/>
+			<div class="modal fade" id="modal-container-1" role="dialog" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+							<h1 class="modal-title text-center" id='popFormLabel'>
+								Rate Order <span id='worker'></span>
+							</h1>
+						</div>
+						<div class="modal-body">	
+								<div class="form-group">
+									<label>How did customer rate the order:</label>
+									<select class="form-control" name='ratelevel' onchange='rateStar()' required>
+										<option value='0' selected>Select a Level...</option>
+										<option value='5'>Perfect</option>
+										<option value='4'>Very Good</option>
+										<option value='3'>Not Bad</option>
+										<option value='2'>Bad</option>
+										<option value='1'>Very Bad</option>
+									</select>
+								</div>
+								<input type='hidden' name='rateordid'/>
+								<button type='button' class='btn btn-success btn-block' onclick='changeRate()' disabled/>
+								   <span id='stars'>
+									<i class='fa fa-star'></i>
+									<i class='fa fa-star'></i>
+									<i class='fa fa-star'></i>
+									<i class='fa fa-star'></i>
+									<i class='fa fa-star'></i>
+								  </span>
+								</button>
+						</div>
+					</div>	
+				</div>
+			</div>
+<!-- Change Order Status Form -->	
+			<input type='hidden' id='modal-status' href='#modal-container-3' data-toggle='modal'/>
+			<div class="modal fade" id="modal-container-3" role="dialog" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+							<h1 class="modal-title text-center" id='popFormLabel'>
+								Change Order Status
+							</h1>
+						</div>
+						<div class="modal-body">
+							<div class="form-group">
+								<label>Change Order Status to:</label>
+								<select class="form-control" name='orderstatus' onchange='changestatusname(this)' required>
+							<?php
+								$sql_orderStatus = "SELECT * FROM order_status WHERE id < 4";
+								$res_orderStatus = $mysql->query($sql_orderStatus);
+								while($row_status = $mysql->fetch($res_orderStatus)){
+									echo "<option value='".$row_status['id']."'>".$row_status['status']."</option>";
+								}
+							?>
+								</select>
+							</div>
+							<input type='hidden' name='statusname'/>
+							<input type='hidden' name='ordstatusid'/>
+							<button type='button' class='btn btn-success btn-block' onclick='changeOrdStatus()'/>Submit</button>
 						</div>
 					</div>	
 				</div>
@@ -222,7 +361,7 @@
 		if($paytype==1){
 			$discount = '0.9';
 			$paid = $totprice*$discount;
-			$origBalance = $mysql->oneQuery("SELECT balance FROM customer WHERE id ='$cusId'");
+			$origBalance = round($mysql->oneQuery("SELECT balance FROM customer WHERE id ='$cusId'"),2);
 			if($origBalance < $paid){
 				echo "<script>alert('Banlance ($origBalance) is lower than price ($paid)')</script>";
 				return false;
@@ -233,7 +372,7 @@
 		}else{
 			$discount = '1';
 		}	
-		$empid = $_SESSION['userid'];
+		$empid = $_SESSION['adminid'];
 		$sql_payment = "INSERT payment VALUES ('','$payId',$cusId,'$totprice','$discount',NOW(),'$paytype','$empid')";
 		$sql_updOrdStatus = "UPDATE orders SET status=4 WHERE id= $payId";
 		$mysql->query($sql_payment);
@@ -244,7 +383,9 @@
 	if(isset($_POST['deloid'])){
 			$delId = $_POST['deloid'];
 			echo "<script>document.getElementById('obnav'+$delId).style.display='none';</script>";
-			$mysql->query("DELETE FROM orders WHERE id = $delId");
+			$mysql->query("DELETE FROM order_product WHERE order_id = '$delId'");
+			$mysql->query("DELETE FROM order_service WHERE order_id = '$delId'");
+			$mysql->query("DELETE FROM orders WHERE id = '$delId'");
 		}
 /**if row_item is not empty,row_order must not be empty(no orders).Because it's outside of while loop,so it only can use row_item*/		
 	if(empty($row_item)){

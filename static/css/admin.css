@@ -5,6 +5,9 @@ table,input,select,button,.mainblocks{
 }
 table tr td:first-child,table tr th:first-child{
 	padding:15px;
+	border-top:0px;
+	border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
 }
 body{
     background-color: #333333;
@@ -31,9 +34,7 @@ body{
 label{
 	cursor:pointer;
 }
-#tab{
-	padding-top: 10px;
-	padding-bottom: 0px;
+.tab{
 	box-shadow: 0px 0px 8px rgba(0,0,0,0.5);
 	position: fixed;
 	z-index: 1;
@@ -44,7 +45,10 @@ label{
 	background: linear-gradient(top, rgb(12,12,12) 0%,#333333 100%);
    background: -moz-linear-gradient(top, rgb(12,12,12) 0%,#333333 100%);
 }
-
+.tab button{
+	margin-top:-5px;
+	padding:10px 25px 10px 25px;
+}
 .left-menu {
 	float: left;
 }
@@ -88,31 +92,35 @@ label{
 	-moz-transition: all linear 0.2s;
 	transition: all linear 0.2s;
 }
+/**Create order page*/
 .create_order{
-	float:left;
-	width: 57%;
+	padding:1px;
+}
+.create_order table{
+	background:#fff;
 }
 .selectid{
-	height: 50px;
-	width: 30%;
+	width: 100%;
 	box-shadow: 0px 0px 1px rgba(0,0,0,0.3);
 }
-#createbtn{
-	margin-left: 40px;
-	height: 50px;
-	color: #fff;
+@media (min-width: 768px){
+	.createbtns{
+		margin-top: 20px;
+	}
 }
-#submitbtn ul li {
+.submitbtn button{
+	padding:10px 25px 10px 25px;
+}
+.submitbtn ul li {
 	list-style-type:none;
 	float: left;
-	padding-right: 10px;
+	padding-right: 2px;
 }
 #create_page{
-	width: 43%;
+	background:#fff;
+	border-radius:5px;
+	padding:5px;
 	float:right;
-	margin-top: -90px;
-	/*margin-left: 50%;
-	position: fixed;*/
 }
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button{
@@ -121,12 +129,16 @@ input::-webkit-inner-spin-button{
 }
 input[type="number"]{-moz-appearance:textfield;}
 .bnum{
-	font-size: 26px;
-	font-family:Georgia,Times;
 	visibility: hidden;
+	position:absolute;
+}
+.bnuml{
+	margin-left:10px;
+}
+.bnumr{
+	margin-left:-28px;
 }
 .order_block{
-	width: 33%;
 	padding-right: 5px;
 	height: 300px;
 	float:left;  
@@ -136,8 +148,9 @@ input[type="number"]{-moz-appearance:textfield;}
 	height: 280px; 
 }
 .ob_nav table{
-	height: 274px;
+	height: 280px;
 	border-radius:5px;
+		width:100%;
 }
 .ob_nav table th{
 	background: #f8f8f8;
@@ -166,22 +179,25 @@ input[type="number"]{-moz-appearance:textfield;}
 .morerow{
 	display: inline;
 	padding-left:0px;
+	cursor:pointer;
+}
+.morerow a{
+	text-decoration:none;
 }
 .paybtn{
 	display: inline;
 	position: absolute;
-	padding-left: 10px;
-	margin-top: -60px;
-}
-.paybtn button{
-	padding: 0px 15px 0px 15px;
+	bottom:0px;
+	padding-left: 5px;
+	bottom: 24px;
 }
 .paybtn form{
 	display: inline;
 }
-#paid span{
+.paid span{
 	color: #0ab159;	
 	visibility:hidden;
+	z-index:9999;
 }
 /**Help tips*/
 .helptip{
@@ -211,6 +227,22 @@ input[type="number"]{-moz-appearance:textfield;}
 		-webkit-transform: translate(0,0);
 		transform: translate(0,0);
 	}
+}
+/** Admin Login */
+.main{
+	background:#fff;
+	border-radius: 5px;
+	padding-top:10px;
+	box-shadow: 3px 3px 20px 1px black;
+}
+.sysTit{
+	color:#fff;
+}
+.seepwd{
+	position:absolute;
+	margin-top: -27px;
+	margin-left: 90%;
+	cursor:pointer;
 }
 /** Recharge Page*/
 	.cards{

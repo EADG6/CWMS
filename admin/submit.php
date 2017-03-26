@@ -1,23 +1,16 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Submit</title>
-        <link type="text/css" rel="stylesheet" href="../static/css/kube.css"/>
-		<link type="text/css" rel="stylesheet" href="../static/css/admin.css"/>
-    </head>
-    <body><br/><br/><br/><br/>
-        <row centered>
-        <column cols="6">
         <?php
 			session_start();
-			include "inc/db.php";
-			echo "<div class='forms'>
-					<fieldset class='alert alert-success'>
-					<legend class='fat'>";
+			require "inc/db.php";
+			include "inc/header.php";
+			echo "<div class='col-sm-6 col-sm-offset-3'>
+					<div class='alert alert-success'>
+					<div class='fat'>";
             if(isset($_SESSION['product__quantity']) && !isset($_POST['fname']) && !isset($_POST['isCata'])){
 				if(isset($_SESSION['order_id'])){
 /**To edit an order, first need to DELETE previous order*/
-					$sql_del="DELETE FROM orders WHERE id={$_SESSION['order_id']}";
+					$mysql->query("DELETE FROM order_product WHERE order_id = '{$_SESSION['order_id']}'");
+					$mysql->query("DELETE FROM order_service WHERE order_id = '{$_SESSION['order_id']}'");
+					$sql_del="DELETE FROM orders WHERE id='{$_SESSION['order_id']}'";
 					$mysql->query($sql_del);
 					unset($_SESSION['order_id']);
 				}
@@ -25,18 +18,17 @@
 				$product__quantity=$_SESSION['product__quantity'];
 	            $cus_id = $_SESSION['cus_id'];	
 	            $emp_id = $_SESSION['emp_id'];	
+				unset($_SESSION['emp_id']);
 				unset($_SESSION['cus_id']);
 				unset($_SESSION['product__quantity']);
-				session_destroy();
-				if(isset($_POST['time']) && !empty($_POST['time'])){
-					$time = "'{$_POST['time']}'";	
-				}else{
-					$time = 'curtime()';
-				}
                 $itemnum = count($product__quantity);
-                $sql_inserto = "INSERT orders(cus_id,emp_id,date,time) VALUE($cus_id,$emp_id,curdate(),$time)";
+				$car_id = inputCheck($_POST["carid"]);
+                $sql_inserto = "INSERT orders(cus_id,date,time,status) VALUE($cus_id,curdate(),curtime(),1)";
                 $mysql->query($sql_inserto);
 				$order_id = mysql_insert_id();
+				if(!empty($emp_id)&&!empty($car_id)){
+					$mysql->query("INSERT order_service(emp_id,car_id,order_id) VALUE('$emp_id','$car_id','$order_id')");
+				}
                 for ($itemcount=0;$itemcount<$itemnum;$itemcount++) {
 					$product_id = array_keys($product__quantity)[$itemcount];
 					$quantity = $product__quantity[$product_id];
@@ -44,7 +36,7 @@
                     $mysql->query($sql_insertf);
                 }
                 echo "Create Order Successfully";  
-                header("refresh:1;url='index.php?page=current_orders'");		
+               header("refresh:1;url='index.php?page=current_orders'");		
             }else if(isset($_POST['fname'])){
 /**cheack info and create a new customer*/	
 				$fname = preg_replace("/\s/","",(string)$_POST['fname']);
@@ -53,14 +45,32 @@
 					$address = preg_replace("/\s/","",(string)$_POST['address']);
 					$tel = preg_replace("/\s/","",(string)$_POST['tel']);
 					$sex = (int)$_POST['sex'];
+					for($i=1;$i<=3;$i++){
+						$carid = 'carid'.$i;
+						$plate = 'plate'.$i;
+						$brand = 'brand'.$i;
+						$color = 'color'.$i;
+						$$carid = inputCheck($_POST['carid'.$i]);
+						$$plate = inputCheck($_POST['plate'.$i]);
+						$$brand = inputCheck($_POST['brand'.$i]);
+						$$color = inputCheck($_POST['color'.$i]);
+					}
 					if(isset($_POST['cusid'])){
-						$cusid = $_POST['cusid'];
+						$cusid = inputCheck($_POST['cusid']);
 						$sql_editcus = "UPDATE customer SET firstname = '$fname',lastname = '$lname',tel = '$tel',sex = $sex,address = '$address' WHERE id = '$cusid'";
 						$mysql->query($sql_editcus);
+						$mysql->query("UPDATE car SET plate='$plate1',brand='$brand1',color='$color1' WHERE id = '$carid1'");
+						$mysql->query("UPDATE car SET plate='$plate2',brand='$brand2',color='$color2' WHERE id = '$carid2'");
+						$mysql->query("UPDATE car SET plate='$plate3',brand='$brand3',color='$color3' WHERE id = '$carid3'");
 						echo 'Update Customer Successfully';
 					}else{
-						$sql_newcus= "INSERT customer (firstname,lastname,sex,tel,address) VALUE ('$fname','$lname',$sex,'$tel','$address')";
+						$username = inputCheck(preg_replace("/\s/","",$_POST['username']));
+						$salt=base64_encode(mcrypt_create_iv(6,MCRYPT_DEV_RANDOM)); //Add random salt
+						$pwdhash = MD5('1234'.$salt); //MD5 of pwd+salt
+						$sql_newcus= "INSERT customer (firstname,lastname,sex,tel,address,username,salt,pwdhash) VALUE ('$fname','$lname',$sex,'$tel','$address','$username','$salt','$pwdhash')";
 						$mysql->query($sql_newcus);
+						$cusid = mysql_insert_id();
+						$mysql->query("INSERT car VALUES ('','$plate1','$brand1','$color1','$cusid'),('','$plate2','$brand2','$color2','$cusid'),('','$plate3','$brand3','$color3','$cusid')");
 						echo "Add Customer Successfully";
 					}
 					header("refresh:1;url='index.php?page=customer&action=info'");
@@ -99,13 +109,14 @@
 					echo "Wrong!<script>history.go(-1);</script>";
 				}
 			}
-			echo "		</legend>
+			echo "		</div>
 						<p>Back to Home Page in 1 seconds...</p>
 						<a href='index.php'>Back to Homepage immdiately</a>
 					</fieldset>
 				</div>";
         ?>
-        </column>
-        </row>
-    </body>
+				</dd>
+			</dl>
+		</div>
+	</body>
 </html>

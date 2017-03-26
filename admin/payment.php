@@ -2,7 +2,7 @@
 <div class="col-md-12 mainblocks">
 	<table class ='table table table-striped'>
 		<thead>
-			<th colspan='4'>Payment Records:</th>
+			<th colspan='7'>Payment Records:</th>
 			<tr>
 				<th>Order ID</th>
 				<th>Payer</th>

@@ -3,7 +3,7 @@
 	 //Start the session
 	 session_start();
 	 //Connect database
-	 require "inc/db.php";
+	 require "admin/inc/db.php";
 	 include "inc/header.php";
  	if(isset($_GET['new'])){
 		$action = 'sign';
@@ -12,24 +12,26 @@
 	 }
  	if($action == 'login'){
 ?>
+    <div background="/static/img/bg3.jpg">
 	    <div class="container">
 	        <hr>
-	        <div class="row">
+	        <div class="row" style="margin-left: 450px;">	
 					<h1>PLEASE LOGIN</h1>
 					<br> </br>
 						<form method="post">  
 							<!-- input the user name -->
 							<div class="form-group col-md-offset-0">
 								<label for='username'>Username:</label>
-								<input type="text" name="username" class="form-control" style="width: 200px">  
+								<input type="text" name="username" class="form-control" style="width: 200px;" placeholder='test1'>  
 							</div> 
 							<!-- input the password -->
 							<div class="form-group col-md-offset-0">
 								<label for='password'>Password:</label>
-								<input type="password" name="password" class="form-control" style="width: 200px">  
+								<input type="password" name="password" class="form-control" style="width: 200px;" placeholder='123'>  
 							</div>
-							<a href="login.php?new" class="btn btn-primary">Sign Up</a>&nbsp;&nbsp;
+							<a href="login.php?new" class="btn btn-primary">Sign Up</a>
 							<input type="submit" value="Sign In" class="btn btn-primary">  
+							<a href="index.php?new" class="btn btn-primary">Back</a>
 					 	</form>
 			</div>
 		</div>
@@ -38,209 +40,142 @@
 		//require('db.php');
 		// get username & password
 		if(isset($_POST['username'])&&isset($_POST['password'])){
-			$username = $_POST['username'];  
-			$password = $_POST['password']; 
+			$username = strtolower(inputCheck($_POST['username'])); 
+			$pwd = inputCheck($_POST['password']);
 			if(empty($username)){    
 				// check vaule
 				echo"<script type='text/javascript'>alert('Empty Username');location='index.php?page=login';  
 					</script>";            
-			}else if(empty($password)){
+			}else if(empty($pwd)){
 				// check vaule
 				echo"<script type='text/javascript'>alert('Empty Password');location='index.php?page=login';</script>";  
 			}else{   
-				// select information from database
-				$sql = "SELECT * FROM customer WHERE password = '$password' AND username = '$username'";
-				$query = mysql_query("$sql");
-				$cusinfo = mysql_fetch_array($query);
-				$id = $cusinfo['id'];
-				$rows = mysql_num_rows($query);
-				$row = mysql_fetch_array($query);
-				// check u & p
-				if ($rows ==1){
-					session_start();
-					$_SESSION['customer_id']= $id;
-					$_SESSION['customer_username']= $username;
-					//Say right and go to home2 page
-					echo"<script type='text/javascript'>alert('ok');</script>"; 
-					header("location: index.php");		
-				}else{					
-					//Say wrong and go back to login page 
-					echo"<script type='text/javascript'>alert('Wrong User Name or Password');location='login.php';</script>";
-				}   
+				$res_pwd = $mysql->query("SELECT id,username,pwdhash,salt FROM customer WHERE username = '$username'"); 
+				$cusInfo = $mysql->fetch($res_pwd);
+				$pwdhash = MD5($pwd.$cusInfo['salt']);
+				if(mysql_num_rows($res_pwd)){
+					$rightpwd = $cusInfo['pwdhash'];
+					if($pwdhash == $rightpwd){
+						$_SESSION['customer_name'] = $cusInfo['username'];
+						$_SESSION['customer_id'] = $cusInfo['id'];
+						echo "<script>$('[name=\"username\"').addClass('alert-success');$('[name=\"password\"').addClass('alert-success');</script>";
+						redirect('index.php');
+					}else{
+						echo "<script>$('[name=\"username\"').addClass('alert-success')
+							$('[name=\"password\"').addClass('alert-danger')
+							$('[name=\"username\"').val('$username')
+							alert('Wrong Password');$('[name=\"password\"').focus();
+						</script>";
+					}
+				}else{
+					echo "<script>$('[name=\"username\"').addClass('alert-danger');$('[name=\"username\"').focus();alert('Username not found')</script>";
+				}	  
 			}          
 		}  
-		include "inc/footer.php";
 	?>  
 <?php		
 	}else if($action=='sign'){
 ?> 
 <?php  
-require "inc/db.php";
-if (isset ($_POST['name']) && isset($_POST['username']) && isset($_POST['password']) && isset($_POST['passwordagain']) && isset($_POST['phone']) && isset($_POST['plate1']) && isset($_POST['color1']) && isset($_POST['type1']) && isset($_POST['plate2']) && isset($_POST['color2']) && isset($_POST['type2']) && isset($_POST['plate3']) && isset($_POST['color3']) && isset($_POST['type3'])) {
-	$name = $_POST['name'];
-	$username = $_POST['username'];
-	$password = $_POST['password'];
-	$passwordagain = $_POST['passwordagain'];
-	$phone = $_POST['phone'];
-	$plate1 = $_POST['plate1'];
-	$color1 = $_POST['color1'];
-	$type1 = $_POST['type1'];
-	$plate2 = $_POST['plate2'];
-	$color2 = $_POST['color2'];
-	$type2 = $_POST['type2'];
-	$plate3 = $_POST['plate3'];
-	$color3 = $_POST['color3'];
-	$type3 = $_POST['type3'];	
+if (isset ($_POST['fname'])) {
+	$fname = inputCheck($_POST['fname']);
+	$lname = inputCheck($_POST['lname']);
+	$username = inputCheck($_POST['username']);
+	$password = inputCheck($_POST['password']);
+	$passwordagain = inputCheck($_POST['passwordagain']);
+	$phone = inputCheck($_POST['phone']);	
+	$address = inputCheck($_POST['address']);	
+	$sex = inputCheck($_POST['sex']);	
 
-	if($username==""|| $password=="" || $name=="" || $phone=="" || $passwordagain=="") {  
+	if($username==""|| $password=="" || $phone=="" || $passwordagain=="") {  
 		echo"<script type='text/javascript'>alert('write all the information');location='login.php?new';  
             </script>";
-			if ($passwoed!=$passwardagain){
+			if ($password!=$passwardagain){
 				echo"<script type='text/javascript'>alert('write same password');location='login.php?new';  
 		            </script>";
 				}
 	} else {  
 	    $sql = "SELECT * FROM customer WHERE username = '$username'";
-	    $query = mysql_query("$sql");
+	    $query = $mysql->query("$sql");
 	    $rows = mysql_num_rows($query);
-	
 	        if ($rows ==1){
-			echo"<script type='text/javascript'>alert('Username in Use');location='login.php?new';  
+			echo"<script type='text/javascript'>alert('Username in Using');location='login.php?new';  
             </script>";
 		      }else{
-		         if($password!=$passwordagain) {   
-			       echo"<script type='text/javascript'>alert('Password Not Same');location='login.php?new';  
+					if($password!=$passwordagain) {   
+			        echo"<script type='text/javascript'>alert('Password Not Same');location='login.php?new';  
                         </script>"; 
-                  } else { 
-			          $sql_newcus = "INSERT INTO customer (name,username,password,phone) VALUES('$name','$username','$password','$phone')"; 
-					  $sql_newcar1 = "INSERT INTO car (plate,color,type) VALUES('$plate1','$color1','$type1')";
-					  $sql_newcar2 = "INSERT INTO car (plate,color,type) VALUES('$plate2','$color2','$type2')";
-					  $sql_newcar3 = "INSERT INTO car (plate,color,type) VALUES('$plate3','$color3','$type3')";
-			          mysql_query($sql_newcus);
-					  $customerid = mysql_insert_id();
-					  mysql_query($sql_newcar1);
-					  $carid1 = mysql_insert_id();
-					  mysql_query($sql_newcar2);
-					  $carid2 = mysql_insert_id();
-					  mysql_query($sql_newcar3);
-					  $carid3 = mysql_insert_id(); 
-					  $sql_cuscar1 = "INSERT INTO customercar (customerid, carid) VALUES('$customerid','$carid1')";
-					  $sql_cuscar2 = "INSERT INTO customercar (customerid, carid) VALUES('$customerid','$carid2')";
-					  $sql_cuscar3 = "INSERT INTO customercar (customerid, carid) VALUES('$customerid','$carid3')";
-					  mysql_query($sql_cuscar1);
-					  mysql_query($sql_cuscar2);
-					  mysql_query($sql_cuscar3);	 
-				echo"<script type='text/javascript'>alert('You Can Login Now');location='login.php';  
-           	 </script>";  
+					}else{
+					$salt=base64_encode(mcrypt_create_iv(6,MCRYPT_DEV_RANDOM)); //Add random salt
+					$pwdhash = MD5($password.$salt); //MD5 of pwd+salt
+			        $sql_newcus = "INSERT INTO customer VALUES('','$username','$pwdhash','$salt','$fname','$lname','$sex','$phone','$address','0')"; 
+			        $mysql->query($sql_newcus);
+					echo"<script type='text/javascript'>alert('You Can Login Now');location='login.php';  </script>";  
 			}
 		}  
 	}  
 }
 ?>  
  	<hr>
-    <div class="container">
-        <div class="row">
+	<div background="/static/img/bg3.jpg">
+		<div class="container">
+			<div class="row">
 				<h1>Please Enter Your Information</h1>  
 				<form method='post'>
 				    <div class="form-group col-md-5 col-md-offset-0">  
-				    	<label for='name'>Name:</label>
-						<input type="text" class="form-control" name="name" id='name' placeholder="Your Name">
+				    	<label for='fname'>First Name:</label>
+						<input type="text" class="form-control" name="fname" id='fname' placeholder="First Name" required>
+					</div>
+					
+				    <div class="form-group col-md-5 col-md-offset-0">  
+				    	<label for='fname'>Last Name:</label>
+						<input type="text" class="form-control" name="lname" id='lname' placeholder="Last Name" required>
 					</div>
 					
 				    <div class="form-group col-md-5 col-md-offset-0">  
 				    	<label for='username'>Username:</label>
-						<input type="text" class="form-control" name="username" id='username' placeholder="Make a User Name">
+						<input type="text" class="form-control" name="username" id='username' placeholder="Make a User Name" required>
 					</div>
 					
 			    	<div class="form-group col-md-5 col-md-offset-0">  
 			   		 	<label for='password'>Password:</label>
-						<input type="text" class="form-control" name="password" id='password' placeholder="Your Password">
+						<input type="password" class="form-control" name="password" id='password' placeholder="Your Password" required>
 					</div>
 					
 				    <div class="form-group col-md-5 col-md-offset-0">  
 				   	 	<label for='passwordagain'>Password Again:</label>
-						<input type="text" class="form-control" name="passwordagain" id='passwordagain'placeholder="Password Again">
+						<input type="password" class="form-control" name="passwordagain" id='passwordagain'placeholder="Password Again" required>
 					</div>
 					
 				    <div class="form-group col-md-5 col-md-offset-0">  
 				    	<label for='phone'>Phone Number:</label>
-						<input type="text" class="form-control" name="phone" id='phone' placeholder="Your Phone Number">
+						<input type="text" class="form-control" name="phone" id='phone' placeholder="Your Phone Number" required>
 					</div>
-					<div class="col-md-12">
-						<hr>
-						<h3>Vehicle information can choose to fill</h3>
+
+					<div class="form-group col-md-5 col-md-offset-0">  
+				    	<label for='address'>Address:</label>
+						<input type="text" class="form-control" name="address" id='address' placeholder="Address" required>
 					</div>
-						<div class="col-md-4">
-						<h4>First Car</h4>
-				   	 		<div class="form-group  col-md-offset-0">  
-				   			 	<label for='plate1'>Plate Number 1:</label>
-								<input type="text" class="form-control" name="plate1" id='plate1' placeholder="Plate Number">
-							</div>
 					
-				    		<div class="form-group  col-md-offset-0">  
-				   			 	<label for='colol1'>Color:</label>
-								<input type="text" class="form-control" name="color1" id='color1' placeholder="Your Car Color">
-							</div>
-							
-				    		<div class="form-group  col-md-offset-0">  
-				   			 	<label for='type1'>Type:</label>
-								<input type="text" class="form-control" name="type1" id='type1' placeholder="Type of Your Car">
-							</div>
-						</div>
-					
-						<div class="col-md-4">
-						<h4>Second Car</h4>
-				   	 		<div class="form-group col-md-offset-0">  
-				   			 	<label for='plate2'>Plate Number 2:</label>
-								<input type="text" class="form-control" name="plate2" id='plate2' placeholder="Plate Number">
-							</div>
-					
-				    		<div class="form-group col-md-offset-0">  
-				   			 	<label for='color2'>Color:</label>
-								<input type="text" class="form-control" name="color2" id='color2' placeholder="Your Car Color">
-							</div>
-							
-				    		<div class="form-group col-md-offset-0">  
-				   			 	<label for='type2'>Type:</label>
-								<input type="text" class="form-control" name="type2" id='type2' placeholder="Type of Your Car">
-							</div>
-						</div>
-						
-						<div class="col-md-4">
-						<h4>Third Car</h4>
-				   	 		<div class="form-group col-md-offset-0">  
-				   			 	<label for='plate3'>Plate Number 3:</label>
-								<input type="text" class="form-control" name="plate3" id='plate3' placeholder="Plate Number">
-							</div>
-					
-				    		<div class="form-group col-md-offset-0">  
-				   			 	<label for='color3'>Color:</label>
-								<input type="text" class="form-control" name="color3" id='color3' placeholder="Your Car Color">
-							</div>
-							
-				    		<div class="form-group col-md-offset-0">  
-				   			 	<label for='type3'>Type:</label>
-								<input type="text" class="form-control" name="type3" id='type3' placeholder="Type of Your Car">
-							</div>
-						</div>
-					<div class="col-md-12">
-						<hr>
+					<div class="form-group col-md-5 col-md-offset-0">  
+				    	<label for='sex'>Sex:</label>
+						<select class="form-control" name="sex" id='sex' required>
+							<option value='1'>Male</option>
+							<option value='2'>Female</option>
+							<option value='0'>Unknown</option>
+						</select>
 					</div>
-					<div class="col-md-12 col-md-offset-10">
-<<<<<<< HEAD
-				    	<input type="submit" value="Submit">  
-				   	 	<input type="reset" value="delete">
-						<a href="login.php" >Back</a>
-=======
+					
+					<div class="col-md-4 col-md-offset-8">
 				    	<a href="login.php" class="btn btn-primary" >Back</a>
 				    	<input type="submit" value="Submit" class="btn btn-primary">  
 				   	 	<input type="reset" value="Delete" class="btn btn-primary">
->>>>>>> origin/dev
 					</div>
 				</form>
-        		</div>        
-    		</div>
+        	</div>        
+    	</div>
+    </div>
 	<?php
 }
+	include "inc/footer.php";
 	?>
-
