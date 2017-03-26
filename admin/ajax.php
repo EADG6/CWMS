@@ -21,6 +21,13 @@
 		$sql_rateOrd = "UPDATE orders SET rate = '$rateLevel' WHERE id = '$rateordid'";
 		$mysql->query($sql_rateOrd);
 	}
+	/**Change order status*/
+	if(isset($_POST['status'])){
+		$status = inputCheck($_POST['status']);
+		$orderid = inputCheck($_POST['orderid']);
+		$sql_statusOrd = "UPDATE orders SET status = '$status' WHERE id = '$orderid'";
+		$mysql->query($sql_statusOrd);
+	}
 	/**Query customer's cars*/
 	if(isset($_POST['cusid'])){
 		$cusid = inputCheck($_POST['cusid']);

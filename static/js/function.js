@@ -87,7 +87,7 @@
 	}
 	/* use ajax to change order rate */
 	function changeRate(){
-		if(confirm('Did you want to Rate the order?')){
+		if(confirm('Do you want to Rate the order?')){
 			starsnum = $('[name="ratelevel"]').val();
 			orid = $('[name="rateordid"]').val();
 			$.ajax({
@@ -95,9 +95,35 @@
 				data:{"rate":starsnum,"orderid":orid},
 				type:'POST'
 			});
-			$('#rate'+orid).html('Rated '+starsnum+"<i class='fa fa-star'></i>")
+			stars = ''
+			for(var v=0;v<starsnum;v++){
+				stars += "<i class='fa fa-star'></i>"
+			}
+			$('#rate'+orid).html(stars)
 			$('#rate'+orid).attr('onclick',"rateOrder('"+orid+"','"+starsnum+"')")
 		}$('#modal-rate').click()
+	}
+	/* use ajax to change order status */
+	function changeOrdStatus(){
+		if(confirm('Do you want to change the order status?')){
+			orid = $('[name="ordstatusid"]').val();
+			status = $('[name="orderstatus"]').val();
+			statusname = $('[name="statusname"]').val();
+			$.ajax({
+				url:'ajax.php',
+				data:{"status":status,"orderid":orid},
+				type:'POST'
+			});
+			if(status==3){
+				unpaidstyle(orid);
+			}else if(status<=2){
+				normalstyle(orid,status);
+			}
+			$('#status'+orid).html(statusname)
+			if(status==2){
+				$('#status'+orid).html("<i class='fa fa-spinner fa-spin'></i> "+statusname)
+			}
+		}$('#modal-status').click()
 	}
 	/* use ajax to check customer username */
 	function checkCusName(){

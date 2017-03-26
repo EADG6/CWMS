@@ -23,7 +23,7 @@
 				unset($_SESSION['product__quantity']);
                 $itemnum = count($product__quantity);
 				$car_id = inputCheck($_POST["carid"]);
-                $sql_inserto = "INSERT orders(cus_id,date,time,status) VALUE($cus_id,curdate(),curtime(),3)";
+                $sql_inserto = "INSERT orders(cus_id,date,time,status) VALUE($cus_id,curdate(),curtime(),1)";
                 $mysql->query($sql_inserto);
 				$order_id = mysql_insert_id();
 				if(!empty($emp_id)&&!empty($car_id)){
