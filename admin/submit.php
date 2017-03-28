@@ -1,6 +1,6 @@
         <?php
 			session_start();
-			require "inc/db.php";
+			require "../inc/db.php";
 			include "inc/header.php";
 			echo "<div class='col-sm-6 col-sm-offset-3'>
 					<div class='alert alert-success'>
