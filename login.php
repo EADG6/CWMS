@@ -12,9 +12,8 @@
 	 }
  	if($action == 'login'){
 ?>
-	    <div class="container" style="border-radius:5px; background:white">
-	        <hr>
-	        <div class="row" >	
+	    <div class="container col-md-8 col-md-offset-2" style="border-radius:5px; background:white; padding-bottom:40px">
+	        <div class="col-md-6 col-md-offset-4" >	
 					<h1>PLEASE LOGIN</h1>
 					<br> </br>
 						<form method="post">  
