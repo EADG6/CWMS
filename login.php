@@ -1,11 +1,18 @@
 <!-- This page used to the customer login -->
 <?php
-	 //Start the session
-	 session_start();
-	 //Connect database
-	 require "inc/db.php";
-	 include "inc/header.php";
-	 $lastpage = $_SERVER['HTTP_REFERER'];
+	//Start the session
+	session_start();
+	//Connect database
+	require "inc/db.php";
+	include "inc/header.php";
+	if(isset($_SERVER['HTTP_REFERER'])){
+		$gotopage = $_SERVER['HTTP_REFERER'];
+		if(explode('CWMS/',$gotopage)[1]!='login.php'){
+			$gotopage = explode('CWMS/',$gotopage)[1];
+		}
+	}else{
+		$gotopage = 'index.php';
+	}
  	if(isset($_GET['new'])){
 		$action = 'sign';
 	 }else{
@@ -58,7 +65,7 @@
 						$_SESSION['customer_name'] = $cusInfo['username'];
 						$_SESSION['customer_id'] = $cusInfo['id'];
 						echo "<script>$('[name=\"username\"').addClass('alert-success');$('[name=\"password\"').addClass('alert-success');</script>";
-						redirect($lastpage);
+						redirect($gotopage);
 					}else{
 						echo "<script>$('[name=\"username\"').addClass('alert-success')
 							$('[name=\"password\"').addClass('alert-danger')

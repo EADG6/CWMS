@@ -35,7 +35,7 @@
                     $sql_insertf = "INSERT order_product(order_id,product_id,quantity) VALUE(".$order_id.",".$product_id.",".$quantity.")";
                     $mysql->query($sql_insertf);
                 }
-                echo "Create Order Successfully";  
+                echo "Create Order Successfully";
                header("refresh:1;url='index.php?page=current_orders'");		
             }else if(isset($_POST['fname'])){
 /**cheack info and create a new customer*/	
