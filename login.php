@@ -12,14 +12,14 @@
 	 }
  	if($action == 'login'){
 ?>
-	    <div class="container">
+	    <div class="container" style="border-radius:5px; background:white">
 	        <hr>
-	        <div class="row" style="margin-left: 450px;">	
+	        <div class="row" >	
 					<h1>PLEASE LOGIN</h1>
 					<br> </br>
 						<form method="post">  
 							<!-- input the user name -->
-							<div class="form-group col-md-offset-0">
+							<div class="form-group col-md-offset-0 centerbox">
 								<label for='username'>Username:</label>
 								<input type="text" name="username" class="form-control" style="width: 200px;" placeholder='cus1'>  
 							</div> 
