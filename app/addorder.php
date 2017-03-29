@@ -1,4 +1,3 @@
-<body background="/CWMS/static/img/bg5.jpg">
 <div class="col-sm-8 col-sm-offset-2">
 <h1>Add Order!</h1>
 </div>
@@ -76,4 +75,3 @@ This form is to add order
 			<input type="submit" value="Submit" class="btn btn-primary">
 		</div>
 		</form>
-</body>

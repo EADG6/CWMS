@@ -14,8 +14,8 @@
 		<link href="static/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 		<!-- Custom CSS -->
 		<link href="static/css/business-frontpage.css" rel="stylesheet">
-		<link href="static/css/table.css" rel="stylesheet">
+		<link href="static/css/frontend.css" rel="stylesheet">
 		<!-- jQuery -->
 		<script src="static/js/jquery.min.js"></script>
 	</head>
-	 <body style="background: #e5e3dd">
+	 <body>
