@@ -45,6 +45,25 @@ This form is to add order
 						?>
 				</select> 
 	    </div>
+		<div class="col-sm-5 col-md-offset-2">
+			Choose Services:
+		</div>
+			<div class="col-sm-10 col-md-offset-2">
+				Wax:
+				<input type="checkbox" name="wax" value="wax">
+			</div>
+			<div class="col-sm-10 col-md-offset-2">
+				Polishing:
+				<input type="checkbox" name="pol" value="pol">
+			</div>
+			<div class="col-sm-10 col-md-offset-2">
+				Wash Big Car:
+				<input type="checkbox" name="wbc" value="wbc">
+			</div>
+			<div class="col-sm-10 col-md-offset-2">
+				Wash Small Car:
+				<input type="checkbox" name="wsc" value="wsc">
+			</div>
 		<div class="col-sm-10 col-md-offset-2">
 			Date:
 			<input type="date" name="date">
