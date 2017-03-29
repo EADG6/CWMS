@@ -21,7 +21,7 @@
 		</div>
 		<div class="col-md-6 contactInfo">
 		   	<h3>Work Time</h3>
-			<table class="zebra" style="background: white">
+			<table class="zebra">
 				<thead>
 					<tr>
 			       	 	<th>Weak</th>        
