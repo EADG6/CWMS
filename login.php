@@ -6,12 +6,16 @@
 	require "inc/db.php";
 	include "inc/header.php";
 	if(isset($_SERVER['HTTP_REFERER'])){
-		$gotopage = $_SERVER['HTTP_REFERER'];
-		if(explode('CWMS/',$gotopage)[1]!='login.php'){
-			$gotopage = explode('CWMS/',$gotopage)[1];
+		$lastpage = explode('CWMS/',$_SERVER['HTTP_REFERER'])[1]; // get previous page name
+		if(isset($_SESSION['gotopage'])){ // if already set the session
+			if($lastpage!='login.php'&&$lastpage!='login.php?new'){ //rewrite previous page in the session only if it's not about login page
+				$_SESSION['gotopage'] = $lastpage;
+			}
+		}else{ // if it's the first time, set the previous page in session
+			$_SESSION['gotopage'] = $lastpage;
 		}
 	}else{
-		$gotopage = 'index.php';
+		$_SESSION['gotopage'] = 'index.php'; //Directly type url: /login.php
 	}
  	if(isset($_GET['new'])){
 		$action = 'sign';
@@ -65,7 +69,7 @@
 						$_SESSION['customer_name'] = $cusInfo['username'];
 						$_SESSION['customer_id'] = $cusInfo['id'];
 						echo "<script>$('[name=\"username\"').addClass('alert-success');$('[name=\"password\"').addClass('alert-success');</script>";
-						redirect($gotopage);
+						redirect($_SESSION['gotopage']);
 					}else{
 						echo "<script>$('[name=\"username\"').addClass('alert-success')
 							$('[name=\"password\"').addClass('alert-danger')
