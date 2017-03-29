@@ -12,7 +12,6 @@
 	 }
  	if($action == 'login'){
 ?>
- <body background="/CWMS/static/img/bg5.jpg">
 	    <div class="container">
 	        <hr>
 	        <div class="row" style="margin-left: 450px;">	
@@ -44,11 +43,11 @@
 			$pwd = inputCheck($_POST['password']);
 			if(empty($username)){    
 				// check vaule
-				echo"<script type='text/javascript'>alert('Empty Username');location='index.php?page=login';  
+				echo"<script type='text/javascript'>alert('Empty Username');location='login.php';  
 					</script>";            
 			}else if(empty($pwd)){
 				// check vaule
-				echo"<script type='text/javascript'>alert('Empty Password');location='index.php?page=login';</script>";  
+				echo"<script type='text/javascript'>alert('Empty Password');location='login.php';</script>";  
 			}else{   
 				$res_pwd = $mysql->query("SELECT id,username,pwdhash,salt FROM customer WHERE username = '$username'"); 
 				$cusInfo = $mysql->fetch($res_pwd);

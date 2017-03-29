@@ -1,8 +1,7 @@
- <body background="/CWMS/static/img/bg5.jpg">
 <div class="col-md-12">
 <h2>About<h2>
 </div>
-		<div class="col-md-5">
+		<div class="col-md-5" style="border-radius:5px; background:white; margin-left:20px">
 			<div>
 		   		<h3>Contact Information</h3>
 			</div>
@@ -18,10 +17,11 @@
 			<div>
 				Email: FR car washing shop
 			</div>
+		</br>
 		</div>
-		<div class="col-md-6">
+		<div class="col-md-6" style="border-radius:5px; background:white; margin-left:20px">
 		   	<h3>Work Time</h3>
-			<table class="table table-hover table-bordered">
+			<table class="zebra" style="background: white">
 				<thead>
 					<tr>
 			       	 	<th>Weak</th>        
@@ -52,5 +52,6 @@
  				 <td>8 AM - 8 PM</td>
 				</tbody>
 			</table>
+		</br>
 		</div>
 </body>

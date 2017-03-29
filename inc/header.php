@@ -18,4 +18,4 @@
 		<!-- jQuery -->
 		<script src="static/js/jquery.min.js"></script>
 	</head>
-	 <body background="/CWMS/static/img/bg5.jpg">
+	 <body style="background: #e5e3dd">
