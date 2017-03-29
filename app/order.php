@@ -57,7 +57,7 @@
     						 	   var name = prompt("Write down your","");
 						 	  }
   						 	</script>
-						 	 <input type="button" onClick="disp_prompt()" value="feedback" />
+						 	 <input type="button" onClick="disp_prompt()" value="feedback" class="btn btn-primary"/>
 						 </form>
 					 </td>
 					 
@@ -72,7 +72,7 @@
 						?>
 					 </td>
 					 <td>
-						<a href ="javascript:if(confirm('Are You Sure to Delete?'))location='index.php?page=order&id=<?php echo $row_orders['id']?>'">Delete </a>
+						<a href ="javascript:if(confirm('Are You Sure to Delete?'))location='index.php?page=order&id=<?php echo $row_orders['id']?>'" class="btn btn-primary">Delete </a>
 					 </td>
 					</tr>
 		 				<?php
