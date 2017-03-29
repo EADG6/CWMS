@@ -21,13 +21,14 @@
 		</div>
 		<div class="col-md-6">
 		   	<h3>Work Time</h3>
-			<table class="zebra">
+			<table class="table table-hover table-bordered">
 				<thead>
 					<tr>
 			       	 	<th>Weak</th>        
 						<th>Open Time</th>
 					<tr>
-				</thead>						       
+				</thead>
+				<tbody>
 	            <tr>
 				 <td>Monday</td>
 				 <td>9 AM - 7 PM</td>
@@ -49,6 +50,7 @@
  	            <tr>
  				 <td>Monday</td>
  				 <td>8 AM - 8 PM</td>
+				</tbody>
 			</table>
 		</div>
 </body>
