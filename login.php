@@ -5,6 +5,7 @@
 	 //Connect database
 	 require "inc/db.php";
 	 include "inc/header.php";
+	 $lastpage = $_SERVER['HTTP_REFERER'];
  	if(isset($_GET['new'])){
 		$action = 'sign';
 	 }else{
@@ -57,7 +58,7 @@
 						$_SESSION['customer_name'] = $cusInfo['username'];
 						$_SESSION['customer_id'] = $cusInfo['id'];
 						echo "<script>$('[name=\"username\"').addClass('alert-success');$('[name=\"password\"').addClass('alert-success');</script>";
-						redirect('index.php');
+						redirect($lastpage);
 					}else{
 						echo "<script>$('[name=\"username\"').addClass('alert-success')
 							$('[name=\"password\"').addClass('alert-danger')
