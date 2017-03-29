@@ -11,6 +11,7 @@
 		echo "<script>alert('Please Login First');location.href='login.php'</script>";
 	}
     ?>
+<body background="/CWMS/static/img/bg5.jpg">
 <div class="container">
         <hr>
         <div class="row">
@@ -80,3 +81,4 @@
 				</table>
         		</div>
     	</div>
+</body>

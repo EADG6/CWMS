@@ -1,3 +1,4 @@
+ <body background="/CWMS/static/img/bg5.jpg">
 <div class="col-md-12">
 <h2>About<h2>
 </div>
@@ -50,3 +51,4 @@
  				 <td>8 AM - 8 PM</td>
 			</table>
 		</div>
+</body>

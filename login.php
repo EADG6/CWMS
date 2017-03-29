@@ -12,7 +12,7 @@
 	 }
  	if($action == 'login'){
 ?>
-    <div background="/static/img/bg3.jpg">
+ <body background="/CWMS/static/img/bg5.jpg">
 	    <div class="container">
 	        <hr>
 	        <div class="row" style="margin-left: 450px;">	
@@ -35,6 +35,7 @@
 					 	</form>
 			</div>
 		</div>
+</body>
 		<!-- This page used to check the username & password -->
 	<?php  
 		// get username & password
@@ -116,7 +117,7 @@ if (isset ($_POST['fname'])) {
 }
 ?>  
  	<hr>
-	<div background="/static/img/bg3.jpg">
+<body background="/CWMS/static/img/bg5.jpg">
 		<div class="container">
 			<div class="row">
 				<h1>Please Enter Your Information</h1>  
@@ -173,7 +174,7 @@ if (isset ($_POST['fname'])) {
 				</form>
         	</div>        
     	</div>
-    </div>
+</body>
 	<?php
 }
 	include "inc/footer.php";
