@@ -1,7 +1,7 @@
 <div class="col-md-12">
 <h2>About<h2>
 </div>
-		<div class="col-md-5" style="border-radius:5px; background:white; margin-left:20px">
+		<div class="col-md-5 contactInfo">
 			<div>
 		   		<h3>Contact Information</h3>
 			</div>
@@ -19,7 +19,7 @@
 			</div>
 		</br>
 		</div>
-		<div class="col-md-6" style="border-radius:5px; background:white; margin-left:20px">
+		<div class="col-md-6 contactInfo">
 		   	<h3>Work Time</h3>
 			<table class="zebra" style="background: white">
 				<thead>
