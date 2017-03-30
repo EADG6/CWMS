@@ -4,10 +4,6 @@
  * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap/blob/gh-pages/LICENSE)
  */
 
-body {
-    padding-top: 50px; /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
-}
-
 /* Header Image Background - Change the URL below to your image path (example: ../images/background.jpg) */
 
 .business-header {
@@ -23,15 +19,11 @@ body {
 
 .tagline {
     text-shadow: 0 0 10px #000;
-    color: rgb(205, 208, 45);
+    color: white;
 }
 
 .img-center {
     margin: 0 auto;
-}
-
-footer {
-    margin: 50px 0;
 }
 
 table {

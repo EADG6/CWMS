@@ -1,22 +1,18 @@
 <header class="business-header">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <h1 class="tagline">YiJia Car Wash Shop</h1>
-                </div>
-            </div>
-        </div>
-    </header>
+    <div class="col-lg-12" style="padding-top:60px;">
+         <h1 class="tagline">YiJia Car Wash Shop</h1>
+    </div>
+</header>
     <!-- Page Content -->
     <div class="container">
         <hr>
         <div class="row">
-            <div class="col-sm-8">
+            <div class="col-sm-8" style="border-radius:5px; background:white; padding-bottom:40px">
                 <h2>What We Do</h2>
                 <p>Introduce the visitor to the business using clear, informative text. Use well-targeted keywords within your sentences to make sure search engines can find the business.</p>
                 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Et molestiae similique eligendi reiciendis sunt distinctio odit? Quia, neque, ipsa, adipisci quisquam ullam deserunt accusantium illo iste exercitationem nemo voluptates asperiores.</p>             
             </div>
-            <div class="col-sm-4">
+            <div class="col-sm-3" style="border-radius:5px; background:white; padding-bottom:20px; margin-left:30px">
                 <h2>Contact Us</h2>
                 <address>
                     <strong>Start Bootstrap</strong>
@@ -52,6 +48,4 @@
                 <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.</p>
             </div>
         </div>
-        <!-- /.row -->
-        <hr>
     </div>

@@ -19,3 +19,5 @@
 		<script src="static/js/jquery.min.js"></script>
 	</head>
 	 <body>
+         <div class="mainbody"></div>
+         <div class="footwrap">

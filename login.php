@@ -126,8 +126,6 @@ if (isset ($_POST['fname'])) {
 	}  
 }
 ?>  
- 	<hr>
-<body background="/CWMS/static/img/bg5.jpg">
 		<div class="container">
 			<div class="row">
 				<h1>Please Enter Your Information</h1>  
@@ -184,7 +182,6 @@ if (isset ($_POST['fname'])) {
 				</form>
         	</div>        
     	</div>
-</body>
 	<?php
 }
 	include "inc/footer.php";
