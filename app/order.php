@@ -56,7 +56,7 @@
     						 	   var name = prompt("Write down your","");
 						 	  }
   						 	</script>
-						 	 <input type="button" onClick="disp_prompt()" value="feedback" class="btn btn-primary"/>
+						 	 <input type="button" onClick="disp_prompt()" value="Feedback" class="btn btn-primary"/>
 						 </form>
 					 </td>
 					 
