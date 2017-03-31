@@ -18,7 +18,7 @@
                 <h1>ORDERS</h1>
 				<hr>
 			</div>
-				<h1><a href="index.php?page=addorder">Add New Order</a></h1>
+				<h1><a href="index.php?page=addorder" class="addorder">Add New Order</a></h1>
 				
 				<table class="zebra">
 					<thead>
