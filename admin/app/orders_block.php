@@ -120,7 +120,7 @@
 	}
 </script>
 <?php
-	include 'timecond.php';
+	include 'inc/timecond.php';
 /**query all the orders and customer information in limited condition*/	
 	$sql_orders = "SELECT o.id,o.cus_id,car.plate,CONCAT(c.firstname,' ',c.lastname) AS cusname,os.emp_id,os.car_id,CONCAT(e.firstname,' ',e.lastname) AS empname,Date,Time,o.status,ost.status AS status_name,rate FROM orders as o LEFT JOIN customer as c ON o.cus_id = c.id LEFT JOIN order_service AS os ON o.id=os.order_id LEFT JOIN employee as e ON os.emp_id = e.id LEFT JOIN car ON os.car_id = car.id LEFT JOIN order_status AS ost ON o.status = ost.id $condition ORDER BY Date DESC,time DESC";
 	$result = $mysql->query($sql_orders);

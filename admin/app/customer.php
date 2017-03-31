@@ -11,7 +11,7 @@ $sql_cusinfo = "SELECT id from customer order by id DESC;";
 	$row = $mysql->fetch($result);
 	$newnum = $row[0]+1;		
 	echo "
-	<form action='submit.php' method='post' class='form-inline'>
+	<form action='../submit.php' method='post' class='form-inline'>
 	<table class='table'>
 		<th colspan='4' id='formtitle'>New Customer</th>
 		<tr>
