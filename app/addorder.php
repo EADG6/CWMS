@@ -16,7 +16,8 @@ This form is to add order
 		$sql_order= "INSERT INTO orders (cus_id,Date,Time,status,rate) VALUES ('$customerid','$date','$time','1','')";	
 		$mysql->query($sql_order); 		
 		$order_id = mysql_insert_id();
-		$mysql->query("INSERT INTO order_service(car_id,order_id) VALUES('$carid','$order_id')");
+		$mysql->query("INSERT INTO order_service(car_id,order_id,) VALUES('$carid','$order_id','.implode(',',$services).')");
+        $sqlstr = "insert into 表(rol) values(".implode(',',$rol).")";
 		echo"<script type='text/javascript'>alert('There have ".$num_pending." people before'); location='index.php?page=order';</script>"; 
 	}
 	?>
@@ -49,19 +50,27 @@ This form is to add order
 		</div>
 			<div class="col-sm-10 col-md-offset-2">
 				Wax:
-				<input type="checkbox" name="wax" value="wax">
+				<input type="checkbox" name="services[]" value="Wax">
 			</div>
 			<div class="col-sm-10 col-md-offset-2">
 				Polishing:
-				<input type="checkbox" name="pol" value="pol">
+				<input type="checkbox" name="services[]" value="Polishing">
 			</div>
 			<div class="col-sm-10 col-md-offset-2">
 				Wash Big Car:
-				<input type="checkbox" name="wbc" value="wbc">
+				<input type="checkbox" name="services[]" value="Big Car Washing">
+			</div>
+            <div class="col-sm-10 col-md-offset-2">
+				Fine Wash Big Car:
+				<input type="checkbox" name="services[]" value="Fine Big Car Washing">
 			</div>
 			<div class="col-sm-10 col-md-offset-2">
 				Wash Small Car:
-				<input type="checkbox" name="wsc" value="wsc">
+				<input type="checkbox" name="services[]" value="Small Car Washing">
+			</div>
+            <div class="col-sm-10 col-md-offset-2">
+				Fine Wash Small Car:
+				<input type="checkbox" name="services[]" value="Fine Small Car Washing">
 			</div>
 		<div class="col-sm-10 col-md-offset-2">
 			Date:
