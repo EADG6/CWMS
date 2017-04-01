@@ -1,13 +1,25 @@
 <!--Show All Payment information-->
-<div class="col-md-12 mainblocks">
-	<div class="col-md-12" style='padding-top:20px'>
+<div class="col-md-12 mainblocks" style='padding-top:20px'>	
+<?php
+	include("inc/timecond.php");
+	include("inc/datarep.php");
+?>
+	<div class="col-md-12" >
+	  <div class="tabbable" id="tabs">
+		<ul class="nav nav-tabs">
+			<li class="active">
+				<a href="#panel-sales" data-toggle="tab">Sale Statistic</a>
+			</li>
+			<li>
+				<a href="#panel-analysis" data-toggle="tab" id='myanaly'><span class="glyphicon glyphicon-cog"></span>&nbsp;Sales Analysis</a>
+			</li>
+		</ul>
+		<div class="tab-content">
+			<div class="tab-pane active" id="panel-sales">
 	<?php
-		include("inc/timecond.php");
-		include("inc/datarep.php");
 	/**Show product sold information*/
 	$sql_fcata = "SELECT type_id,product_name FROM product_service WHERE price IS NULL ORDER by type_id";
 	$result_fcata = $mysql->query($sql_fcata);
-	
 	echo "<table class='table table table-striped'>"; 
 	while($row_fcata = $mysql->fetch($result_fcata)) {
 		$cata_id = $row_fcata['type_id'];	
@@ -39,7 +51,10 @@
 	if(empty($totalPrice)){$totalPrice = 0;}
 	echo "<th colspan=3>Total Price: &#165;$totalPrice<th>
 	</table>";
-
+?>
+			</div>
+			<div class="tab-pane" id="panel-analysis">
+<?php
 	//$sql_ordProducts = "SELECT od.order_id,p.cata_name AS product_name FROM cafe.order_food AS od INNER JOIN cafe.food_catalogue AS p ON od.food_id=p.food_id ORDER BY order_id";
 	$sql_ordProducts = "SELECT od.order_id,p.product_name FROM order_product AS od INNER JOIN product_service AS p ON od.product_id=p.id INNER JOIN orders AS o ON o.id=od.order_id $condition ORDER BY order_id";
 	$result = $mysql->query($sql_ordProducts);
@@ -58,5 +73,8 @@
 	$staRes->find2SC(0.1,0.1,'%');
 	print_r($staRes->aprior(0.1,2));
 	?>
+			</div>
+		</div>
+	  </div>
 	</div>
 </div>
