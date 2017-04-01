@@ -12,9 +12,8 @@
 						    <span class="caret"></span></button>
 						    <ul class="dropdown-menu">
 						      <li class="dropdown-header">Overviews</li>
-							  <li><a href="index.php?page=product&action=sold">Product Sold</a></li>
 							  <li><a href="index.php?page=product&action=weekly">Weekly Report</a></li>
-							  <li><a href="index.php?page=report">Sales Report</a></li>
+							  <li><a href="index.php?page=report">Statistical Report</a></li>
 						      <li class="divider"></li>
 						      <li class="dropdown-header">Customer</li>
 						      <li><a href="index.php?page=customer&action=info">Customer Info</a></li>

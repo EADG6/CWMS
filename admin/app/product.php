@@ -125,31 +125,6 @@ if($action == 'cata'){
 			$mysql->query($sql_delproduct);
 			echo "<script>window.location.href='index.php?page=product&action=detail';</script>";
 		}
-}else if($action == 'sold'){
-/**Show product sold information*/
-	echo "<table class ='table table-stripped'>"; 
-	while($row_fcata = $mysql->fetch($result_fcata)) {
-		$cata_id = $row_fcata['type_id'];	
-        $sql_finfo = "select id,s.product_name as product_name,s.price from product_service as s where s.type_id = ".$cata_id." and s.price IS NOT NULL;";
-	    $result_finfo = $mysql->query($sql_finfo); 
-        echo "<th colspan='3' id=".$row_fcata['product_name'].">".$row_fcata['product_name']."</th>
-				<tr>
-					<td  class='text-centered'><b>Product Name</b></td>
-					<td class='bold'>Price</td><td class='bold'>Quantity</td>
-				</tr>";
-		while($row_finfo = $mysql->fetch($result_finfo)) {
-			echo "<tr>
-					<td class='text-centered'>".$row_finfo['product_name']."</td>
-					<td>&#165;".$row_finfo['price']." </td>";   
-            $productid = $row_finfo['id'];
-            $sql_fquantity = "SELECT sum(quantity)as Quantity from order_product where product_id = ".$productid.";";
-			$result_fquantity = $mysql->query($sql_fquantity); 
-  			while($row_fquantity = $mysql->fetch($result_fquantity)) {
-		        echo "<td>".$row_fquantity['Quantity']."</td>
-				</tr>";
-		    }
-	    }   
-    }echo "</table>";
 }else if($action == 'new'){
 	echo "<form action='../submit.php' method='post' class='form-inline'>
 		<table class='table'>

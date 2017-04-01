@@ -3,161 +3,60 @@
 	<div class="col-md-12" style='padding-top:20px'>
 	<?php
 		include("inc/timecond.php");
-		class Math{
-	function __construct($ary){
-		$this->ary = $ary;
-		$this->uniAry = $this->uniqueAry();
-	}
-	function randomText($length=6){
-		$length=(int)$length;
-		if($length>32||$length<3){
-			$length==6;
-		}
-		return base64_encode(mcrypt_create_iv($length,MCRYPT_DEV_RANDOM));
-	}
-	function uniqueAry($dataSetAry=''){
-		$ary = empty($dataSetAry)?$this->ary:$dataSetAry;
-		$uniqueAry = [];
-		for($i=0;$i<count($ary);$i++){
-			for($j=0;$j<count($ary[$i]);$j++){
-				if(isset($ary[$i][$j])){
-					if(!in_array($ary[$i][$j],$uniqueAry,true)){
-						array_push($uniqueAry,$ary[$i][$j]);
-					}
-				}
+		include("inc/datarep.php");
+	/**Show product sold information*/
+	$sql_fcata = "SELECT type_id,product_name FROM product_service WHERE price IS NULL ORDER by type_id";
+	$result_fcata = $mysql->query($sql_fcata);
+	
+	echo "<table class='table table table-striped'>"; 
+	while($row_fcata = $mysql->fetch($result_fcata)) {
+		$cata_id = $row_fcata['type_id'];	
+        $sql_finfo = "SELECT id,s.product_name AS product_name,s.price FROM product_service AS s WHERE s.type_id = ".$cata_id." AND s.price IS NOT NULL;";
+	    $result_finfo = $mysql->query($sql_finfo); 
+        echo "<tr><th colspan='4' id=".$row_fcata['product_name'].">".$row_fcata['product_name']."</th></tr>
+				<tr>
+					<th class='text-center'>Item Name</th>
+					<th>Price</th>
+					<th>Quantity</th>
+					<th>Total</th>
+				</tr>";
+		while($row_finfo = $mysql->fetch($result_finfo)) {
+			echo "<tr>
+					<td class='text-center'>".$row_finfo['product_name']."</td>
+					<td>&#165;".$row_finfo['price']." </td>";   
+            $productid = $row_finfo['id'];
+            $sql_fquantity = "SELECT SUM(quantity) AS quantity FROM order_product AS od INNER JOIN orders AS o ON o.id=od.order_id $condition AND product_id = ".$productid.";";
+			$result_fquantity = $mysql->query($sql_fquantity); 
+			while($row_fquantity = $mysql->fetch($result_fquantity)) {
+				$quantity = empty($row_fquantity['quantity'])?0:$row_fquantity['quantity'];
+				echo "<td>".$quantity."</td>";
 			}
-		}
-		return $uniqueAry;
-	}
-	function linearRegression($x=0){
-		$aSum = 0;
-		$bSum = 0;
-		$a2Sum = 0;
-		$abProSum = 0;
-		for($i=0;$i<count($ary);$i++){
-			$abProSum += $this->ary[$i][0] * $this->ary[$i][1];
-			$aSum += $this->ary[$i][0];
-			$bSum += $this->ary[$i][1];
-			$a2Sum += pow($this->ary[$i][0],2);
-		}
-		$denominator = count($ary)*$a2Sum - pow($aSum,2);
-		$k = (count($ary)*$abProSum - $aSum*$bSum)/$denominator;
-		$c = ($a2Sum*$bSum - $aSum*$abProSum)/$denominator;
-		$y = $k*$x+$c;
-		echo "f(x)=".$k."x+".$c.'<br/>';
-		echo "x = $x <br/> y = $y";
-	}
-	function getSupportConfidence($A,$B='',$C='',$dataSetAry=''){
-		$ary = empty($dataSetAry)?$this->ary:$dataSetAry;
-		if($B==''){
-			$B=$A;
-		}
-		if($C==''){
-			$C=$A;
-		}
-		$support = 0;
-		$freqA = 0;
-		for($i=0;$i<count($ary);$i++){
-			$isA = false;
-			$isB = false;
-			$isC = false;
-			for($j=0;$j<count($ary[$i]);$j++){
-				if($ary[$i][$j]==$A){
-					$isA = true;
-					$freqA++;
-				}
-				if($ary[$i][$j]==$B){
-						$isB = true;
-				}
-				if($ary[$i][$j]==$C){
-						$isC = true;
-				}
-			}
-			if($isA&&$isB&&$isC){
-				$support++;
-			}
-		}
-		$supportPercent = round($support/count($ary),4);
-		if($freqA>0){
-			$confidencePercent = round($support/$freqA,4);
+			echo "<td>&#165;".$quantity*$row_finfo['price']."</td>
+			</tr>";
+	    }   
+    }
+	$totalPrice = $mysql->oneQuery("SELECT SUM(op.Quantity*p.Price) AS total FROM order_product AS op INNER JOIN product_service AS p ON op.product_id=p.id INNER JOIN orders AS o ON o.id=op.order_id $condition");
+	if(empty($totalPrice)){$totalPrice = 0;}
+	echo "<th colspan=3>Total Price: &#165;$totalPrice<th>
+	</table>";
+
+	//$sql_ordProducts = "SELECT od.order_id,p.cata_name AS product_name FROM cafe.order_food AS od INNER JOIN cafe.food_catalogue AS p ON od.food_id=p.food_id ORDER BY order_id";
+	$sql_ordProducts = "SELECT od.order_id,p.product_name FROM order_product AS od INNER JOIN product_service AS p ON od.product_id=p.id INNER JOIN orders AS o ON o.id=od.order_id $condition ORDER BY order_id";
+	$result = $mysql->query($sql_ordProducts);
+	$ordProducts = array();
+	$ordID='';$ordNum=0;
+	while($row = $mysql->fetch($result)){
+		if($ordID!=$row['order_id']){
+			array_push($ordProducts,[$row['product_name']]);
+			$ordNum++;
+			$ordID=$row['order_id'];
 		}else{
-			$confidencePercent = 0;
-		}
-		$res = ['S'=>$supportPercent,'C'=>$confidencePercent,'S%'=>($supportPercent*100).'%','C%'=>($confidencePercent*100).'%','S/'=>$support.'/'.count($ary),'C/'=>$support.'/'.$freqA];
-		return $res;
-	}
-	function find2SC($minS=0,$minC=0,$u='%',$dataSetAry=''){
-		if($minS>1||$minC>1){
-			echo 'Error: Support_min or Confidence_min cannot greater than 1';
-			return false;
-		}
-		$ary = empty($dataSetAry)?$this->ary:$dataSetAry;
-		$uniAry = $this->uniqueAry();
-		for($i=0;$i<count($uniAry);$i++){
-			$A = $uniAry[$i];
-			for($j=$i+1;$j<count($uniAry);$j++){
-				$B = $uniAry[$j];
-				$A_B = $this->getSupportConfidence($A,$B);
-				$B_A = $this->getSupportConfidence($B,$A);
-				if($A_B['S']>=$minS&&$A_B['C']>=$minC){
-					echo $A.'->'.$B.': S/'.$A_B['S'.$u].',&nbsp;C/'.$A_B['C'.$u].'&nbsp;';
-				}
-				if($B_A['S']>=$minS&&$B_A['C']>=$minC){
-					echo $B.'->'.$A.': S/'.$B_A['S'.$u].',&nbsp;C/'.$B_A['C'.$u].'<br/>';
-				}
-			}
-			echo '<br/>';
+			array_push($ordProducts[$ordNum-1],$row['product_name']);
 		}
 	}
-	function aprior($minS=0,$cut=1,$u='%'){
-		if($minS>1){
-			echo 'Error: Support_min cannot greater than 1';
-			return false;
-		}
-		if($cut>3||$cut<1){
-			echo 'Error: Cut times must be set in [1,3]';
-			return false;
-		}
-		$uniAry = $this->uniAry;
-		$freqSubset1 = array();
-		$freqSubset2 = array();
-		$freqSubset3 = array();
-		for($i=0;$i<count($uniAry);$i++){
-			if($this->getSupportConfidence($uniAry[$i])['S'] >= $minS){//Cut 1
-				array_push($freqSubset1,[$uniAry[$i] , $this->getSupportConfidence($uniAry[$i])['S'.$u]]);
-			}
-		}
-		for($i=0;$i<count($freqSubset1);$i++){
-			$A = $freqSubset1[$i][0];
-			for($j=$i+1;$j<count($freqSubset1);$j++){
-				$B = $freqSubset1[$j][0];
-				if($this->getSupportConfidence($A,$B)['S'] >= $minS){//Cut 2
-					array_push($freqSubset2,[$A.','.$B , $this->getSupportConfidence($A,$B)['S'.$u]]);
-				}
-			}
-		}
-		$fs2Str = '';
-		for($i=0;$i<count($freqSubset2);$i++){
-			$fs2Str .= $freqSubset2[$i][0].',';
-		}
-		$fs2Ary = $this->uniqueAry(explode(',',$fs2Str));
-		for($i=0;$i<count($fs2Ary);$i++){
-			$A = $fs2Ary[$i];
-			for($j=$i+1;$j<count($fs2Ary);$j++){
-				$B = $fs2Ary[$j];
-				for($v=$j+1;$v<count($fs2Ary);$v++){
-					$C = $fs2Ary[$v];
-					if($this->getSupportConfidence($A,$B,$C)['S'] >= $minS){//Cut 3
-						array_push($freqSubset3,[$A.','.$B.','.$C , $this->getSupportConfidence($A,$B,$C)['S'.$u]]);
-					}
-				}
-			}
-		}
-		$res = 'freqSubset'.$cut;
-		return $$res;
-		
-	}
-}
+	$staRes = new Report($ordProducts);
+	$staRes->find2SC(0.1,0.1,'%');
+	print_r($staRes->aprior(0.1,2));
 	?>
 	</div>
 </div>

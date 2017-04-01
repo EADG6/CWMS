@@ -79,9 +79,9 @@ var ifweek = function (){
 	if(isset($_POST['unpaid'])){
 		echo "<script>document.getElementsByName('unpaid')[0].checked = true</script>";
 		if($timestamp == 'all'){
-			$condition = 'WHERE status = 0';
+			$condition = 'WHERE status != 4';
 		}else{
-			$condition .= ' AND status = 0';
+			$condition .= ' AND status != 4';
 		}
 		$unpaidAdj = '<mark>unpaid</mark>';
 	}else{

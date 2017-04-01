@@ -54,7 +54,6 @@
 	function checkNewName(pg){
 		$('[name="username"]').val($('[name="username"]').val().replace(" ",""))
 		if($('[name="username"]').val().length>0 && $('[name="sign"]').length>0){
-			//var ajaxurl = pg=='cus'? 'ajax.php':'./ajax.php'
 			$.ajax({
 				url:'ajax.php',
 				data:{"usercheck":encodeURI(encodeURI($('[name="username"]').val())),"page":pg},
