@@ -14,8 +14,10 @@
 		<link href="static/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 		<!-- Custom CSS -->
 		<link href="static/css/business-frontpage.css" rel="stylesheet">
-		<link href="static/css/table.css" rel="stylesheet">
+		<link href="static/css/frontend.css" rel="stylesheet">
 		<!-- jQuery -->
 		<script src="static/js/jquery.min.js"></script>
+		<script src="static/js/Chart.bundle.js"></script>
 	</head>
-	<body>
+	 <body>
+        <div class="mainbody"></div>

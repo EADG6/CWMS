@@ -13,10 +13,13 @@ This form is to add order
 		$time = $_POST['time'];
 		//creat SQL and execute qurty
 		$num_pending = $mysql->oneQuery("SELECT COUNT(ID) FROM orders WHERE status < 4");
-		$sql_order= "INSERT INTO orders (cus_id,Date,Time,status,rate) VALUES ('$customerid','$date','$time','1','')";	
+		$sql_order= "INSERT INTO orders (cus_id,Date,Time,status,rate) VALUES ('$customerid','$date','$time','1','')";
 		$mysql->query($sql_order); 		
 		$order_id = mysql_insert_id();
-		$mysql->query("INSERT INTO order_service(car_id,order_id) VALUES('$carid','$order_id')");
+		for($i=0;$i<count($_POST['services']);$i++){
+			$sql_orderProduct = "INSERT INTO order_product(order_id,product_id,Quantity) VALUES ('$order_id','".$_POST['services'][$i]."','1')";
+        $mysql->query($sql_orderProduct);
+		}
 		echo"<script type='text/javascript'>alert('There have ".$num_pending." people before'); location='index.php?page=order';</script>"; 
 	}
 	?>
@@ -44,6 +47,21 @@ This form is to add order
 						?>
 				</select> 
 	    </div>
+		<div class="col-sm-5 col-md-offset-2">
+			Choose Services:
+		</div>
+            <?php
+                $sql_serviers = "SELECT * FROM product_service WHERE type_id = 1";
+                $result_serviers = $mysql->query($sql_serviers);
+                while ($row_serviers = $mysql->fetch($result_serviers)){
+            ?>
+			<div class="col-sm-10 col-md-offset-2">
+				<?php echo $row_serviers['product_name']; ?>:
+				<input type="checkbox" name="services[]" value="<?php echo $row_serviers['id']; ?>">
+			</div>
+            <?php
+		 	    }
+		 	?>
 		<div class="col-sm-10 col-md-offset-2">
 			Date:
 			<input type="date" name="date">

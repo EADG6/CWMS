@@ -1,6 +1,6 @@
         <?php
 			session_start();
-			require "inc/db.php";
+			require "../inc/db.php";
 			include "inc/header.php";
 			echo "<div class='col-sm-6 col-sm-offset-3'>
 					<div class='alert alert-success'>
@@ -35,7 +35,7 @@
                     $sql_insertf = "INSERT order_product(order_id,product_id,quantity) VALUE(".$order_id.",".$product_id.",".$quantity.")";
                     $mysql->query($sql_insertf);
                 }
-                echo "Create Order Successfully";  
+                echo "Create Order Successfully";
                header("refresh:1;url='index.php?page=current_orders'");		
             }else if(isset($_POST['fname'])){
 /**cheack info and create a new customer*/	

@@ -1,10 +1,22 @@
 <!-- This page used to the customer login -->
 <?php
-	 //Start the session
-	 session_start();
-	 //Connect database
-	 require "admin/inc/db.php";
-	 include "inc/header.php";
+	//Start the session
+	session_start();
+	//Connect database
+	require "inc/db.php";
+	include "inc/header.php";
+	if(isset($_SERVER['HTTP_REFERER'])){
+		$lastpage = explode('CWMS/',$_SERVER['HTTP_REFERER'])[1]; // get previous page name
+		if(isset($_SESSION['gotopage'])){ // if already set the session
+			if($lastpage!='login.php'&&$lastpage!='login.php?new'){ //rewrite previous page in the session only if it's not about login page
+				$_SESSION['gotopage'] = $lastpage;
+			}
+		}else{ // if it's the first time, set the previous page in session
+			$_SESSION['gotopage'] = $lastpage;
+		}
+	}else{
+		$_SESSION['gotopage'] = 'index.php'; //Directly type url: /login.php
+	}
  	if(isset($_GET['new'])){
 		$action = 'sign';
 	 }else{
@@ -12,22 +24,20 @@
 	 }
  	if($action == 'login'){
 ?>
-    <div background="/static/img/bg3.jpg">
-	    <div class="container">
-	        <hr>
-	        <div class="row" style="margin-left: 450px;">	
+	    <div class="container col-md-8 col-md-offset-2 login">
+	        <div class="col-md-6 col-md-offset-4" >	
 					<h1>PLEASE LOGIN</h1>
 					<br> </br>
 						<form method="post">  
 							<!-- input the user name -->
-							<div class="form-group col-md-offset-0">
+							<div class="form-group col-md-offset-0 centerbox">
 								<label for='username'>Username:</label>
-								<input type="text" name="username" class="form-control" style="width: 200px;" placeholder='test1'>  
+								<input type="text" name="username" class="form-control" style="width: 200px;" placeholder='cus1'>  
 							</div> 
 							<!-- input the password -->
 							<div class="form-group col-md-offset-0">
 								<label for='password'>Password:</label>
-								<input type="password" name="password" class="form-control" style="width: 200px;" placeholder='123'>  
+								<input type="password" name="password" class="form-control" style="width: 200px;" placeholder='1234'>  
 							</div>
 							<a href="login.php?new" class="btn btn-primary">Sign Up</a>
 							<input type="submit" value="Sign In" class="btn btn-primary">  
@@ -35,20 +45,20 @@
 					 	</form>
 			</div>
 		</div>
+</body>
 		<!-- This page used to check the username & password -->
 	<?php  
-		//require('db.php');
 		// get username & password
 		if(isset($_POST['username'])&&isset($_POST['password'])){
 			$username = strtolower(inputCheck($_POST['username'])); 
 			$pwd = inputCheck($_POST['password']);
 			if(empty($username)){    
 				// check vaule
-				echo"<script type='text/javascript'>alert('Empty Username');location='index.php?page=login';  
+				echo"<script type='text/javascript'>alert('Empty Username');location='login.php';  
 					</script>";            
 			}else if(empty($pwd)){
 				// check vaule
-				echo"<script type='text/javascript'>alert('Empty Password');location='index.php?page=login';</script>";  
+				echo"<script type='text/javascript'>alert('Empty Password');location='login.php';</script>";  
 			}else{   
 				$res_pwd = $mysql->query("SELECT id,username,pwdhash,salt FROM customer WHERE username = '$username'"); 
 				$cusInfo = $mysql->fetch($res_pwd);
@@ -59,7 +69,7 @@
 						$_SESSION['customer_name'] = $cusInfo['username'];
 						$_SESSION['customer_id'] = $cusInfo['id'];
 						echo "<script>$('[name=\"username\"').addClass('alert-success');$('[name=\"password\"').addClass('alert-success');</script>";
-						redirect('index.php');
+						redirect($_SESSION['gotopage']);
 					}else{
 						echo "<script>$('[name=\"username\"').addClass('alert-success')
 							$('[name=\"password\"').addClass('alert-danger')
@@ -116,8 +126,6 @@ if (isset ($_POST['fname'])) {
 	}  
 }
 ?>  
- 	<hr>
-	<div background="/static/img/bg3.jpg">
 		<div class="container">
 			<div class="row">
 				<h1>Please Enter Your Information</h1>  
@@ -174,7 +182,6 @@ if (isset ($_POST['fname'])) {
 				</form>
         	</div>        
     	</div>
-    </div>
 	<?php
 }
 	include "inc/footer.php";

@@ -1,6 +1,6 @@
 <?php 
 	session_start();
-	require "inc/db.php";
+	require "../inc/db.php";
 	include 'inc/header.php';
 ?>
 <div>
@@ -101,7 +101,7 @@
 	if(isset($_POST['sign'])){
 		$username = strtolower(inputCheck(preg_replace("/\s/","",$_POST['username'])));
 		$nameUsed = $mysql->query("SELECT id FROM employee WHERE username = '$username'");
-		if(!mysql_num_rows($nameUsed)||!empty($username)){
+		if(!mysql_num_rows($nameUsed)&&!empty($username)){
 			$pwd = inputCheck($_POST['pwd']);
 			$salt=base64_encode(mcrypt_create_iv(6,MCRYPT_DEV_RANDOM)); //Add random salt
 			$pwdhash = MD5($pwd.$salt); //MD5 of pwd+salt

@@ -1,7 +1,7 @@
 <div class="col-md-12">
 <h2>About<h2>
 </div>
-		<div class="col-md-5">
+		<div class="col-md-5 contactInfo">
 			<div>
 		   		<h3>Contact Information</h3>
 			</div>
@@ -17,8 +17,9 @@
 			<div>
 				Email: FR car washing shop
 			</div>
+		</br>
 		</div>
-		<div class="col-md-6">
+		<div class="col-md-6 contactInfo">
 		   	<h3>Work Time</h3>
 			<table class="zebra">
 				<thead>
@@ -26,7 +27,8 @@
 			       	 	<th>Weak</th>        
 						<th>Open Time</th>
 					<tr>
-				</thead>						       
+				</thead>
+				<tbody>
 	            <tr>
 				 <td>Monday</td>
 				 <td>9 AM - 7 PM</td>
@@ -48,5 +50,7 @@
  	            <tr>
  				 <td>Monday</td>
  				 <td>8 AM - 8 PM</td>
+				</tbody>
 			</table>
+		</br>
 		</div>

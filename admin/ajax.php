@@ -1,6 +1,6 @@
 <?php
 	session_start();
-	require "inc/db.php";
+	require "../inc/db.php";
 	/**Check if username have been used when sign up*/
 	if(isset($_POST['usercheck'])){
 		$usercheck = inputCheck(strtolower(preg_replace("/\s/","",$_POST['usercheck'])));
@@ -44,5 +44,49 @@
 		}else{
 			echo json_encode(['status'=>0]);
 		}
+	}
+	/**Data of product sold proportion diagram*/
+	if(isset($_POST['diagram'])){
+		$timecond = isset($_POST['timecond'])?mysql_real_escape_string($_POST['timecond']):'';
+		if($_POST['diagram']=='soldProp'){
+			$sql_soldProp = "SELECT ps.product_name,SUM(quantity) AS quan,SUM(quantity*ps.price) AS price FROM order_product AS op INNER JOIN orders AS o ON o.id=op.order_id RIGHT JOIN product_service AS ps ON op.product_id=ps.id $timecond GROUP BY type_id";
+			$res_soldProp = $mysql->query($sql_soldProp);
+			$soldProp_data = ['labels'=>[],'quan'=>[],'price'=>[]];
+			while($row = $mysql->fetch($res_soldProp)){
+				$row['quan'] = empty($row['quan'])?0:$row['quan'];
+				$row['price'] = empty($row['price'])?0:$row['price'];
+				array_push($soldProp_data['labels'],$row['product_name']);
+				array_push($soldProp_data['quan'],$row['quan']);
+				array_push($soldProp_data['price'],$row['price']);
+			}
+			echo json_encode($soldProp_data);
+		}else if($_POST['diagram']=='ordTrend'){
+			$soldtrend_data =['totord'=>[],'totquan'=>[],'date'=>[],'labels'=>[]];
+			$sql_totquan = "SELECT totord,SUM(quantity) AS totquan,o.Date FROM order_product AS op JOIN orders AS o ON o.id=op.order_id JOIN (SELECT COUNT(*) AS totord,Date AS date1 FROM orders GROUP BY Date ORDER by Date) AS t ON t.date1=o.date $timecond GROUP BY o.Date ORDER BY o.Date;";
+			$res_totquan = $mysql->query($sql_totquan);
+			while($row_totquan = $mysql->fetch($res_totquan)){
+				array_push($soldtrend_data['totord'],$row_totquan['totord']);
+				array_push($soldtrend_data['totquan'],$row_totquan['totquan']);
+				array_push($soldtrend_data['date'],$row_totquan['Date']);
+			}
+			$res_prodTypes = $mysql->query("SELECT id,product_name FROM product_service WHERE type_id=id");
+			while($row_types = $mysql->fetch($res_prodTypes)){
+				array_push($soldtrend_data['labels'],$row_types['product_name']);
+				$soldtrend_data[$row_types['product_name']]=[];
+				$sql_typequan = "SELECT SUM(quantity) AS quan,o.Date FROM order_product AS op JOIN orders AS o ON o.id=op.order_id JOIN product_service AS ps ON op.product_id=ps.id $timecond AND ps.type_id=".$row_types['id']." GROUP BY O.DATE";
+				$res_typequan = $mysql->query($sql_typequan);
+				while($row_typequan = $mysql->fetch($res_typequan)){
+					$soldtrend_data[$row_types['product_name']][$row_typequan['Date']] = $row_typequan['quan'];
+				}
+				for($i=0;$i<count($soldtrend_data['date']);$i++){
+					if(!array_key_exists($soldtrend_data['date'][$i],$soldtrend_data[$row_types['product_name']])){
+						$soldtrend_data[$row_types['product_name']][$soldtrend_data['date'][$i]] = 0;
+					}
+				}
+				ksort($soldtrend_data[$row_types['product_name']]);
+				$soldtrend_data[$row_types['product_name']] = array_values($soldtrend_data[$row_types['product_name']]);
+			}
+			echo json_encode($soldtrend_data);
+	 	}
 	}
 ?>

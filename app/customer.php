@@ -5,7 +5,6 @@
 		echo "<script>alert('Please Login First');location.href='login.php'</script>";
 	}
     ?>
-    <div background="../CWMS/static/img/bg3.jpg">
 	<div class="container">
         <div class="row">
 				<div class="col-md-12">
@@ -183,4 +182,3 @@
 				  </form>
 		</div>        
 	</div>
-    </div>

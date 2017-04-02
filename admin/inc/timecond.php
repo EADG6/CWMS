@@ -51,11 +51,11 @@ var ifweek = function (){
 <?php
 	/**some sql condition to use*/
 	$all = '';
-	$today ="where date =(current_date())";
-	$yesterday ="where date = DATE_SUB(CURDATE(),INTERVAL 1 DAY)";
-	$this_7_day = "where DATE_SUB(CURDATE(), INTERVAL 7 DAY) <= date";
-	$this_month = "where month(date) = month(now())";
-	$this_week = "where week(date,1) = week(now(),1)";
+	$today ="WHERE date =(current_date())";
+	$yesterday ="WHERE date = DATE_SUB(CURDATE(),INTERVAL 1 DAY)";
+	$this_7_day = "WHERE DATE_SUB(CURDATE(), INTERVAL 7 DAY) <= Date";
+	$this_month = "WHERE month(date) = month(now())";
+	$this_week = "WHERE week(date,1) = week(now(),1)";
 	if(isset($_POST['timestamp'])){
 		if(isset($_POST['weeknum']) && $_POST['timestamp']=='input_week'){
 /**get the week number, change it on the input form, and change sql condition*/		
@@ -65,7 +65,7 @@ var ifweek = function (){
 			if(!empty($_POST['yearnum'])){$yearnum = inputCheck($_POST['yearnum']);}
 			if($_POST['weeknum']!=''){$weeknum = inputCheck($_POST['weeknum']);}
 			$timestamp = "week $weeknum of $yearnum";
-			$condition = "where week(date,1) = $weeknum and year(date) = $yearnum";
+			$condition = "WHERE week(date,1) = $weeknum and year(date) = $yearnum";
 			echo "<script>document.getElementById('timestamp').value = 'input_week';ifweek();$('#weeknum').val('$weeknum');</script>";
 		}else{
 			$timestamp=inputCheck($_POST['timestamp']);
@@ -79,9 +79,9 @@ var ifweek = function (){
 	if(isset($_POST['unpaid'])){
 		echo "<script>document.getElementsByName('unpaid')[0].checked = true</script>";
 		if($timestamp == 'all'){
-			$condition = 'WHERE status = 0';
+			$condition = 'WHERE status != 4';
 		}else{
-			$condition .= ' AND status = 0';
+			$condition .= ' AND status != 4';
 		}
 		$unpaidAdj = '<mark>unpaid</mark>';
 	}else{
