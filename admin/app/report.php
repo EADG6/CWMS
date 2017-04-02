@@ -1,9 +1,5 @@
 <!--Show All Payment information-->
 <div class="col-md-12 mainblocks" style='padding-top:20px'>	
-<?php
-	include("inc/timecond.php");
-	include("inc/datarep.php");
-?>
 	<div class="col-md-12" >
 	  <div class="tabbable" id="tabs">
 		<ul class="nav nav-tabs">
@@ -14,12 +10,26 @@
 				<a href="#panel-analysis" data-toggle="tab" id='myanaly'><span class="glyphicon glyphicon-cog"></span>&nbsp;Sales Analysis</a>
 			</li>
 		</ul>
-		<div class="tab-content">
+		<div class="tab-content" style='padding-top:20px'>
 			<div class="tab-pane active" id="panel-sales">
+		<?php
+			include("inc/timecond.php");
+		?>
+			<div class='col-sm-6' id='ProSold' style='display:none'>
+				<canvas id="ProSoldChart" width="400" height="400"></canvas>
+			</div>
+			<div class='col-sm-6' id='ProPri' style='display:none'>
+				<canvas id="ProPriChart" width="400" height="400"></canvas>
+			</div>
+			<div class='col-sm-4' id='soldProp' style='display:none'>
+				<canvas id="SoldPropChart" width="400" height="400"></canvas>
+			</div>
 	<?php
 	/**Show product sold information*/
 	$sql_fcata = "SELECT type_id,product_name FROM product_service WHERE price IS NULL ORDER by type_id";
 	$result_fcata = $mysql->query($sql_fcata);
+	//create arrays for draw charts
+	$prod = ['label'=>[],'quan'=>[],'pri'=>[]];
 	echo "<table class='table table table-striped'>"; 
 	while($row_fcata = $mysql->fetch($result_fcata)) {
 		$cata_id = $row_fcata['type_id'];	
@@ -45,6 +55,9 @@
 			}
 			echo "<td>&#165;".$quantity*$row_finfo['price']."</td>
 			</tr>";
+			array_push($prod['label'],'"'.$row_finfo['product_name'].'"');
+			array_push($prod['quan'] ,$quantity);
+			array_push($prod['pri'] ,$quantity*$row_finfo['price']);
 	    }   
     }
 	$totalPrice = $mysql->oneQuery("SELECT SUM(op.Quantity*p.Price) AS total FROM order_product AS op INNER JOIN product_service AS p ON op.product_id=p.id INNER JOIN orders AS o ON o.id=op.order_id $condition");
@@ -53,8 +66,13 @@
 	</table>";
 ?>
 			</div>
+<script>
+	creProSoldChart([<?php echo implode(',',$prod['quan']).'],['.implode(',',$prod['label']).'],"'.ucwords($timestamp).'",['.implode(',',$prod['pri']).']';?>)
+	creSoldProp('<?php echo $condition;?>')
+</script>
 			<div class="tab-pane" id="panel-analysis">
 <?php
+	include("inc/datarep.php");
 	//$sql_ordProducts = "SELECT od.order_id,p.cata_name AS product_name FROM cafe.order_food AS od INNER JOIN cafe.food_catalogue AS p ON od.food_id=p.food_id ORDER BY order_id";
 	$sql_ordProducts = "SELECT od.order_id,p.product_name FROM order_product AS od INNER JOIN product_service AS p ON od.product_id=p.id INNER JOIN orders AS o ON o.id=od.order_id $condition ORDER BY order_id";
 	$result = $mysql->query($sql_ordProducts);
@@ -70,7 +88,7 @@
 		}
 	}
 	$staRes = new Report($ordProducts);
-	//$staRes->find2SC(0.1,0.1,'%');
+	$staRes->find2SC(0.1,0.1,'%');
 	//print_r($staRes->aprior(0.1,2));
 	?>
 			</div>

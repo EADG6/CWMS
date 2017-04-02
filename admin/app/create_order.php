@@ -328,7 +328,7 @@ session['times'] is a counter to make sure session['order_id'] directly comes fr
 				<td colspan='2' style='border-left:0;text-align:right;' id='time' onclick='inputTime()'>$datetime</td>
 				<td colspan='2' style='border-left:0;text-align:right;display:none;' id='timeNew'>
 				</td>
-					<form action='../submit.php' method='post' id='newOrder'>
+					<form action='submit.php' method='post' id='newOrder'>
 						<input type='hidden' name='carid' value='$carid'/>
 					</form>
 			</tr>

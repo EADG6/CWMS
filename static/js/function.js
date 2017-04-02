@@ -230,4 +230,126 @@
 			}
 		}
 	} */
+	function creProSoldChart(data_quan,labels,timecond,data_rev){
+		$('#ProSold').show();
+		$('#ProPri').show();
+		var proSoldQuan = $("#ProSoldChart");
+		var proSoldPri = $("#ProPriChart");
+		var myProSoldQuan = new Chart(proSoldQuan, {
+			type: 'horizontalBar',//bar or horizontalBar
+			data: {
+				labels: labels,
+				datasets: [
+					{
+						label: "Sold",
+						backgroundColor: 'rgba(54, 162, 235, 0.5)',
+						borderColor: 'rgba(54, 162, 235, 1)',
+						borderWidth: 1,
+						data: data_quan,
+					}
+				]
+			},
+			options: {
+				responsive: true,
+				title: {
+					display: true,
+					text: 'Products Sold in '+timecond
+				},
+				scales: {
+					xAxes: [{
+						position: "top",
+						ticks: {
+							beginAtZero:true,
+							suggestedMin: 0,
+							suggestedMax: 10
+						}
+					}],
+					yAxes: [{
+						stacked: true,
+						position: "left",
+						
+					}]
+				}
+			}
+		});
+		var myProSoldPri = new Chart(proSoldPri, {
+			type: 'horizontalBar',//bar or horizontalBar
+				data:  {
+				labels: labels,
+				datasets: [
+					{
+						label: "Revenues",
+						backgroundColor: 'rgba(255, 99, 132, 0.2)',
+						borderColor: 'rgba(255,99,132,1)',
+						borderWidth: 1,
+						data: data_rev,
+					}
+				]
+			},
+			options: {
+				responsive: true,
+				title: {
+					display: true,
+					text: 'Products Sold Revenues in '+timecond
+				},
+				scales: {
+					xAxes: [{
+						position: "top",
+						ticks: {
+							beginAtZero:true,
+							suggestedMin: 0,
+							suggestedMax: 50
+						}
+					}],
+					yAxes: [{
+						position: "left",
+						
+					}]
+				}
+			}
+		});
+	}
+	function creSoldProp(timecond){
+		$.ajax({
+			url:'ajax.php',
+			data:{"diagram":"soldProp","timecond":timecond},
+			type:'POST',
+			success:function(data){
+				labels_soldProp = data.labels;
+				quan_soldProp = data.quan;
+				creSoldPropChart(labels_soldProp,quan_soldProp)
+			},
+			dataType: 'json'
+		});
+	}
+	function creSoldPropChart(labels_soldProp,data_soldProp){
+		$('#soldProp').show();
+		var soldProp = $("#SoldPropChart");
+		var mysoldProp = new Chart(soldProp, {
+			type: 'doughnut',
+			data: {
+				labels: labels_soldProp,
+				datasets: [
+					{
+						data: data_soldProp,
+						backgroundColor: [
+							"#FF6384",
+							"#36A2EB",
+							"#FFCE56"
+						],
+						hoverBackgroundColor: [
+							"#FF6384",
+							"#36A2EB",
+							"#FFCE56"
+						]
+					}]
+			},
+			options: {
+				responsive: true,
+				animation:{
+					animateScale:true
+				}
+			}
+		});	
+	}
 	

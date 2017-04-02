@@ -45,4 +45,21 @@
 			echo json_encode(['status'=>0]);
 		}
 	}
+	/**Data of product sold proportion diagram*/
+	if(isset($_POST['diagram'])){
+		$timecond = isset($_POST['timecond'])?inputCheck($_POST['timecond']):'';
+		if($_POST['diagram']=='soldProp'){
+			$sql_soldProp = "SELECT ps.product_name,SUM(quantity) AS quan,SUM(quantity*ps.price) AS price FROM order_product AS op INNER JOIN orders AS o ON o.id=op.order_id RIGHT JOIN product_service AS ps ON op.product_id=ps.id $timecond GROUP BY type_id";
+			$res_soldProp = $mysql->query($sql_soldProp);
+			$soldProp_data = ['labels'=>[],'quan'=>[],'price'=>[]];
+			while($row = $mysql->fetch($res_soldProp)){
+				$row['quan'] = empty($row['quan'])?0:$row['quan'];
+				$row['price'] = empty($row['price'])?0:$row['price'];
+				array_push($soldProp_data['labels'],$row['product_name']);
+				array_push($soldProp_data['quan'],$row['quan']);
+				array_push($soldProp_data['price'],$row['price']);
+			}
+			echo json_encode($soldProp_data);
+		}
+	}
 ?>
