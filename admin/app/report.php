@@ -70,8 +70,8 @@
 		}
 	}
 	$staRes = new Report($ordProducts);
-	$staRes->find2SC(0.1,0.1,'%');
-	print_r($staRes->aprior(0.1,2));
+	//$staRes->find2SC(0.1,0.1,'%');
+	//print_r($staRes->aprior(0.1,2));
 	?>
 			</div>
 		</div>
