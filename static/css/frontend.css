@@ -1,5 +1,6 @@
 .footwrap{
     min-height: 600px;
+	padding-top: 50px;
 }
 .mainbody{
     background: -webkit-linear-gradient(top, #286090 0%,rgba(40, 96, 144, 0.51) 100%);

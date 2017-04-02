@@ -14,11 +14,18 @@ This form is to add order
 		//creat SQL and execute qurty
 		$num_pending = $mysql->oneQuery("SELECT COUNT(ID) FROM orders WHERE status < 4");
 		$sql_order= "INSERT INTO orders (cus_id,Date,Time,status,rate) VALUES ('$customerid','$date','$time','1','')";	
-		$mysql->query($sql_order); 		
-		$order_id = mysql_insert_id();
-		$mysql->query("INSERT INTO order_service(car_id,order_id,) VALUES('$carid','$order_id','.implode(',',$services).')");
-        $sqlstr = "insert into 表(rol) values(".implode(',',$rol).")";
-		echo"<script type='text/javascript'>alert('There have ".$num_pending." people before'); location='index.php?page=order';</script>"; 
+		/*$mysql->query($sql_order); 		
+		$order_id = mysql_insert_id();*/
+		
+		//勾选框里的值$_POST['services']以数组的形式发送过来的
+		for($i=0;$i<count($_POST['services']);$i++){
+			$sql_orderProduct = "INSERT order_product(order_id,product_id,Quantity) VALUES ('前面的mysql_insert_id','".$_POST['services'][$i]."所对应的ID','1')";
+			echo "<script>alert(\"".$sql_orderProduct."\")</script>";
+		}
+
+		/*$mysql->query("INSERT INTO order_service(car_id,order_id,) VALUES('$carid','$order_id','.implode(',',$services).')"); */
+       // $sqlstr = "insert into 表(rol) values(".implode(',',$rol).")";
+		//echo"<script type='text/javascript'>alert('There have ".$num_pending." people before'); location='index.php?page=order';</script>"; 
 	}
 	?>
 	<div class="col-sm-10 col-md-offset-2">
@@ -48,6 +55,7 @@ This form is to add order
 		<div class="col-sm-5 col-md-offset-2">
 			Choose Services:
 		</div>
+<!-- 下面的数据应该从数据库自动输出，不应该直接手打，因为货物随时会改变 ，下面的value应该对应product_service里的ID，而不是name-->		
 			<div class="col-sm-10 col-md-offset-2">
 				Wax:
 				<input type="checkbox" name="services[]" value="Wax">
