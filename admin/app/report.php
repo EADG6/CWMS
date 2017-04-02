@@ -24,6 +24,9 @@
 			<div class='col-sm-4' id='soldProp' style='display:none'>
 				<canvas id="SoldPropChart" width="400" height="400"></canvas>
 			</div>
+			<div class='col-sm-8' id='ordTrend' style='display:none'>
+				<canvas id="OrdTrendChart" width="600" height="300"></canvas>
+			</div>
 	<?php
 	/**Show product sold information*/
 	$sql_fcata = "SELECT type_id,product_name FROM product_service WHERE price IS NULL ORDER by type_id";
@@ -68,7 +71,8 @@
 			</div>
 <script>
 	creProSoldChart([<?php echo implode(',',$prod['quan']).'],['.implode(',',$prod['label']).'],"'.ucwords($timestamp).'",['.implode(',',$prod['pri']).']';?>)
-	creSoldProp('<?php echo $condition;?>')
+	creSoldProp('<?php echo $condition."','".ucwords($timestamp);?>')
+	creOrdTrend('<?php echo $condition."','".ucwords($timestamp);?>')
 </script>
 			<div class="tab-pane" id="panel-analysis">
 <?php
@@ -88,7 +92,7 @@
 		}
 	}
 	$staRes = new Report($ordProducts);
-	$staRes->find2SC(0.1,0.1,'%');
+	//$staRes->find2SC(0.1,0.1,'%');
 	//print_r($staRes->aprior(0.1,2));
 	?>
 			</div>

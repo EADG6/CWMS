@@ -126,7 +126,7 @@ if($action == 'cata'){
 			echo "<script>window.location.href='index.php?page=product&action=detail';</script>";
 		}
 }else if($action == 'new'){
-	echo "<form action='../submit.php' method='post' class='form-inline'>
+	echo "<form action='submit.php' method='post' class='form-inline'>
 		<table class='table'>
 			<th colspan='4'> 
 				<label>New Product&nbsp;<input type='radio' name='isCata' value='product' onclick='refresh()' checked>&nbsp; &nbsp;</label>

@@ -273,7 +273,7 @@
 			}
 		});
 		var myProSoldPri = new Chart(proSoldPri, {
-			type: 'horizontalBar',//bar or horizontalBar
+			type: 'horizontalBar',
 				data:  {
 				labels: labels,
 				datasets: [
@@ -309,7 +309,7 @@
 			}
 		});
 	}
-	function creSoldProp(timecond){
+	function creSoldProp(timecond,timestamp){
 		$.ajax({
 			url:'ajax.php',
 			data:{"diagram":"soldProp","timecond":timecond},
@@ -317,12 +317,13 @@
 			success:function(data){
 				labels_soldProp = data.labels;
 				quan_soldProp = data.quan;
-				creSoldPropChart(labels_soldProp,quan_soldProp)
+				pri_soldProp = data.price;
+				creSoldPropChart(labels_soldProp,quan_soldProp,pri_soldProp,timestamp)
 			},
 			dataType: 'json'
 		});
 	}
-	function creSoldPropChart(labels_soldProp,data_soldProp){
+	function creSoldPropChart(labels_soldProp,data_soldProp,data_soldPriProp,timestamp){
 		$('#soldProp').show();
 		var soldProp = $("#SoldPropChart");
 		var mysoldProp = new Chart(soldProp, {
@@ -342,14 +343,109 @@
 							"#36A2EB",
 							"#FFCE56"
 						]
-					}]
+					},{
+						data: data_soldPriProp,
+						backgroundColor: [
+							'rgba(255, 99, 132, 0.7)',
+							'rgba(54, 162, 235, 0.7)',
+							'rgba(255, 159, 64, 0.7)'
+						],
+						hoverBackgroundColor:  [
+							'rgba(255, 99, 132, 0.5)',
+							'rgba(54, 162, 235, 0.5)',
+							'rgba(255, 159, 64, 0.5)'
+							
+						]
+					}
+				]
 			},
 			options: {
 				responsive: true,
+				title: {
+					display: true,
+					text: 'Solds & Revenues Proportion in '+timestamp
+				},
 				animation:{
 					animateScale:true
 				}
 			}
 		});	
+	}
+	function creOrdTrend(timecond,timestamp){
+		$.ajax({
+			url:'ajax.php',
+			data:{"diagram":"ordTrend","timecond":timecond},
+			type:'POST',
+			success:function(data){
+				labels_time = data.date
+				data_tot = data.totquan
+				data_ord = data.totord
+				data_dri = data.Drinks
+				data_acc = data.Accessories
+				data_ser = data.Service
+				creOrdTrendChart(labels_time,data_tot,data_dri,data_acc,data_ser,timestamp)
+			},
+			dataType: 'json'
+		});
+	}
+	function creOrdTrendChart(labels_time,data_tot,data_dri,data_acc,data_ser,timestamp){
+		$('#ordTrend').show();
+		var ordTrend = $("#OrdTrendChart");
+		var data_line =  {
+			labels: labels_time,
+			datasets: [{
+				label: 'Total Quantities',
+				data: data_tot,
+				fill: false,
+				borderColor: "rgba(75,192,192,1)",
+				backgroundColor: "rgba(75,192,192,0.2)",
+				pointHoverRadius: 5
+			},{
+				label: 'Total Orders',
+				data: data_ord,
+				fill: false,
+				pointHoverRadius: 5,
+			},{
+				label: 'Drinks',
+				data: data_dri,
+				backgroundColor: "rgba(255, 206, 86, 0.2)",
+				borderColor: 'rgba(255, 206, 86, 0.7)',
+				pointHoverRadius: 5,
+			},{
+				label: 'Accessories',
+				data: data_acc,
+				backgroundColor: 'rgba(54, 162, 235, 0.1)',
+				borderColor: 'rgba(54, 162, 235, 0.7)',
+				pointHoverRadius: 5
+			},{
+				label: 'Service',
+				data: data_ser,
+				backgroundColor: "rgba(255,99,132,0.2)",
+				borderColor: 'rgba(255,99,132,0.9)',
+				pointHoverRadius: 5
+			}]
+		};
+		var myOrdTrendChart = new Chart(ordTrend, {
+			type: 'line',
+			data: data_line,
+			options: {
+				responsive: true,
+				title: {
+					display: true,
+					text: 'Sales Trends in '+timestamp
+				},
+				scales: {
+					xAxes: [{
+						type: 'time',
+						position: 'bottom',
+						time: {
+							displayFormats: {
+								day: "DD MMM, YY"
+							}
+						}
+					}]
+				}
+			}
+		});
 	}
 	
