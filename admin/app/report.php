@@ -1,4 +1,5 @@
 <!--Show All Payment information-->
+<script src="../static/js/mychart.js"></script>
 <div class="col-md-12 mainblocks" style='padding-top:20px'>	
 	<div class="col-md-12" >
 	  <div class="tabbable" id="tabs">

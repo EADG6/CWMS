@@ -46,9 +46,6 @@
 		}
 	}
 	/**Data of product sold proportion diagram*/
-/* 	$_POST['diagram']='ordTrend';
-	$_POST['timetype']='a';
-	$timecond ="WHERE week(date,1) = week(now(),1)"; */
 	if(isset($_POST['diagram'])){
 		$timecond = isset($_POST['timecond'])?mysql_real_escape_string($_POST['timecond']):'';
 		if($_POST['diagram']=='soldProp'){
