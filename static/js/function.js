@@ -231,83 +231,89 @@
 		}
 	} */
 	function creProSoldChart(data_quan,labels,timecond,data_rev){
-		$('#ProSold').show();
-		$('#ProPri').show();
-		var proSoldQuan = $("#ProSoldChart");
-		var proSoldPri = $("#ProPriChart");
-		var myProSoldQuan = new Chart(proSoldQuan, {
-			type: 'horizontalBar',//bar or horizontalBar
-			data: {
-				labels: labels,
-				datasets: [
-					{
-						label: "Sold",
-						backgroundColor: 'rgba(54, 162, 235, 0.5)',
-						borderColor: 'rgba(54, 162, 235, 1)',
-						borderWidth: 1,
-						data: data_quan,
-					}
-				]
-			},
-			options: {
-				responsive: true,
-				title: {
-					display: true,
-					text: 'Products Sold in '+timecond
-				},
-				scales: {
-					xAxes: [{
-						position: "top",
-						ticks: {
-							beginAtZero:true,
-							suggestedMin: 0,
-							suggestedMax: 10
+		totalQuan = 0;
+		for(i=0;i<data_quan.length;i++){
+			totalQuan += data_quan[i];
+		}
+		if(totalQuan>0){
+			$('#ProSold').show();
+			$('#ProPri').show();
+			var proSoldQuan = $("#ProSoldChart");
+			var proSoldPri = $("#ProPriChart");
+			var myProSoldQuan = new Chart(proSoldQuan, {
+				type: 'horizontalBar',//bar or horizontalBar
+				data: {
+					labels: labels,
+					datasets: [
+						{
+							label: "Sold",
+							backgroundColor: 'rgba(54, 162, 235, 0.5)',
+							borderColor: 'rgba(54, 162, 235, 1)',
+							borderWidth: 1,
+							data: data_quan,
 						}
-					}],
-					yAxes: [{
-						stacked: true,
-						position: "left",
-						
-					}]
-				}
-			}
-		});
-		var myProSoldPri = new Chart(proSoldPri, {
-			type: 'horizontalBar',
-				data:  {
-				labels: labels,
-				datasets: [
-					{
-						label: "Revenues",
-						backgroundColor: 'rgba(255, 99, 132, 0.2)',
-						borderColor: 'rgba(255,99,132,1)',
-						borderWidth: 1,
-						data: data_rev,
-					}
-				]
-			},
-			options: {
-				responsive: true,
-				title: {
-					display: true,
-					text: 'Products Sold Revenues in '+timecond
+					]
 				},
-				scales: {
-					xAxes: [{
-						position: "top",
-						ticks: {
-							beginAtZero:true,
-							suggestedMin: 0,
-							suggestedMax: 50
-						}
-					}],
-					yAxes: [{
-						position: "left",
-						
-					}]
+				options: {
+					responsive: true,
+					title: {
+						display: true,
+						text: 'Products Sold in '+timecond
+					},
+					scales: {
+						xAxes: [{
+							position: "top",
+							ticks: {
+								beginAtZero:true,
+								suggestedMin: 0,
+								suggestedMax: 10
+							}
+						}],
+						yAxes: [{
+							stacked: true,
+							position: "left",
+							
+						}]
+					}
 				}
-			}
-		});
+			});
+			var myProSoldPri = new Chart(proSoldPri, {
+				type: 'horizontalBar',
+					data:  {
+					labels: labels,
+					datasets: [
+						{
+							label: "Revenues",
+							backgroundColor: 'rgba(255, 99, 132, 0.2)',
+							borderColor: 'rgba(255,99,132,1)',
+							borderWidth: 1,
+							data: data_rev,
+						}
+					]
+				},
+				options: {
+					responsive: true,
+					title: {
+						display: true,
+						text: 'Products Sold Revenues in '+timecond
+					},
+					scales: {
+						xAxes: [{
+							position: "top",
+							ticks: {
+								beginAtZero:true,
+								suggestedMin: 0,
+								suggestedMax: 50
+							}
+						}],
+						yAxes: [{
+							position: "left",
+							
+						}]
+					}
+				}
+			});
+		}
 	}
 	function creSoldProp(timecond,timestamp){
 		$.ajax({
@@ -315,15 +321,17 @@
 			data:{"diagram":"soldProp","timecond":timecond},
 			type:'POST',
 			success:function(data){
-				labels_soldProp = data.labels;
-				quan_soldProp = data.quan;
-				pri_soldProp = data.price;
-				creSoldPropChart(labels_soldProp,quan_soldProp,pri_soldProp,timestamp)
+				if(data.status!='empty'){
+					labels_soldProp = data.labels;
+					quan_soldProp = data.quan;
+					pri_soldProp = data.price;
+					creSoldPropChart(timestamp)
+				}
 			},
 			dataType: 'json'
 		});
 	}
-	function creSoldPropChart(labels_soldProp,data_soldProp,data_soldPriProp,timestamp){
+	function creSoldPropChart(timestamp){
 		$('#soldProp').show();
 		var soldProp = $("#SoldPropChart");
 		var mysoldProp = new Chart(soldProp, {
@@ -332,7 +340,7 @@
 				labels: labels_soldProp,
 				datasets: [
 					{
-						data: data_soldProp,
+						data: quan_soldProp,
 						backgroundColor: [
 							"#FF6384",
 							"#36A2EB",
@@ -344,7 +352,7 @@
 							"#FFCE56"
 						]
 					},{
-						data: data_soldPriProp,
+						data: pri_soldProp,
 						backgroundColor: [
 							'rgba(255, 99, 132, 0.7)',
 							'rgba(54, 162, 235, 0.7)',
@@ -377,18 +385,20 @@
 			data:{"diagram":"ordTrend","timecond":timecond},
 			type:'POST',
 			success:function(data){
-				labels_time = data.date
-				data_tot = data.totquan
-				data_ord = data.totord
-				data_dri = data.Drinks
-				data_acc = data.Accessories
-				data_ser = data.Service
-				creOrdTrendChart(labels_time,data_tot,data_dri,data_acc,data_ser,timestamp)
+				if(data.status!='empty'){
+					labels_time = data.date
+					data_tot = data.totquan
+					data_ord = data.totord
+					data_dri = data.Drinks
+					data_acc = data.Accessories
+					data_ser = data.Service
+					creOrdTrendChart(timestamp)
+				}
 			},
 			dataType: 'json'
 		});
 	}
-	function creOrdTrendChart(labels_time,data_tot,data_dri,data_acc,data_ser,timestamp){
+	function creOrdTrendChart(timestamp){
 		$('#ordTrend').show();
 		var ordTrend = $("#OrdTrendChart");
 		var data_line =  {
