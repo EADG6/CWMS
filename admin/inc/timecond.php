@@ -19,7 +19,7 @@ var ifweek = function (){
 			<option value='yesterday'>Yesterday</option>
 			<option value='this_week'>This Week</option>
 			<option value='this_month'>This Month</option>	
-			<option value='this_7_day'>In 7 Day</option>
+			<option value='last_month'>Last Month</option>
 			<option value='all'>All Time</option>
 			<option value='input_week'>Input Week...</option>
 		</select>
@@ -53,8 +53,8 @@ var ifweek = function (){
 	$all = '';
 	$today ="WHERE date =(current_date())";
 	$yesterday ="WHERE date = DATE_SUB(CURDATE(),INTERVAL 1 DAY)";
-	$this_7_day = "WHERE DATE_SUB(CURDATE(), INTERVAL 7 DAY) <= Date";
 	$this_month = "WHERE month(date) = month(now())";
+	$last_month = "WHERE month(date) = month(date_sub(now(),interval 1 month))";
 	$this_week = "WHERE week(date,1) = week(now(),1)";
 	if(isset($_POST['timestamp'])){
 		if(isset($_POST['weeknum']) && $_POST['timestamp']=='input_week'){

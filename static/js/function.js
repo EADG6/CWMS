@@ -380,9 +380,10 @@
 		});	
 	}
 	function creOrdTrend(timecond,timestamp){
+		var timetype = timestamp.indexOf('day')>0 ? 'min':'day';
 		$.ajax({
 			url:'ajax.php',
-			data:{"diagram":"ordTrend","timecond":timecond},
+			data:{"diagram":"ordTrend","timecond":timecond,'timetype':timetype},
 			type:'POST',
 			success:function(data){
 				if(data.status!='empty'){
@@ -401,6 +402,20 @@
 	function creOrdTrendChart(timestamp){
 		$('#ordTrend').show();
 		var ordTrend = $("#OrdTrendChart");
+		var time_min =  {
+			parser: "HH:mm:ss",
+			displayFormats: {
+				minute: "HH:mm:ss"
+			}
+		};
+		var time_day = {
+			parser: "YYYY-MM-DD",
+			minUnit: "day",
+			displayFormats: {
+				day: "DD MMM, YY"
+			}
+		}
+		var timeformat = timestamp.indexOf('day')>0 ? time_min:time_day;
 		var data_line =  {
 			labels: labels_time,
 			datasets: [{
@@ -448,11 +463,7 @@
 					xAxes: [{
 						type: 'time',
 						position: 'bottom',
-						time: {
-							displayFormats: {
-								day: "DD MMM, YY"
-							}
-						}
+						time: timeformat
 					}]
 				}
 			}

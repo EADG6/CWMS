@@ -46,10 +46,13 @@
 		}
 	}
 	/**Data of product sold proportion diagram*/
+/* 	$_POST['diagram']='ordTrend';
+	$_POST['timetype']='a';
+	$timecond ="WHERE week(date,1) = week(now(),1)"; */
 	if(isset($_POST['diagram'])){
 		$timecond = isset($_POST['timecond'])?mysql_real_escape_string($_POST['timecond']):'';
 		if($_POST['diagram']=='soldProp'){
-			$sql_soldProp = "SELECT ps.product_name,SUM(quantity) AS quan,SUM(quantity*ps.price) AS price FROM order_product AS op INNER JOIN orders AS o ON o.id=op.order_id RIGHT JOIN product_service AS ps ON op.product_id=ps.id $timecond GROUP BY type_id";
+			$sql_soldProp = "SELECT pss.product_name,SUM(quantity) AS quan,SUM(quantity*ps.price) AS price FROM order_product AS op INNER JOIN orders AS o ON o.id=op.order_id JOIN product_service AS ps ON op.product_id=ps.id RIGHT JOIN product_service AS pss ON pss.id=ps.type_id $timecond GROUP BY ps.type_id";
 			$res_soldProp = $mysql->query($sql_soldProp);
 			if(mysql_num_rows($res_soldProp)==0){
 				echo json_encode(['status'=>'empty']);
@@ -66,8 +69,9 @@
 			$soldProp_data['status']=0;
 			echo json_encode($soldProp_data);
 		}else if($_POST['diagram']=='ordTrend'){
+			$timetype = ($_POST['timetype']=='min')? 'Time':'Date';
 			$soldtrend_data =['totord'=>[],'totquan'=>[],'date'=>[],'labels'=>[]];
-			$sql_totquan = "SELECT totord,SUM(quantity) AS totquan,o.Date FROM order_product AS op JOIN orders AS o ON o.id=op.order_id JOIN (SELECT COUNT(*) AS totord,Date AS date1 FROM orders GROUP BY Date ORDER by Date) AS t ON t.date1=o.date $timecond GROUP BY o.Date ORDER BY o.Date;";
+			$sql_totquan = "SELECT totord,SUM(quantity) AS totquan,o.$timetype FROM order_product AS op JOIN orders AS o ON o.id=op.order_id JOIN (SELECT COUNT(*) AS totord,$timetype AS ".$timetype."1 FROM orders GROUP BY $timetype ORDER by $timetype) AS t ON t.".$timetype."1=o.$timetype $timecond GROUP BY o.$timetype ORDER BY o.$timetype;";
 			$res_totquan = $mysql->query($sql_totquan);
 			if(mysql_num_rows($res_totquan)==0){
 				echo json_encode(['status'=>'empty']);
@@ -76,16 +80,16 @@
 			while($row_totquan = $mysql->fetch($res_totquan)){
 				array_push($soldtrend_data['totord'],$row_totquan['totord']);
 				array_push($soldtrend_data['totquan'],$row_totquan['totquan']);
-				array_push($soldtrend_data['date'],$row_totquan['Date']);
+				array_push($soldtrend_data['date'],$row_totquan[$timetype]);
 			}
 			$res_prodTypes = $mysql->query("SELECT id,product_name FROM product_service WHERE type_id=id");
 			while($row_types = $mysql->fetch($res_prodTypes)){
 				array_push($soldtrend_data['labels'],$row_types['product_name']);
 				$soldtrend_data[$row_types['product_name']]=[];
-				$sql_typequan = "SELECT SUM(quantity) AS quan,o.Date FROM order_product AS op JOIN orders AS o ON o.id=op.order_id JOIN product_service AS ps ON op.product_id=ps.id $timecond AND ps.type_id=".$row_types['id']." GROUP BY O.Date";
+				$sql_typequan = "SELECT SUM(quantity) AS quan,o.$timetype FROM order_product AS op JOIN orders AS o ON o.id=op.order_id JOIN product_service AS ps ON op.product_id=ps.id $timecond AND ps.type_id=".$row_types['id']." GROUP BY O.$timetype";
 				$res_typequan = $mysql->query($sql_typequan);
 				while($row_typequan = $mysql->fetch($res_typequan)){
-					$soldtrend_data[$row_types['product_name']][$row_typequan['Date']] = $row_typequan['quan'];
+					$soldtrend_data[$row_types['product_name']][$row_typequan[$timetype]] = $row_typequan['quan'];
 				}
 				for($i=0;$i<count($soldtrend_data['date']);$i++){
 					if(!array_key_exists($soldtrend_data['date'][$i],$soldtrend_data[$row_types['product_name']])){
