@@ -49,7 +49,7 @@
 	if(isset($_POST['diagram'])){
 		$timecond = isset($_POST['timecond'])?mysql_real_escape_string($_POST['timecond']):'';
 		if($_POST['diagram']=='soldProp'){
-			$sql_soldProp = "SELECT pss.product_name,SUM(quantity) AS quan,SUM(quantity*ps.price) AS price FROM order_product AS op INNER JOIN orders AS o ON o.id=op.order_id JOIN product_service AS ps ON op.product_id=ps.id RIGHT JOIN product_service AS pss ON pss.id=ps.type_id $timecond GROUP BY ps.type_id";
+			$sql_soldProp = "SELECT pss.product_name,SUM(quantity) AS quan,SUM(quantity*ps.price) AS price FROM order_product AS op INNER JOIN orders AS o ON o.id=op.order_id JOIN product_service AS ps ON op.product_id=ps.id RIGHT JOIN product_service AS pss ON pss.id=ps.type_id $timecond GROUP BY pss.type_id";
 			$res_soldProp = $mysql->query($sql_soldProp);
 			if(mysql_num_rows($res_soldProp)==0){
 				echo json_encode(['status'=>'empty']);
@@ -98,6 +98,41 @@
 			}
 			$soldtrend_data['status']=0;
 			echo json_encode($soldtrend_data);
-	 	}
+	 	}else if($_POST['diagram']=='finanTrend'){
+			$sql_revenues = "SELECT SUM(ps.price*op.quantity) AS revenues,o.Date FROM order_product AS op JOIN product_service AS ps ON op.product_id = ps.id JOIN orders AS o ON o.id=op.order_id GROUP BY o.Date";
+			$res_rev = $mysql->query($sql_revenues);
+			$revAry = ['reve'=>[],'rech'=>[],'pay'=>[]];
+			while($row_rev = $mysql->fetch($res_rev)){
+				array_push($revAry['reve'],['x'=>$row_rev['Date'],'y'=>$row_rev['revenues']]);
+			}
+			$sql_recharge = "SELECT Date(datetime) AS date,SUM(price) AS price FROM recharge GROUP BY date";
+			$res_rech = $mysql->query($sql_recharge);
+			while($row_rech = $mysql->fetch($res_rech)){
+				array_push($revAry['rech'],['x'=>$row_rech['date'],'y'=>$row_rech['price']]);
+			}
+			$sql_payments = "SELECT DATE(pay_time) AS date,SUM(price) AS price FROM payment GROUP BY date";
+			$res_pay = $mysql->query($sql_payments);
+			while($row_pay = $mysql->fetch($res_pay)){
+				array_push($revAry['pay'],['x'=>$row_pay['date'],'y'=>$row_pay['price']]);
+			}
+			echo json_encode($revAry);
+		}else if($_POST['diagram']=='ordSta'){
+			$ordsta = ['labels'=>[],'quan'=>[]];
+			$sql_ordstatus = "SELECT os.status,COUNT(o.status) AS quan FROM orders AS o JOIN order_status AS os ON os.id=o.status GROUP BY o.status";
+			$res_ordstatus = $mysql->query($sql_ordstatus);
+			while($row_ordsta = $mysql->fetch($res_ordstatus)){
+				array_push($ordsta['labels'],$row_ordsta['status']);
+				array_push($ordsta['quan'],$row_ordsta['quan']);
+			}
+			echo json_encode($ordsta);
+		}else if($_POST['diagram']=='cusTransac'){
+			$custransac = [];
+			$sql_custrans = "SELECT SUM(balance) AS data FROM customer UNION SELECT SUM(price) FROM recharge UNION SELECT SUM(price) FROM payment";
+			$res_custra = $mysql->query($sql_custrans);
+			while($row_custra = $mysql->fetch($res_custra)){
+				array_push($custransac,$row_custra['data']);//0=>balance,1=>recharge,2=>payment
+			}
+			echo json_encode($custransac);
+		}
 	}
 ?>

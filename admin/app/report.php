@@ -5,17 +5,28 @@
 	  <div class="tabbable" id="tabs">
 		<ul class="nav nav-tabs">
 			<li class="active">
-				<a href="#panel-sales" data-toggle="tab">Sale Statistic</a>
+				<a href="#panel-sales" data-toggle="tab"><span class="fa fa-car"></span>&nbsp;Product Sales</a>
+			</li>
+			<li onclick="this.onclick='';crefinanTrend();creOrdStaChart();creCusTransacChart()">
+				<a href="#panel-analysis" data-toggle="tab" id='myanaly'><span class="fa fa-line-chart"></span>&nbsp;Finiancial Analysis</a>
 			</li>
 			<li>
-				<a href="#panel-analysis" data-toggle="tab" id='myanaly'><span class="glyphicon glyphicon-cog"></span>&nbsp;Sales Analysis</a>
+				<a href="#panel-assoc" data-toggle="tab" id='proassoc'><span class="fa fa-shopping-basket"></span>&nbsp;Product Association</a>
 			</li>
+			<li>
+				<a href="#panel-cus" data-toggle="tab" id='proassoc'><span class="fa fa-users"></span>&nbsp;Customer Analysis</a>
+			</li>
+<!--			<li>
+				<a href="#panel-emp" data-toggle="tab" id='proassoc'><span class="fa fa-pie-chart"></span>&nbsp;Staff Performance</a>
+			</li>
+-->
 		</ul>
 		<div class="tab-content" style='padding-top:20px'>
 			<div class="tab-pane active" id="panel-sales">
 		<?php
 			include("inc/timecond.php");
 		?>
+		<script>$('#timecond_ordsta').hide()</script>
 			<div class='col-sm-6' id='ProSold' style='display:none'>
 				<canvas id="ProSoldChart" width="400" height="400"></canvas>
 			</div>
@@ -76,10 +87,25 @@
 	creOrdTrend('<?php echo $condition."','".ucwords($timestamp);?>')
 </script>
 			<div class="tab-pane" id="panel-analysis">
+				<div class='col-sm-12' id='finanTrend' style='display:none'>
+					<canvas id="FinanTrendChart" width="800" height="300"></canvas>
+				</div>
+				<div class='col-sm-4' id='ordSta' style='display:none'>
+					<canvas id="ordStaChart" width="400" height="400"></canvas>
+				</div>
+				<div class='col-sm-3' id='cusTransac' style='display:none'>
+					<canvas id="cusTransacChart" width="300" height="400"></canvas>
+				</div>
+				<div class='col-sm-5' id='paytype' style='display:none'>
+					<canvas id="paytypeChart" width="400" height="400"></canvas>
+				</div>
+			</div>
+			
+			<div class="tab-pane" id="panel-assoc">
 <?php
 	include("inc/datarep.php");
 	//$sql_ordProducts = "SELECT od.order_id,p.cata_name AS product_name FROM cafe.order_food AS od INNER JOIN cafe.food_catalogue AS p ON od.food_id=p.food_id ORDER BY order_id";
-	$sql_ordProducts = "SELECT od.order_id,p.product_name FROM order_product AS od INNER JOIN product_service AS p ON od.product_id=p.id INNER JOIN orders AS o ON o.id=od.order_id $condition ORDER BY order_id";
+	$sql_ordProducts = "SELECT od.order_id,p.product_name FROM order_product AS od INNER JOIN product_service AS p ON od.product_id=p.id INNER JOIN orders AS o ON o.id=od.order_id ORDER BY order_id";
 	$result = $mysql->query($sql_ordProducts);
 	$ordProducts = array();
 	$ordID='';$ordNum=0;
@@ -94,8 +120,11 @@
 	}
 	$staRes = new Report($ordProducts);
 	//$staRes->find2SC(0.1,0.1,'%');
-	//print_r($staRes->aprior(0.1,2));
+	print_r($staRes->aprior(0.05,3));
 	?>
+			</div>
+			<div class="tab-pane" id="panel-cus">
+			
 			</div>
 		</div>
 	  </div>
