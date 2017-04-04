@@ -401,3 +401,47 @@
 			dataType: 'json'
 		});
 	}
+	function crePaytypeChart(){
+		$('#paytype').show();
+		var paytype = $('#paytypeChart');
+		$.ajax({
+			url:'ajax.php',
+			data:{"diagram":"paytype"},
+			type:'POST',
+			success:function(data){
+				var mypaytypeChart = new Chart(paytype,{
+					type: 'bar',
+					data: {
+						labels: ['Balance','Recharge','Payment'],
+						datasets: [{
+							label: "Customers' Transactions",
+							data: data,
+							backgroundColor: [
+								"#FFCE56",
+								"#FF6384",
+								"#4BC0C0"
+							],
+							borderWidth: 1
+						}]
+					},
+					options: {
+						responsive: true,
+						title: {
+							display: true,
+							text: 'Transactions Statistics'
+						},
+						scales: {
+							xAxes: [{
+								stacked: false,
+								position: "bottom",
+								ticks: {
+									beginAtZero:true
+								}
+							}],
+						},
+					}
+				});
+			},
+			dataType: 'json'
+		});
+	}
