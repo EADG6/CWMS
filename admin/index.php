@@ -36,6 +36,8 @@
 		include "app/recharge.php";
 	}else if($page == 'payment'){
 		include "app/payment.php";
+	}else if($page == 'rechlog'){
+		include "app/rechlog.php";
 	}else if($page == 'staff'){
 		include "app/staff.php";
 	}else if($page == 'profile'){
