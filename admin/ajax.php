@@ -134,5 +134,37 @@
 			}
 			echo json_encode($custransac);
 		}
+		else if($_POST['diagram']=='paytype'){
+			$paytypeAry = array('labels'=>[],'recharge'=>[],'payment'=>[]);
+			$sql_paytype = "SELECT type FROM pay_type ORDER BY id";
+			$res_paytype = $mysql->query($sql_paytype);
+			while($row_paytype = $mysql->fetch($res_paytype)){
+				array_push($paytypeAry['labels'],$row_paytype['type']);
+			}
+			$sql_recharge = "SELECT SUM(price) AS amount FROM recharge AS p RIGHT JOIN pay_type AS pt ON p.pay_type_id=pt.id GROUP BY pt.id ORDER BY pt.id";
+			$res_recharge = $mysql->query($sql_recharge);
+			while($row_rech = $mysql->fetch($res_recharge)){
+				array_push($paytypeAry['recharge'],$row_rech['amount']);
+			}
+			$sql_payments = "SELECT SUM(price) AS amount FROM payment AS p RIGHT JOIN pay_type AS pt ON p.pay_type_id=pt.id GROUP BY pt.id ORDER BY pt.id";
+			$res_pay = $mysql->query($sql_payments);
+			while($row_pay = $mysql->fetch($res_pay)){
+				array_push($paytypeAry['payment'],$row_pay['amount']);
+			}
+			echo json_encode($paytypeAry);
+		}else if($_POST['diagram']=='cusUnknown'){
+			$cusUnk = $mysql->oneQuery("SELECT COUNT(*) AS num FROM orders WHERE cus_id IS NULL");
+			$cusKno = $mysql->oneQuery("SELECT COUNT(*) AS num FROM orders WHERE cus_id IS NOT NULL");
+			echo json_encode([$cusUnk,$cusKno]);
+		}
+		else if($_POST['diagram']=='cusSex'){
+			$cus_sex = [];
+			$sql_cusSex = "SELECT COUNT(*) AS sex FROM customer GROUP BY sex ORDER BY sex DESC";
+			$res = $mysql->query($sql_cusSex);
+			while($row = $mysql->fetch($res)){
+				array_push($cus_sex,$row['sex']);
+			}
+			echo json_encode($cus_sex);
+		}
 	}
 ?>

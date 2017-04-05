@@ -7,13 +7,13 @@
 			<li class="active">
 				<a href="#panel-sales" data-toggle="tab"><span class="fa fa-car"></span>&nbsp;Product Sales</a>
 			</li>
-			<li onclick="this.onclick='';crefinanTrend();creOrdStaChart();creCusTransacChart()">
+			<li onclick="this.onclick='';crefinanTrend();creOrdStaChart();creCusTransacChart();crePaytypeChart()">
 				<a href="#panel-analysis" data-toggle="tab" id='myanaly'><span class="fa fa-line-chart"></span>&nbsp;Finiancial Analysis</a>
 			</li>
 			<li>
 				<a href="#panel-assoc" data-toggle="tab" id='proassoc'><span class="fa fa-shopping-basket"></span>&nbsp;Product Association</a>
 			</li>
-			<li>
+			<li onclick="creCusUnknownChart();creCusSexChart();">
 				<a href="#panel-cus" data-toggle="tab" id='proassoc'><span class="fa fa-users"></span>&nbsp;Customer Analysis</a>
 			</li>
 <!--			<li>
@@ -97,7 +97,7 @@
 					<canvas id="cusTransacChart" width="300" height="400"></canvas>
 				</div>
 				<div class='col-sm-5' id='paytype' style='display:none'>
-					<canvas id="paytypeChart" width="400" height="400"></canvas>
+					<canvas id="paytypeChart" width="400" height="300"></canvas>
 				</div>
 			</div>
 			
@@ -124,7 +124,12 @@
 	?>
 			</div>
 			<div class="tab-pane" id="panel-cus">
-			
+				<div class='col-sm-3' id='cusUnknown' style='display:none'>
+					<canvas id="cusUnknownChart" width="400" height="400"></canvas>
+				</div>
+				<div class='col-sm-3' id='cusSex' style='display:none'>
+					<canvas id="cusSexChart" width="400" height="400"></canvas>
+				</div>
 			</div>
 		</div>
 	  </div>

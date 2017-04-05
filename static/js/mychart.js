@@ -412,23 +412,22 @@
 				var mypaytypeChart = new Chart(paytype,{
 					type: 'bar',
 					data: {
-						labels: ['Balance','Recharge','Payment'],
+						labels: data.labels,
 						datasets: [{
-							label: "Customers' Transactions",
-							data: data,
-							backgroundColor: [
-								"#FFCE56",
-								"#FF6384",
-								"#4BC0C0"
-							],
-							borderWidth: 1
+							label: "Payment",
+							data: data.payment,
+							backgroundColor: "#4BC0C0",
+						},{
+							label: "Recharge",
+							data: data.recharge,
+							backgroundColor: "#FF6384",
 						}]
 					},
 					options: {
 						responsive: true,
 						title: {
 							display: true,
-							text: 'Transactions Statistics'
+							text: 'Pay Types'
 						},
 						scales: {
 							xAxes: [{
@@ -437,8 +436,72 @@
 								ticks: {
 									beginAtZero:true
 								}
-							}],
+							}]
 						},
+					}
+				});
+			},
+			dataType: 'json'
+		});
+	}
+	function creCusUnknownChart(){
+		$('#cusUnknown').show();
+		var cusUnknown = $('#cusUnknownChart');
+		$.ajax({
+			url:'ajax.php',
+			data:{"diagram":"cusUnknown"},
+			type:'POST',
+			success:function(data){
+				var mycusunkChart = new Chart(cusUnknown,{
+					type: 'pie',
+					data: {
+						labels: ['Unknown','Members'],
+						datasets: [{
+							data: data,
+							backgroundColor: ["#FF6384","#4BC0C0"]
+						}]
+					},
+					options: {
+						responsive: true,
+						title: {
+							display: true,
+							text: 'Unknown Customers Orders Proportion'
+						},
+						animation:{
+							animateScale:true
+						}
+					}
+				});
+			},
+			dataType: 'json'
+		});
+	}
+	function creCusSexChart(){
+		$('#cusSex').show();
+		var cusSex = $('#cusSexChart');
+		$.ajax({
+			url:'ajax.php',
+			data:{"diagram":"cusSex"},
+			type:'POST',
+			success:function(data){
+				var mycusSexChart = new Chart(cusSex,{
+					type: 'pie',
+					data: {
+						labels: ['Female','Male','Unknown'],
+						datasets: [{
+							data: data,
+							backgroundColor: ["#FF6384","#4BC0C0"]
+						}]
+					},
+					options: {
+						responsive: true,
+						title: {
+							display: true,
+							text: 'Customers Gender Proportion'
+						},
+						animation:{
+							animateScale:true
+						}
 					}
 				});
 			},
