@@ -203,6 +203,17 @@
 				$sex_car[$row['sex']][$row['cars']] = $row['num'];
 			}
 			echo json_encode($sex_car);
+		}else if($_POST['diagram']=='sexBuy'){
+			$sexbuy = array('balance'=>[],'recharge'=>[],'paid'=>[]);
+			$sql_sexbuy = "SELECT g.sex,SUM(balance) AS balance,SUM(p.price) AS paid,SUM(r.price) AS recharge 
+			FROM customer AS c INNER JOIN gender AS g ON c.sex=g.id LEFT JOIN payment AS p ON p.cus_id=c.id LEFT JOIN recharge AS r ON r.cus_id=c.id GROUP BY g.sex ORDER BY g.id";
+			$res = $mysql->query($sql_sexbuy);
+			while($row = $mysql->fetch($res)){
+				array_push($sexbuy['balance'],$row['balance']);
+				array_push($sexbuy['paid'],$row['paid']);
+				array_push($sexbuy['recharge'],$row['recharge']);
+			}
+			echo json_encode($sexbuy);
 		}
 	}
 ?>

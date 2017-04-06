@@ -608,6 +608,63 @@
 			dataType: 'json'
 		});
 	}
+	function cresexBuyChart(){
+		$('#sexBuy').show();
+		$.ajax({
+			url:'ajax.php',
+			data:{"diagram":"sexBuy"},
+			type:'POST',
+			success:function(data){
+				var sexBuy = $("#sexBuyChart");
+				var mySexBuy = new Chart(sexBuy, {
+					type: 'doughnut',
+					data: {
+						labels: ['Male','Female','Unknown'],
+						datasets: [
+							{
+								data: data.paid,
+								backgroundColor: [
+									"#4BC0C0",
+									"#FF6384"
+								]
+							},{
+								data: data.recharge,
+								backgroundColor: [
+									'rgba(75,192,192, 0.7)',
+									'rgba(255,99,132, 0.7)',
+								],
+								hoverBackgroundColor:  [
+									'rgba(75,192,192, 0.5)',
+									'rgba(255,99,132, 0.5)',
+								]
+							},{
+								data: data.balance,
+								backgroundColor: [
+									'rgba(75,192,192, 0.4)',
+									'rgba(255,99,132, 0.4)',
+								],
+								hoverBackgroundColor:  [
+									'rgba(75,192,192, 0.2)',
+									'rgba(255,99,132, 0.2)',
+								]
+							}
+						]
+					},
+					options: {
+						responsive: true,
+						title: {
+							display: true,
+							text: 'Gender & Balance) Recharge) Payment)'
+						},
+						animation:{
+							animateScale:true
+						}
+					}
+				});	
+			},
+			dataType: 'json'
+		});
+	}
 	/* function crecarbindChart(){
 		$('#carBind').show()
 		$.ajax({

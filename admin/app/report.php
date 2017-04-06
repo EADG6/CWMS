@@ -13,7 +13,7 @@
 			<li>
 				<a href="#panel-assoc" data-toggle="tab" id='proassoc'><span class="fa fa-shopping-basket"></span>&nbsp;Product Association</a>
 			</li>
-			<li onclick="creCusUnknownChart();creCusSexChart();creCusAgeChart();crecarbindChart();this.onclick='';">
+			<li onclick="creCusUnknownChart();creCusSexChart();creCusAgeChart();crecarbindChart();cresexBuyChart();this.onclick='';">
 				<a href="#panel-cus" data-toggle="tab" id='proassoc'><span class="fa fa-users"></span>&nbsp;Customer Analysis</a>
 			</li>
 <!--			<li>
@@ -133,14 +133,14 @@
 				<div class='col-sm-5' id='cusAge' style='display:none'>
 					<canvas id="cusAgeChart" width="600" height="400"></canvas>
 				</div>
-				<div class='col-sm-4' id='age' style=''>
+				<div class='col-sm-3' id='age' style=''>
 					
 				</div>
-				<div class='col-sm-3' id='sexBuy' style=''>
-					<canvas id="sexBuyChart" width="600" height="400"></canvas>
+				<div class='col-sm-4' id='sexBuy' style='display:none'>
+					<canvas id="sexBuyChart" width="400" height="400"></canvas>
 				</div>
 				<div class='col-sm-5' id='carBind' style='display:none'>
-					<canvas id="carBindChart" width="600" height="400"></canvas>
+					<canvas id="carBindChart" width="500" height="400"></canvas>
 				</div>
 			</div>
 		</div>
