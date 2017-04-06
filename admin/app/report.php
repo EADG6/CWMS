@@ -13,7 +13,7 @@
 			<li>
 				<a href="#panel-assoc" data-toggle="tab" id='proassoc'><span class="fa fa-shopping-basket"></span>&nbsp;Product Association</a>
 			</li>
-			<li onclick="creCusUnknownChart();creCusSexChart();">
+			<li onclick="creCusUnknownChart();creCusSexChart();creCusAgeChart();this.onclick='';">
 				<a href="#panel-cus" data-toggle="tab" id='proassoc'><span class="fa fa-users"></span>&nbsp;Customer Analysis</a>
 			</li>
 <!--			<li>
@@ -129,6 +129,9 @@
 				</div>
 				<div class='col-sm-3' id='cusSex' style='display:none'>
 					<canvas id="cusSexChart" width="400" height="400"></canvas>
+				</div>
+				<div class='col-sm-6' id='cusAge' style='display:none'>
+					<canvas id="cusAgeChart" width="800" height="400"></canvas>
 				</div>
 			</div>
 		</div>

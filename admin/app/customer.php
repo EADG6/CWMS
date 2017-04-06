@@ -178,7 +178,7 @@ $sql_cusinfo = "SELECT id from customer order by id DESC;";
 				switch($row['sex']){
 					case 1: $sex='Male';break;
 					case 2: $sex='Female';break;
-					case 0: $sex='Unknown';break;
+					case 3: $sex='Unknown';break;
 				}
 				$balance=(empty($row['balance']))? 0:round($row['balance'],2);
 				$credit=(empty($row_cre['credit']))? 0:$row_cre['credit'];

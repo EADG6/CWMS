@@ -28,21 +28,21 @@
 						display: true,
 						text: 'Products Sold in '+timecond
 					},
-					scales: {
-						xAxes: [{
-							position: "top",
-							ticks: {
-								beginAtZero:true,
-								suggestedMin: 0,
-								suggestedMax: 10
-							}
-						}],
-						yAxes: [{
-							stacked: true,
-							position: "left",
-							
-						}]
-					}
+						scales: {
+							xAxes: [{
+								position: "top",
+								ticks: {
+									beginAtZero:true,
+									suggestedMin: 0,
+									suggestedMax: 10
+								}
+							}],
+							yAxes: [{
+								stacked: true,
+								position: "left",
+								
+							}]
+						}
 				}
 			});
 			var myProSoldPri = new Chart(proSoldPri, {
@@ -446,12 +446,12 @@
 	}
 	function creCusUnknownChart(){
 		$('#cusUnknown').show();
-		var cusUnknown = $('#cusUnknownChart');
 		$.ajax({
 			url:'ajax.php',
 			data:{"diagram":"cusUnknown"},
 			type:'POST',
 			success:function(data){
+				var cusUnknown = $('#cusUnknownChart');
 				var mycusunkChart = new Chart(cusUnknown,{
 					type: 'pie',
 					data: {
@@ -465,7 +465,7 @@
 						responsive: true,
 						title: {
 							display: true,
-							text: 'Unknown Customers Orders Proportion'
+							text: 'Unknown Customers Proportion'
 						},
 						animation:{
 							animateScale:true
@@ -478,12 +478,12 @@
 	}
 	function creCusSexChart(){
 		$('#cusSex').show();
-		var cusSex = $('#cusSexChart');
 		$.ajax({
 			url:'ajax.php',
 			data:{"diagram":"cusSex"},
 			type:'POST',
 			success:function(data){
+				var cusSex = $('#cusSexChart');
 				var mycusSexChart = new Chart(cusSex,{
 					type: 'pie',
 					data: {
@@ -508,3 +508,106 @@
 			dataType: 'json'
 		});
 	}
+	function creCusAgeChart(){
+		$('#cusAge').show();
+		$.ajax({
+			url:'ajax.php',
+			data:{"diagram":"cusAge"},
+			type:'POST',
+			success:function(data){
+				var cusAge = $('#cusAgeChart');
+				var mycusSexChart = new Chart(cusAge,{
+					type: 'bar',
+					data: {
+						labels: ['< 24','25-34','35-44','45-54','55-64','> 65'],
+						datasets: [{
+							label: "Male",
+							data: data.male,
+							backgroundColor: 'rgba(54, 162, 235, 0.5)',
+							borderColor: 'rgba(54, 162, 235, 1)',
+						},{
+							label: "Female",
+							data: data.female,
+							backgroundColor: 'rgba(255, 99, 132, 0.5)',
+							borderColor: 'rgba(255, 99, 132, 1)',
+						},{
+							label: "Unknown",
+							data: data.unknown,
+						}]
+					},
+					options: {
+						responsive: true,
+						title: {
+							display: true,
+							text: 'Customers Age Proportion'
+						},
+						scales: {
+							xAxes: [{
+								ticks: {
+									beginAtZero:true
+								}
+							}],
+							yAxes: [{
+								stacked: true,
+								suggestedMin: -1
+							}]
+						}
+					}
+				});
+			},
+			dataType: 'json'
+		});
+	}
+	/* function creCusAgeSexChart(){
+		$('#cusSexAge').show()
+		$.ajax({
+			url:'ajax.php',
+			data:{"diagram":"cusSexAge"},
+			type:'POST',
+			success:function(data){
+				var cusSexAge = $('#cusSexAgeChart');
+				var mycusSexChart = new Chart(cusSexAge,{
+					type: 'radar',
+					data: {
+						labels: ['< 24','25-34','35-44','45-54','55-64','> 65'],
+						datasets: [
+							{
+								label: "Male",
+								backgroundColor: "rgba(179,181,198,0.2)",
+								borderColor: "rgba(179,181,198,1)",
+								pointBackgroundColor: "rgba(179,181,198,1)",
+								pointBorderColor: "#fff",
+								pointHoverBackgroundColor: "#fff",
+								pointHoverBorderColor: "rgba(179,181,198,1)",
+								data: [2,4,2,3,3,4]
+							
+							},{
+								label: "Female",
+								backgroundColor: "rgba(255,99,132,0.2)",
+								borderColor: "rgba(255,99,132,1)",
+								pointBackgroundColor: "rgba(255,99,132,1)",
+								pointBorderColor: "#fff",
+								pointHoverBackgroundColor: "#fff",
+								pointHoverBorderColor: "rgba(255,99,132,1)",
+								data: [1,2,1,3,5,3]
+							}
+						]
+					},
+					options: {
+						responsive: true,
+						title: {
+							display: true,
+							text: 'Age/Gender Distribution'
+						},
+						scale: {
+							reverse: false,
+							ticks: {
+								beginAtZero: true,
+							}
+						}
+					}
+				});
+			},
+			dataType: 'json'
+		});
+	} */

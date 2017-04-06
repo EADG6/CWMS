@@ -127,7 +127,7 @@
 			echo json_encode($ordsta);
 		}else if($_POST['diagram']=='cusTransac'){
 			$custransac = [];
-			$sql_custrans = "SELECT SUM(balance) AS data FROM customer UNION SELECT SUM(price) FROM recharge UNION SELECT SUM(price) FROM payment";
+			$sql_custrans = "SELECT SUM(balance) AS data FROM customer UNION ALL SELECT SUM(price) FROM recharge UNION ALL SELECT SUM(price) FROM payment";
 			$res_custra = $mysql->query($sql_custrans);
 			while($row_custra = $mysql->fetch($res_custra)){
 				array_push($custransac,$row_custra['data']);//0=>balance,1=>recharge,2=>payment
@@ -156,8 +156,7 @@
 			$cusUnk = $mysql->oneQuery("SELECT COUNT(*) AS num FROM orders WHERE cus_id IS NULL");
 			$cusKno = $mysql->oneQuery("SELECT COUNT(*) AS num FROM orders WHERE cus_id IS NOT NULL");
 			echo json_encode([$cusUnk,$cusKno]);
-		}
-		else if($_POST['diagram']=='cusSex'){
+		}else if($_POST['diagram']=='cusSex'){
 			$cus_sex = [];
 			$sql_cusSex = "SELECT COUNT(*) AS sex FROM customer GROUP BY sex ORDER BY sex DESC";
 			$res = $mysql->query($sql_cusSex);
@@ -165,6 +164,33 @@
 				array_push($cus_sex,$row['sex']);
 			}
 			echo json_encode($cus_sex);
+		}else if($_POST['diagram']=='cusAge'){
+			$age_labels = array('0-25'=>0,'25-35'=>0,'35-45'=>0,'45-55'=>0,'55-65'=>0,'65-'=>0);
+			$cus_age = array('male'=>$age_labels,'female'=>$age_labels,'unknown'=>$age_labels);
+			$sql_age = "SELECT CASE WHEN temp.age <=24 THEN '0-25' 
+				WHEN temp.age BETWEEN 25 AND 35 THEN '25-35' 
+				WHEN temp.age BETWEEN 35 AND 45 THEN '35-45' 
+				WHEN temp.age BETWEEN 45 AND 55 THEN '45-55' 
+				WHEN temp.age BETWEEN 55 AND 65 THEN '55-65' 
+				ELSE '65-' END AS agerange, 
+				COUNT(male) AS malenum, COUNT(female) femalenum, COUNT(unknown) unknum FROM (
+					SELECT YEAR(FROM_DAYS(DATEDIFF(now(),birth))) AS AGE,
+						CASE WHEN sex=1 THEN sex END AS male,
+						CASE WHEN sex=2 THEN sex END AS female, 
+						CASE WHEN sex=3 THEN sex END AS unknown 
+					FROM customer
+				) AS temp 
+			GROUP BY agerange ORDER BY agerange";
+			$res = $mysql->query($sql_age);
+			while($row = $mysql->fetch($res)){
+				$cus_age['male'][$row['agerange']] = $row['malenum'];
+				$cus_age['female'][$row['agerange']] = $row['femalenum'];
+				$cus_age['unknown'][$row['agerange']] = $row['unknum'];
+			}
+			$cus_age['male']=array_values($cus_age['male']);
+			$cus_age['female']=array_values($cus_age['female']);
+			$cus_age['unknown']=array_values($cus_age['unknown']);
+			echo json_encode($cus_age);
 		}
 	}
 ?>
