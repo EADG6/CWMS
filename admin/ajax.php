@@ -191,6 +191,18 @@
 			$cus_age['female']=array_values($cus_age['female']);
 			$cus_age['unknown']=array_values($cus_age['unknown']);
 			echo json_encode($cus_age);
+		}else if($_POST['diagram']=='carBind'){
+			$cars_bind = array('0'=>0,'1'=>0,'2'=>0,'3'=>0);
+			$sex_car = array('male'=>$cars_bind,'female'=>$cars_bind,'unknown'=>$cars_bind);
+			$sql_cuscar = "SELECT cars,sex,COUNT(cars) AS num FROM (
+			SELECT COUNT(car.id) AS cars,CASE WHEN sex=1 THEN 'male' WHEN sex=2 THEN 'female' WHEN sex=3 THEN 'unknown' END AS sex 
+				FROM car INNER JOIN customer AS cus ON car.cus_id=cus.id WHERE plate !='' GROUP BY cus_id
+			) AS temp GROUP BY cars,sex";
+			$res = $mysql->query($sql_cuscar);
+			while($row = $mysql->fetch($res)){
+				$sex_car[$row['sex']][$row['cars']] = $row['num'];
+			}
+			echo json_encode($sex_car);
 		}
 	}
 ?>

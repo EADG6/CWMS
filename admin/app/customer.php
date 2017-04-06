@@ -121,7 +121,7 @@ $sql_cusinfo = "SELECT id from customer order by id DESC;";
 					document.getElementsByName('username')[0].disabled = true;
 					var gender = document.getElementsByName('sex');
 					if({$origCus[4]}==1) gender[0].checked=true;
-					if({$origCus[4]}==0) gender[1].checked=true;	
+					if({$origCus[4]}==2) gender[1].checked=true;	
 					if({$origCus[4]}==3) gender[2].checked=true;
 					$('#formtitle').html('Edit Customer')
 				</script>";

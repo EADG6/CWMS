@@ -549,7 +549,7 @@
 							}],
 							yAxes: [{
 								stacked: true,
-								suggestedMin: -1
+								ticks:{fixedStepSize: 1}
 							}]
 						}
 					}
@@ -558,16 +558,66 @@
 			dataType: 'json'
 		});
 	}
-	/* function creCusAgeSexChart(){
-		$('#cusSexAge').show()
+	function crecarbindChart(){
+		$('#carBind').show()
 		$.ajax({
 			url:'ajax.php',
-			data:{"diagram":"cusSexAge"},
+			data:{"diagram":"carBind"},
 			type:'POST',
 			success:function(data){
-				var cusSexAge = $('#cusSexAgeChart');
-				var mycusSexChart = new Chart(cusSexAge,{
-					type: 'radar',
+				var carBind = $('#carBindChart');
+				var mycusSexChart = new Chart(carBind,{
+					type: 'bar',
+					data: {
+						labels: ['Unknown','1 Car','2 Cars','3 Cars'],
+						datasets: [{
+							label: "Male",
+							data: data.male,
+							backgroundColor: 'rgba(54, 162, 235, 0.5)',
+							borderColor: 'rgba(54, 162, 235, 1)',
+						},{
+							label: "Female",
+							data: data.female,
+							backgroundColor: 'rgba(255, 99, 132, 0.5)',
+							borderColor: 'rgba(255, 99, 132, 1)',
+						},{
+							label: "Unknown",
+							data: data.unknown,
+						}]
+					},
+					options: {
+						responsive: true,
+						title: {
+							display: true,
+							text: 'Customers Cars Owning'
+						},
+						scales: {
+							xAxes: [{
+								ticks: {
+									beginAtZero:true
+								}
+							}],
+							yAxes: [{
+								stacked: true,
+								ticks:{fixedStepSize: 1}
+							}]
+						}
+					}
+				});
+			},
+			dataType: 'json'
+		});
+	}
+	/* function crecarbindChart(){
+		$('#carBind').show()
+		$.ajax({
+			url:'ajax.php',
+			data:{"diagram":"carBind"},
+			type:'POST',
+			success:function(data){
+				var carBind = $('#carBindChart');
+				var mycusSexChart = new Chart(carBind,{
+					type: 'pie',
 					data: {
 						labels: ['< 24','25-34','35-44','45-54','55-64','> 65'],
 						datasets: [
@@ -597,13 +647,10 @@
 						responsive: true,
 						title: {
 							display: true,
-							text: 'Age/Gender Distribution'
+							text: 'Car Bind'
 						},
-						scale: {
-							reverse: false,
-							ticks: {
-								beginAtZero: true,
-							}
+						animation:{
+							animateScale:true
 						}
 					}
 				});
