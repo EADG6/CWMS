@@ -665,38 +665,47 @@
 			dataType: 'json'
 		});
 	}
-	/* function crecarbindChart(){
-		$('#carBind').show()
+	function creageBuyChart(){
+		$('#ageBuy').show()
 		$.ajax({
 			url:'ajax.php',
-			data:{"diagram":"carBind"},
+			data:{"diagram":"ageBuy"},
 			type:'POST',
 			success:function(data){
-				var carBind = $('#carBindChart');
-				var mycusSexChart = new Chart(carBind,{
-					type: 'pie',
+				var ageBuy = $('#ageBuyChart');
+				var mycusSexChart = new Chart(ageBuy,{
+					type: 'radar',
 					data: {
 						labels: ['< 24','25-34','35-44','45-54','55-64','> 65'],
 						datasets: [
 							{
-								label: "Male",
+								label: "Balance",
 								backgroundColor: "rgba(179,181,198,0.2)",
 								borderColor: "rgba(179,181,198,1)",
 								pointBackgroundColor: "rgba(179,181,198,1)",
 								pointBorderColor: "#fff",
 								pointHoverBackgroundColor: "#fff",
 								pointHoverBorderColor: "rgba(179,181,198,1)",
-								data: [2,4,2,3,3,4]
+								data: data.ageBal
 							
 							},{
-								label: "Female",
+								label: "Recharge",
 								backgroundColor: "rgba(255,99,132,0.2)",
 								borderColor: "rgba(255,99,132,1)",
 								pointBackgroundColor: "rgba(255,99,132,1)",
 								pointBorderColor: "#fff",
 								pointHoverBackgroundColor: "#fff",
 								pointHoverBorderColor: "rgba(255,99,132,1)",
-								data: [1,2,1,3,5,3]
+								data: data.ageRec
+							},{
+								label: "Payment",
+								backgroundColor: 'rgba(75,192,192, 0.2)',
+								borderColor: 'rgba(75,192,192, 1)',
+								pointBackgroundColor: 'rgba(75,192,192, 1)',
+								pointBorderColor: "#fff",
+								pointHoverBackgroundColor: "#fff",
+								pointHoverBorderColor: 'rgba(75,192,192, 1)',
+								data: data.agePay
 							}
 						]
 					},
@@ -704,14 +713,19 @@
 						responsive: true,
 						title: {
 							display: true,
-							text: 'Car Bind'
+							text: 'Customer Age & Transaction'
 						},
-						animation:{
-							animateScale:true
+						scale: {
+							reverse: false,
+							ticks: {
+								beginAtZero: true,
+								suggestedMin: -100,
+								fixedStepSize: 300
+							}
 						}
 					}
 				});
 			},
 			dataType: 'json'
 		});
-	} */
+	}

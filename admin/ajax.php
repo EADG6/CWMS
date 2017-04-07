@@ -173,7 +173,7 @@
 				WHEN temp.age BETWEEN 45 AND 55 THEN '45-55' 
 				WHEN temp.age BETWEEN 55 AND 65 THEN '55-65' 
 				ELSE '65-' END AS agerange, 
-				COUNT(male) AS malenum, COUNT(female) femalenum, COUNT(unknown) unknum FROM (
+				COUNT(male) AS malenum, COUNT(female) AS femalenum, COUNT(unknown) AS unknum FROM (
 					SELECT YEAR(FROM_DAYS(DATEDIFF(now(),birth))) AS AGE,
 						CASE WHEN sex=1 THEN sex END AS male,
 						CASE WHEN sex=2 THEN sex END AS female, 
@@ -214,6 +214,30 @@
 				array_push($sexbuy['recharge'],$row['recharge']);
 			}
 			echo json_encode($sexbuy);
+		}else if($_POST['diagram']=='ageBuy'){
+			$age_labels = array('0-25'=>0,'25-35'=>0,'35-45'=>0,'45-55'=>0,'55-65'=>0,'65-'=>0);
+			$cus_agebuy = array('ageBal'=>$age_labels,'ageRec'=>$age_labels,'agePay'=>$age_labels);
+			$sql_agebuy = "SELECT CASE WHEN temp.age <=24 THEN '0-25' 
+				WHEN temp.age BETWEEN 25 AND 35 THEN '25-35' 
+				WHEN temp.age BETWEEN 35 AND 45 THEN '35-45' 
+				WHEN temp.age BETWEEN 45 AND 55 THEN '45-55' 
+				WHEN temp.age BETWEEN 55 AND 65 THEN '55-65' 
+				ELSE '65-' END AS agerange, 
+				SUM(balance) AS balance,  SUM(recharges) AS recharges, SUM(payments) AS payments FROM (
+					SELECT YEAR(FROM_DAYS(DATEDIFF(now(),birth))) AS age,balance,SUM(p.price*discount) AS payments,SUM(r.price) AS recharges 
+						FROM customer AS c LEFT JOIN payment AS p ON p.cus_id=c.id LEFT JOIN recharge AS r ON r.cus_id=c.id GROUP BY age 
+				) AS temp 
+			GROUP BY agerange ORDER BY agerange";
+			$res = $mysql->query($sql_agebuy);
+			while($row = $mysql->fetch($res)){
+				$cus_agebuy['ageBal'][$row['agerange']] = empty($row['balance'])? 0:round($row['balance'],2);
+				$cus_agebuy['ageRec'][$row['agerange']] = empty($row['recharges'])? 0:round($row['recharges'],2);
+				$cus_agebuy['agePay'][$row['agerange']] = empty($row['payments'])? 0:round($row['payments'],2);
+			}
+			$cus_agebuy['ageBal']=array_values($cus_agebuy['ageBal']);
+			$cus_agebuy['ageRec']=array_values($cus_agebuy['ageRec']);
+			$cus_agebuy['agePay']=array_values($cus_agebuy['agePay']);
+			echo json_encode($cus_agebuy);
 		}
 	}
 ?>

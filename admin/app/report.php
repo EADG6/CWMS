@@ -1,6 +1,6 @@
 <!--Show All Payment information-->
 <script src="../static/js/mychart.js"></script>
-<div class="col-md-12 mainblocks" style='padding-top:20px'>	
+<div class="col-md-12 mainblocks" style='padding-top:20px;padding-bottom:20px'>	
 	<div class="col-md-12" >
 	  <div class="tabbable" id="tabs">
 		<ul class="nav nav-tabs">
@@ -13,7 +13,7 @@
 			<li>
 				<a href="#panel-assoc" data-toggle="tab" id='proassoc'><span class="fa fa-shopping-basket"></span>&nbsp;Product Association</a>
 			</li>
-			<li onclick="creCusUnknownChart();creCusSexChart();creCusAgeChart();crecarbindChart();cresexBuyChart();this.onclick='';">
+			<li onclick="creCusUnknownChart();creCusSexChart();creCusAgeChart();crecarbindChart();cresexBuyChart();creageBuyChart();this.onclick='';">
 				<a href="#panel-cus" data-toggle="tab" id='proassoc'><span class="fa fa-users"></span>&nbsp;Customer Analysis</a>
 			</li>
 <!--			<li>
@@ -133,14 +133,14 @@
 				<div class='col-sm-5' id='cusAge' style='display:none'>
 					<canvas id="cusAgeChart" width="600" height="400"></canvas>
 				</div>
-				<div class='col-sm-3' id='age' style=''>
-					
+				<div class='col-sm-4' id='ageBuy' style='display:none'>
+					<canvas id="ageBuyChart" width="400" height="400"></canvas>
 				</div>
 				<div class='col-sm-4' id='sexBuy' style='display:none'>
 					<canvas id="sexBuyChart" width="400" height="400"></canvas>
 				</div>
-				<div class='col-sm-5' id='carBind' style='display:none'>
-					<canvas id="carBindChart" width="500" height="400"></canvas>
+				<div class='col-sm-4' id='carBind' style='display:none'>
+					<canvas id="carBindChart" width="400" height="400"></canvas>
 				</div>
 			</div>
 		</div>
