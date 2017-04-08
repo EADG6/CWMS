@@ -59,7 +59,7 @@
 					</div>
 					
 					<div class="col-md-12 col-md-offset-10">			
-				    	<input type="submit" value="Submit" class="btn btn-primary">  
+				    	<input type="submit" value="Submit" class="btn btn-danger">  
 					</div>
 				</form>
 				
@@ -115,7 +115,7 @@
 						<input type="text" class="form-control" name="newpasswordagain" id='newpasswordagain' placeholder="New Password Again">
 					</div>
 					<div class="col-md-12 col-md-offset-10">			
-				    	<input type="submit" value="Submit" class="btn btn-primary">  
+				    	<input type="submit" value="Submit" class="btn btn-danger">  
 					</div>
 				</form>
 				<hr>
@@ -177,7 +177,7 @@
 				}
 					?>
 						<div class="col-md-12 col-md-offset-10">
-				    		<input type="submit" value="Submit" class="btn btn-primary">  
+				    		<input type="submit" value="Submit" class="btn btn-danger">  
 						</div>
 				  </form>
 		</div>        
