@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 2017-04-06 14:22:41
+-- Generation Time: 2017-04-09 22:17:41
 -- 服务器版本： 5.6.24
 -- PHP Version: 5.6.8
 
@@ -81,7 +81,7 @@ INSERT INTO `customer` (`id`, `username`, `pwdhash`, `salt`, `FirstName`, `LastN
 (2, 'cus2', 'f056d6a7a5ec600efee50537bd50549f', 'd13ca1', 'Yuan', 'Tian', 1, '1829444332', 'CDUTSong2-334', 17.799999999999997, '1986-06-01'),
 (5, 'kevin', '9abe16a3aa0abd091d9dfb9649080e37', '9879f9', 'Kevin', 'He', 3, '23333', 'CDUT562', 209.5, '2006-06-01'),
 (8, 'test', 'e861c63b3bf88589fda553c977b0e538', 'bSK3NDPs', 'test', 'test', 2, '1233', '12333', 10, '1995-06-01'),
-(9, 'test1', '96b2fde0498302384e5e282fa73e7150', '2/RwUARx', 'test1', '1', 2, '1', '1', 10, '1895-06-01');
+(9, 'test1', '96b2fde0498302384e5e282fa73e7150', '2/RwUARx', 'test1', '1', 1, '1', '1', 10, '1895-06-01');
 
 -- --------------------------------------------------------
 
