@@ -4,13 +4,13 @@ class Report{
 		$this->ary = $ary;
 		$this->uniAry = $this->uniqueAry();
 	}
-	function randomText($length=6){
+/* 	function randomText($length=6){
 		$length=(int)$length;
 		if($length>32||$length<3){
 			$length==6;
 		}
 		return base64_encode(mcrypt_create_iv($length,MCRYPT_DEV_RANDOM));
-	}
+	} */
 	function uniqueAry($dataSetAry=''){
 		$ary = empty($dataSetAry)?$this->ary:$dataSetAry;
 		$uniqueAry = [];
@@ -25,7 +25,7 @@ class Report{
 		}
 		return $uniqueAry;
 	}
-	function linearRegression($x=0){
+	/* function linearRegression($x=0){
 		$aSum = 0;
 		$bSum = 0;
 		$a2Sum = 0;
@@ -42,7 +42,7 @@ class Report{
 		$y = $k*$x+$c;
 		echo "f(x)=".$k."x+".$c.'<br/>';
 		echo "x = $x <br/> y = $y";
-	}
+	} */
 	function getSupportConfidence($A,$B='',$C='',$dataSetAry=''){
 		$ary = empty($dataSetAry)?$this->ary:$dataSetAry;
 		if($B==''){
@@ -75,15 +75,17 @@ class Report{
 				$support++;
 			}
 		}
-		$supportPercent = round($support/count($ary),4);
-		$confidencePercent = round($support/$freqA,4);
-		$lift = round(($support/$freqA)/($freqB/count($ary)),4);
-		$res = [
-			'S'=>$supportPercent,'C'=>$confidencePercent,'L'=>$lift,
-			'S%'=>($supportPercent*100).'%','C%'=>($confidencePercent*100).'%','L%'=>($lift*100).'%',
-			'S/'=>$support.'/'.count($ary),'C/'=>$support.'/'.$freqA,'L/'=>$support.'/'.$freqA.'/('.$freqB.'/'.count($ary).')'
-		];
-		return $res;
+		if($support!=0){
+			$supportPercent = round($support/count($ary),4);
+			$confidencePercent = round($support/$freqA,4);
+			$lift = round(($support/$freqA)/($freqB/count($ary)),4);
+			$res = [
+				'S'=>$supportPercent,'C'=>$confidencePercent,'L'=>$lift,
+				'S%'=>($supportPercent*100).'%','C%'=>($confidencePercent*100).'%','L%'=>($lift*100).'%',
+				'S/'=>$support.'/'.count($ary),'C/'=>$support.'/'.$freqA,'L/'=>$support.'/'.$freqA.'/('.$freqB.'/'.count($ary).')'
+			];
+			return $res;
+		}
 	}
 	function find2SC($minS=0,$minC=0,$u='%',$dataSetAry=''){
 		if($minS>1||$minC>1){
@@ -98,11 +100,13 @@ class Report{
 				$B = $uniAry[$j];
 				$A_B = $this->getSupportConfidence($A,$B);
 				$B_A = $this->getSupportConfidence($B,$A);
-				if($A_B['S']>=$minS&&$A_B['C']>=$minC){
-					echo $A.'->'.$B.': S/'.$A_B['S'.$u].',&nbsp;C/'.$A_B['C'.$u].'&nbsp;L/'.$A_B['L'.$u].'&nbsp;';
-				}
-				if($B_A['S']>=$minS&&$B_A['C']>=$minC){
-					echo $B.'->'.$A.': S/'.$B_A['S'.$u].',&nbsp;C/'.$B_A['C'.$u].'&nbsp;L/'.$B_A['L'.$u].'<br/>';
+				if(!empty($A_B['S'])&&!empty($B_A['S'])){
+					if($A_B['S']>=$minS&&$A_B['C']>=$minC){
+						echo $A.'->'.$B.': S/'.$A_B['S'.$u].',&nbsp;C/'.$A_B['C'.$u].'&nbsp;L/'.$A_B['L'.$u].'&nbsp;';
+					}
+					if($B_A['S']>=$minS&&$B_A['C']>=$minC){
+						echo $B.'->'.$A.': S/'.$B_A['S'.$u].',&nbsp;C/'.$B_A['C'.$u].'&nbsp;L/'.$B_A['L'.$u].'<br/>';
+					}
 				}
 			}
 		}
@@ -121,7 +125,7 @@ class Report{
 		$freqSubset2 = array();
 		$freqSubset3 = array();
 		for($i=0;$i<count($uniAry);$i++){
-			if($this->getSupportConfidence($uniAry[$i])['S'] >= $minS){//Cut 1
+			if($this->getSupportConfidence($uniAry[$i])['S'] >= $minS && !empty($this->getSupportConfidence($uniAry[$i])['S'])){//Cut 1
 				array_push($freqSubset1,[$uniAry[$i] , $this->getSupportConfidence($uniAry[$i])['S'.$u]]);
 			}
 		}
@@ -129,7 +133,7 @@ class Report{
 			$A = $freqSubset1[$i][0];
 			for($j=$i+1;$j<count($freqSubset1);$j++){
 				$B = $freqSubset1[$j][0];
-				if($this->getSupportConfidence($A,$B)['S'] >= $minS){//Cut 2
+				if($this->getSupportConfidence($A,$B)['S'] >= $minS && !empty($this->getSupportConfidence($A,$B)['S'])){//Cut 2
 					array_push($freqSubset2,[$A.','.$B , $this->getSupportConfidence($A,$B)['S'.$u]]);
 				}
 			}
@@ -152,7 +156,7 @@ class Report{
 				$B = $fs2UniAry[$j];
 				for($v=$j+1;$v<count($fs2UniAry);$v++){
 					$C = $fs2UniAry[$v];
-					if($this->getSupportConfidence($A,$B,$C)['S'] >= $minS){//Cut 3
+					if($this->getSupportConfidence($A,$B,$C)['S'] >= $minS && !empty($this->getSupportConfidence($A,$B,$C)['S'])){//Cut 3
 						array_push($freqSubset3,[$A.','.$B.','.$C , $this->getSupportConfidence($A,$B,$C)['S'.$u]]);
 					} 
 						

@@ -19,10 +19,11 @@
 						      <li><a href="index.php?page=customer&action=info">Customer Info</a></li>
 							  <li><a href="index.php?page=customer&action=new">New Customer</a></li>
 							  <li><a href="index.php?page=recharge">Recharge</a></li>
-							  <li><a href="index.php?page=payment">Payment</a></li>
 							  <li class="divider"></li>
 							  <li class="dropdown-header">Staff</li>
 							  <li><a href="index.php?page=staff&action=info">Staff Info</a></li>
+							  <li><a href="index.php?page=payment">Payment Log</a></li>
+							  <li><a href="index.php?page=rechlog">Recharge Log</a></li>
 						      <li class="divider"></li>
 							  <li class="dropdown-header">Product</li>							  
 							  <li><a href="index.php?page=product&action=detail">Product Items</a></li>

@@ -17,7 +17,6 @@
 		<link href="static/css/frontend.css" rel="stylesheet">
 		<!-- jQuery -->
 		<script src="static/js/jquery.min.js"></script>
-		<script src="static/js/Chart.bundle.js"></script>
 	</head>
 	 <body>
         <div class="mainbody"></div>
