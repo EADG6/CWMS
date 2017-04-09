@@ -24,7 +24,7 @@
 	 }
  	if($action == 'login'){
 ?>
-	    <div class="container col-md-8 col-md-offset-2 login">
+	    <div class="container col-md-8 col-md-offset-2 login" style="margin-bottom: 250px;">
 	        <div class="col-md-6 col-md-offset-4" >	
 					<h1>PLEASE LOGIN</h1>
 					<br> </br>
