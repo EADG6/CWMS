@@ -10,9 +10,9 @@
 			<li onclick="this.onclick='';crefinanTrend();creOrdStaChart();creCusTransacChart();crePaytypeChart()">
 				<a href="#panel-analysis" data-toggle="tab" id='myanaly'><span class="fa fa-line-chart"></span>&nbsp;Finiancial Analysis</a>
 			</li>
-			<li>
+			<!--<li>
 				<a href="#panel-assoc" data-toggle="tab" id='proassoc'><span class="fa fa-shopping-basket"></span>&nbsp;Product Association</a>
-			</li>
+			</li>-->
 			<li onclick="creCusUnknownChart();creCusSexChart();creCusAgeChart();crecarbindChart();cresexBuyChart();creageBuyChart();this.onclick='';">
 				<a href="#panel-cus" data-toggle="tab" id='proassoc'><span class="fa fa-users"></span>&nbsp;Customer Analysis</a>
 			</li>
@@ -120,7 +120,7 @@
 	}
 	$staRes = new Report($ordProducts);
 	//$staRes->find2SC(0.1,0.1,'%');
-	print_r($staRes->aprior(0.05,3));
+	//print_r($staRes->aprior(0.05,3));
 	?>
 			</div>
 			<div class="tab-pane" id="panel-cus">

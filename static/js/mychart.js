@@ -139,7 +139,7 @@
 				responsive: true,
 				title: {
 					display: true,
-					text: 'Solds & Revenues Proportion in '+timestamp
+					text: 'Revenues) Solds) Proportion in '+timestamp
 				},
 				animation:{
 					animateScale:true
