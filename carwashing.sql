@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 2017-04-09 22:17:41
+-- Generation Time: 2017-04-11 21:40:26
 -- 服务器版本： 5.6.24
 -- PHP Version: 5.6.8
 
@@ -79,9 +79,9 @@ CREATE TABLE IF NOT EXISTS `customer` (
 INSERT INTO `customer` (`id`, `username`, `pwdhash`, `salt`, `FirstName`, `LastName`, `sex`, `tel`, `address`, `balance`, `birth`) VALUES
 (1, 'cus1', '4037f3d099eb4e3cd9e657df21936662', 'f018f9', 'Hao', 'Liu', 1, '123456789001', 'CDUTSong2-562', 146.3, '1996-06-01'),
 (2, 'cus2', 'f056d6a7a5ec600efee50537bd50549f', 'd13ca1', 'Yuan', 'Tian', 1, '1829444332', 'CDUTSong2-334', 17.799999999999997, '1986-06-01'),
-(5, 'kevin', '9abe16a3aa0abd091d9dfb9649080e37', '9879f9', 'Kevin', 'He', 3, '23333', 'CDUT562', 209.5, '2006-06-01'),
+(5, 'kevin', '9abe16a3aa0abd091d9dfb9649080e37', '9879f9', 'Kevin', 'He', 3, '23333', 'CDUT562', 178, '1987-06-01'),
 (8, 'test', 'e861c63b3bf88589fda553c977b0e538', 'bSK3NDPs', 'test', 'test', 2, '1233', '12333', 10, '1995-06-01'),
-(9, 'test1', '96b2fde0498302384e5e282fa73e7150', '2/RwUARx', 'test1', '1', 1, '1', '1', 10, '1895-06-01');
+(9, 'test1', '96b2fde0498302384e5e282fa73e7150', '2/RwUARx', 'test1', '1', 1, '1', '1', 300.1, '1895-06-01');
 
 -- --------------------------------------------------------
 
@@ -147,7 +147,7 @@ CREATE TABLE IF NOT EXISTS `orders` (
   `Time` time DEFAULT NULL,
   `status` int(11) DEFAULT NULL,
   `rate` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=68 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=69 DEFAULT CHARSET=latin1;
 
 --
 -- 转存表中的数据 `orders`
@@ -163,12 +163,13 @@ INSERT INTO `orders` (`id`, `cus_id`, `Date`, `Time`, `status`, `rate`) VALUES
 (59, 5, '2017-03-28', '16:37:32', 3, 0),
 (60, 2, '2017-03-28', '16:37:54', 2, 0),
 (61, NULL, '2017-03-28', '16:38:19', 1, 0),
-(62, NULL, '2017-04-02', '18:54:33', 3, 0),
-(63, 5, '2017-04-03', '13:37:14', 1, 0),
-(64, 1, '2017-04-03', '14:04:29', 1, 0),
+(62, NULL, '2017-04-02', '18:54:33', 1, 0),
+(63, 5, '2017-04-03', '13:37:14', 4, 0),
+(64, 1, '2017-04-03', '14:04:29', 4, 0),
 (65, 5, '2017-04-03', '18:27:51', 4, 0),
 (66, NULL, '2017-04-03', '19:24:24', 4, 0),
-(67, NULL, '2017-04-03', '19:25:41', 3, 0);
+(67, NULL, '2017-04-03', '19:25:41', 3, 0),
+(68, 1, '2017-04-11', '15:36:06', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -181,7 +182,7 @@ CREATE TABLE IF NOT EXISTS `order_product` (
   `order_id` int(10) unsigned DEFAULT NULL,
   `product_id` int(10) unsigned DEFAULT NULL,
   `Quantity` int(11) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=134 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=136 DEFAULT CHARSET=latin1;
 
 --
 -- 转存表中的数据 `order_product`
@@ -212,7 +213,9 @@ INSERT INTO `order_product` (`item_id`, `order_id`, `product_id`, `Quantity`) VA
 (130, 67, 3, 1),
 (131, 67, 9, 1),
 (132, 67, 7, 1),
-(133, 67, 15, 1);
+(133, 67, 15, 1),
+(134, 68, 7, 1),
+(135, 68, 15, 1);
 
 -- --------------------------------------------------------
 
@@ -276,7 +279,7 @@ CREATE TABLE IF NOT EXISTS `payment` (
   `pay_time` datetime DEFAULT NULL,
   `pay_type_id` int(11) DEFAULT NULL,
   `emp_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;
 
 --
 -- 转存表中的数据 `payment`
@@ -289,7 +292,9 @@ INSERT INTO `payment` (`id`, `order_id`, `cus_id`, `price`, `discount`, `pay_tim
 (15, 53, 2, 45, 1, '2017-03-26 15:48:38', 2, 1),
 (16, 50, 1, 180, 1, '2017-03-26 18:46:50', 2, 1),
 (17, 66, NULL, 340, 1, '2017-04-03 19:24:36', 2, 1),
-(18, 65, 5, 200, 1, '2017-04-06 03:13:47', 4, 1);
+(18, 65, 5, 200, 1, '2017-04-06 03:13:47', 4, 1),
+(19, 63, 5, 35, 0.9, '2017-04-11 15:36:56', 1, 1),
+(20, 64, 9, 260, 1, '2017-04-11 15:51:51', 2, 1);
 
 -- --------------------------------------------------------
 
@@ -361,7 +366,7 @@ CREATE TABLE IF NOT EXISTS `recharge` (
   `datetime` datetime DEFAULT NULL,
   `pay_type_id` int(11) DEFAULT NULL,
   `emp_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=latin1;
 
 --
 -- 转存表中的数据 `recharge`
@@ -372,7 +377,8 @@ INSERT INTO `recharge` (`id`, `cus_id`, `price`, `datetime`, `pay_type_id`, `emp
 (13, 8, 10, '2017-03-26 03:11:21', 4, 1),
 (14, 5, 200, '2017-03-28 16:39:34', 4, 1),
 (15, 1, 123, '2017-04-06 03:14:22', 2, 1),
-(16, 9, 10, '2017-04-06 03:14:47', 3, 1);
+(16, 9, 10, '2017-04-06 03:14:47', 3, 1),
+(18, 9, 300, '2017-04-11 15:49:44', 3, 1);
 
 -- --------------------------------------------------------
 
@@ -395,49 +401,6 @@ INSERT INTO `role` (`id`, `role`, `pid`) VALUES
 (2, 'Worker', 1),
 (3, 'Super Admin', 0),
 (4, 'Unvalidated', 2);
-
--- --------------------------------------------------------
-
---
--- 表的结构 `salary_category`
---
-
-CREATE TABLE IF NOT EXISTS `salary_category` (
-  `id` int(11) NOT NULL,
-  `kpi` varchar(100) DEFAULT NULL,
-  `monthlysalary` double DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
-
---
--- 转存表中的数据 `salary_category`
---
-
-INSERT INTO `salary_category` (`id`, `kpi`, `monthlysalary`) VALUES
-(1, '< 20', 2000),
-(2, '20-30', 2200),
-(3, '30-40', 2400),
-(4, '40-50', 2600),
-(5, '50-60', 2800),
-(6, '60-70', 3000),
-(7, '70-80', 3200),
-(8, '80-90', 3400),
-(9, '90-100', 3600),
-(10, '100-120', 3800),
-(11, '> 120', 4000);
-
--- --------------------------------------------------------
-
---
--- 表的结构 `salary_record`
---
-
-CREATE TABLE IF NOT EXISTS `salary_record` (
-  `id` int(11) NOT NULL,
-  `emp_id` int(11) DEFAULT NULL,
-  `kpi` int(11) DEFAULT NULL,
-  `salary_category_id` int(11) DEFAULT NULL,
-  `datetime` datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Indexes for dumped tables
@@ -522,18 +485,6 @@ ALTER TABLE `role`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `salary_category`
---
-ALTER TABLE `salary_category`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `salary_record`
---
-ALTER TABLE `salary_record`
-  ADD PRIMARY KEY (`id`), ADD KEY `emp_id` (`emp_id`), ADD KEY `salary_category_id` (`salary_category_id`);
-
---
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -561,12 +512,12 @@ ALTER TABLE `gender`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=68;
+  MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=69;
 --
 -- AUTO_INCREMENT for table `order_product`
 --
 ALTER TABLE `order_product`
-  MODIFY `item_id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=134;
+  MODIFY `item_id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=136;
 --
 -- AUTO_INCREMENT for table `order_service`
 --
@@ -581,7 +532,7 @@ ALTER TABLE `order_status`
 -- AUTO_INCREMENT for table `payment`
 --
 ALTER TABLE `payment`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=19;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=21;
 --
 -- AUTO_INCREMENT for table `pay_type`
 --
@@ -596,22 +547,12 @@ ALTER TABLE `product_service`
 -- AUTO_INCREMENT for table `recharge`
 --
 ALTER TABLE `recharge`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=17;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=19;
 --
 -- AUTO_INCREMENT for table `role`
 --
 ALTER TABLE `role`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
---
--- AUTO_INCREMENT for table `salary_category`
---
-ALTER TABLE `salary_category`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=12;
---
--- AUTO_INCREMENT for table `salary_record`
---
-ALTER TABLE `salary_record`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- 限制导出的表
 --
@@ -668,13 +609,6 @@ ALTER TABLE `recharge`
 ADD CONSTRAINT `recharge_ibfk_1` FOREIGN KEY (`emp_id`) REFERENCES `employee` (`id`),
 ADD CONSTRAINT `recharge_ibfk_2` FOREIGN KEY (`pay_type_id`) REFERENCES `pay_type` (`id`),
 ADD CONSTRAINT `recharge_ibfk_3` FOREIGN KEY (`cus_id`) REFERENCES `customer` (`id`);
-
---
--- 限制表 `salary_record`
---
-ALTER TABLE `salary_record`
-ADD CONSTRAINT `salary_record_ibfk_1` FOREIGN KEY (`emp_id`) REFERENCES `employee` (`id`),
-ADD CONSTRAINT `salary_record_ibfk_2` FOREIGN KEY (`salary_category_id`) REFERENCES `salary_category` (`id`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
