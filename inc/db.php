@@ -4,8 +4,11 @@
 		$this->conn=$this->getConn();
 	}
 	function getConn(){
-        $conn =  mysql_connect('localhost','root','') or die("Cannot connect to server".mysql_error());
-        mysql_select_db("carwashing",$conn) or die("Cannot use this Database");
+        $conn =  mysql_connect('localhost','root','0618') or die("Cannot connect to server".mysql_error());
+        $db = mysql_select_db("carwashing",$conn);
+		if(!$db){
+			header("Location:install.php");
+		}
         mysql_query("set names gbk");
         return $conn;
     }
