@@ -39,9 +39,9 @@
 								<label for='password'>Password:</label>
 								<input type="password" name="password" class="form-control" style="width: 200px;" placeholder='1234'>  
 							</div>
-							<a href="login.php?new" class="btn btn-primary">Sign Up</a>
-							<input type="submit" value="Sign In" class="btn btn-primary">  
-							<a href="index.php?new" class="btn btn-primary">Back</a>
+							<button href="login.php?new" class="btn btn-primary">Sign Up</button>
+							<button type="submit" class="btn btn-org">Sign In</button>  
+							<button href="index.php?new" class="btn btn-primary">Back</button>
 					 	</form>
 			</div>
 		</div>

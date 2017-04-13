@@ -1,9 +1,10 @@
+div{color:black;}
 .footwrap{
     min-height: 600px;
 	padding-top: 50px;
 }
 .mainbody{
-    background: -webkit-linear-gradient(top, #286090 0%,rgba(40, 96, 144, 0.51) 100%);
+    background: #1E3E57;
     width: 100%;
     height: 100%;
     position: fixed;
@@ -24,5 +25,9 @@
 }
 .addorder{
 	color:#dae6f0;
+}
+.btn-org{
+	background: #DB4C4C;
+	color: #fff;
 }
     
