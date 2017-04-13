@@ -1,8 +1,63 @@
 <?php
 	include('inc/header.php');
 ?>
-	<div class="col-sm-4 col-sm-offset-4">
-		<div class='col-sm-12' style="margin-top:40px;border-radius:5px;height:400px;background:#fff;">
+	<div class="col-sm-6 col-sm-offset-3">
+		<div class='col-sm-12' style="margin-top:40px;padding-top:10px;border-radius:5px;height:400px;background:#fff;">
+			<table class="table table table-striped">
+                    <thead>
+                        <tr>
+                            <th class="text-center">Environments</th>
+                            <th>Suggestion</th>
+                            <th class="text-center">Current</th>
+                            <th class="text-center">Minimum</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Operation System</td><td class="font-bold text-left">WINNT</td>
+                            <td><div class="label label-warning"><?php echo PHP_OS;?></div></td>
+                            <td>No Limit</td>
+                        </tr>
+                        <tr> <td>PHP Version</td><td>5.5.x</td><td><?php echo phpversion();?></td><td>5.3.0</td></tr>
+                        <tr> <td>MySQL Version</td><td>5.x.x</td><td><?php echo function_exists('mysql_connect')?'<span>&radic;</span>Installed':'<span>&radic;</span>Error';?></td><td>5.2</td></tr>
+                         <tr>
+                            <td>File Upload</td><td>2M</td><td><?php echo ini_get('file_uploads')?'<span>&radic;</span>'.ini_get('upload_max_filesize'):'<span>&radic;</span>禁止上传';?></td><td>No Limit</td>
+                        </tr>
+                        <tr>
+                            <td>SESSION</td><td>Open</td><td><?php echo function_exists('session_start')?'<span>&radic;</span>Supported':'<span>&radic;</span>Nonsupport';?></td><td>Open</td>
+                        </tr>
+                        <tr>
+                            <th class="text-center">Directory Authority</th><th class="text-center" colspan="2">Write</th><th class="text-center">Read</th>
+                        </tr>
+                        <?php
+						$folder = array(
+							'/',
+							'/inc/',
+							'/admin/'
+						);
+						$cwd = __dir__;
+						for($i=0;$i<count($folder);$i++){
+							$path = $cwd.$folder[$i];
+							if(is_readable($path)){
+								$readable = '<span>&radic;</span>Readable';
+							}else{
+								$readable = '<span>&radic;</span>Not Readable';
+							}
+							if(is_writable($path)){
+								$writeable = '<span>&radic;</span>Writable';
+							}else{
+								$writeable = '<span>&radic;</span>Not Writable ';
+							}
+							echo "<tr>
+                                <td>".$folder[$i]."</td>
+                                <td colspan=2 class='text-center'>$writeable</td>
+                                <td>$readable</td>
+                            </tr>";
+						}
+						
+                        ?>
+                    </tbody>
+                </table>
 		</div>
 		<button id='install' onclick='location.href="install.php?submit"' class='btn btn-danger btn-lg btn-block center-block'>Start to Install</button>
 	</div>
