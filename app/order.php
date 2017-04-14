@@ -12,15 +12,10 @@
 	}
     ?>
 <div class="container">
-        <hr>
-        <div class="row">
-            <div class="col-sm-12 col-md-offset-0">
-                <h1>ORDERS</h1>
-				<hr>
-			</div>
-				<h1><a href="index.php?page=addorder" class="addorder">Add New Order</a></h1>
-				
-				<table class="zebra">
+	<h1>ORDERS</h1>
+		<h1><a href="index.php?page=addorder" class="addorder">Add New Order</a></h1>
+			<div class="col-sm-12" style="padding:20px;background:#fff;border-radius:5px;">
+				<table class="table table table-striped">
 					<thead>
 						<tr>
 				       	 	<th>Order ID</th>        
@@ -43,40 +38,25 @@
 		             <td><?php echo $row_orders['time']; ?></td>
 		             <td><?php echo $row_orders['rate']; ?></td>
 					 <td>
-						 <?php
-						 	if (isset($_POST['name'])){
-								$feedback = $_POST['name'];
-								$sql_feedback= "INSERT INTO orders (feedback) VALUES ('$feedback')";
-								$mysql->query($sql_feedback); 
-							}
-						 ?>
-						 <form method="post"> 
-						 	<script type="text/javascript">
-						 		function disp_prompt(){
-    						 	   var name = prompt("Write down your","");
-						 	  }
-  						 	</script>
-						 	 <input type="button" onClick="disp_prompt()" value="Feedback" class="btn btn-primary"/>
-						 </form>
+						<button type="button" class="btn btn-primary">Rate</button>
 					 </td>
-					 
 					 <td>
-						<?php 
+					<?php 
 						switch($row_orders['status']){
 							case 1: echo 'Pending';break;
 							case 2: echo 'On Going';break;
 							case 3: echo 'Done but Unpaid';break;
 							case 4: echo 'Paid';break;
 						}
-						?>
+					?>
 					 </td>
 					 <td>
-						<a href ="javascript:if(confirm('Are You Sure to Delete?'))location='index.php?page=order&id=<?php echo $row_orders['id']?>'" class="btn btn-primary">Delete </a>
+						<a href ="javascript:if(confirm('Are You Sure to Delete?'))location='index.php?page=order&id=<?php echo $row_orders['id']?>'" class="btn btn-danger">Delete </a>
 					 </td>
 					</tr>
 		 				<?php
 		 			}
 		 				?>
 				</table>
-        		</div>
+			</div>
     	</div>

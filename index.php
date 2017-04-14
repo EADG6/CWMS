@@ -1,6 +1,7 @@
 <?php
 	 //Start the session
 	 session_start();
+	 date_default_timezone_set('PRC'); 
 	 //Make sure login
 	 if (!isset($_SESSION['customer_id'])){
 		 	$_SESSION['customer_id'] = 0;

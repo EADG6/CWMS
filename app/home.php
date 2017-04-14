@@ -1,5 +1,5 @@
-<header class="business-header">
-    <div class="col-lg-12" style="padding-top:60px;">
+<header class="myheader">
+    <div class="col-lg-12" style="padding-top:30px;">
          <h1 class="tagline">YiJia Car Wash Shop</h1>
     </div>
 </header>
