@@ -10,16 +10,12 @@
 			<li onclick="this.onclick='';crefinanTrend();creOrdStaChart();creCusTransacChart();crePaytypeChart()">
 				<a href="#panel-analysis" data-toggle="tab" id='myanaly'><span class="fa fa-line-chart"></span>&nbsp;Finiancial Analysis</a>
 			</li>
-			<!--<li>
+			<li>
 				<a href="#panel-assoc" data-toggle="tab" id='proassoc'><span class="fa fa-shopping-basket"></span>&nbsp;Product Association</a>
-			</li>-->
+			</li>
 			<li onclick="creCusUnknownChart();creCusSexChart();creCusAgeChart();crecarbindChart();cresexBuyChart();creageBuyChart();this.onclick='';">
 				<a href="#panel-cus" data-toggle="tab" id='proassoc'><span class="fa fa-users"></span>&nbsp;Customer Analysis</a>
 			</li>
-<!--			<li>
-				<a href="#panel-emp" data-toggle="tab" id='proassoc'><span class="fa fa-pie-chart"></span>&nbsp;Staff Performance</a>
-			</li>
--->
 		</ul>
 		<div class="tab-content" style='padding-top:20px'>
 			<div class="tab-pane active" id="panel-sales">
@@ -100,8 +96,15 @@
 					<canvas id="paytypeChart" width="400" height="300"></canvas>
 				</div>
 			</div>
-			
 			<div class="tab-pane" id="panel-assoc">
+				<div class='form-group'>
+					<label for='minsup'>Min Support: <span id='minsup_lab'>40</span>%</label>
+					<div class='range'>
+						<span class='label label-primary'>0%</span>
+						<input type='range' id='minsup' min=0 max=100 value='40' onchange='minrange(this,"minsup_lab")'/>
+						<span class='label label-primary'>100%</span>
+					</div>
+				</div>
 <?php
 	include("inc/datarep.php");
 	//$sql_ordProducts = "SELECT od.order_id,p.cata_name AS product_name FROM cafe.order_food AS od INNER JOIN cafe.food_catalogue AS p ON od.food_id=p.food_id ORDER BY order_id";
@@ -119,9 +122,8 @@
 		}
 	}
 	$staRes = new Report($ordProducts);
-	//$staRes->find2SC(0.1,0.1,'%');
 	//print_r($staRes->aprior(0.05,3));
-	?>
+?>
 			</div>
 			<div class="tab-pane" id="panel-cus">
 				<div class='col-sm-3' id='cusUnknown' style='display:none'>

@@ -4,13 +4,6 @@ class Report{
 		$this->ary = $ary;
 		$this->uniAry = $this->uniqueAry();
 	}
-/* 	function randomText($length=6){
-		$length=(int)$length;
-		if($length>32||$length<3){
-			$length==6;
-		}
-		return base64_encode(mcrypt_create_iv($length,MCRYPT_DEV_RANDOM));
-	} */
 	function uniqueAry($dataSetAry=''){
 		$ary = empty($dataSetAry)?$this->ary:$dataSetAry;
 		$uniqueAry = [];
@@ -25,24 +18,6 @@ class Report{
 		}
 		return $uniqueAry;
 	}
-	/* function linearRegression($x=0){
-		$aSum = 0;
-		$bSum = 0;
-		$a2Sum = 0;
-		$abProSum = 0;
-		for($i=0;$i<count($ary);$i++){
-			$abProSum += $this->ary[$i][0] * $this->ary[$i][1];
-			$aSum += $this->ary[$i][0];
-			$bSum += $this->ary[$i][1];
-			$a2Sum += pow($this->ary[$i][0],2);
-		}
-		$denominator = count($ary)*$a2Sum - pow($aSum,2);
-		$k = (count($ary)*$abProSum - $aSum*$bSum)/$denominator;
-		$c = ($a2Sum*$bSum - $aSum*$abProSum)/$denominator;
-		$y = $k*$x+$c;
-		echo "f(x)=".$k."x+".$c.'<br/>';
-		echo "x = $x <br/> y = $y";
-	} */
 	function getSupportConfidence($A,$B='',$C='',$dataSetAry=''){
 		$ary = empty($dataSetAry)?$this->ary:$dataSetAry;
 		if($B==''){
@@ -85,30 +60,6 @@ class Report{
 				'S/'=>$support.'/'.count($ary),'C/'=>$support.'/'.$freqA,'L/'=>$support.'/'.$freqA.'/('.$freqB.'/'.count($ary).')'
 			];
 			return $res;
-		}
-	}
-	function find2SC($minS=0,$minC=0,$u='%',$dataSetAry=''){
-		if($minS>1||$minC>1){
-			echo 'Error: Support_min or Confidence_min cannot greater than 1';
-			return false;
-		}
-		$ary = empty($dataSetAry)?$this->ary:$dataSetAry;
-		$uniAry = $this->uniqueAry();
-		for($i=0;$i<count($uniAry);$i++){
-			$A = $uniAry[$i];
-			for($j=$i+1;$j<count($uniAry);$j++){
-				$B = $uniAry[$j];
-				$A_B = $this->getSupportConfidence($A,$B);
-				$B_A = $this->getSupportConfidence($B,$A);
-				if(!empty($A_B['S'])&&!empty($B_A['S'])){
-					if($A_B['S']>=$minS&&$A_B['C']>=$minC){
-						echo $A.'->'.$B.': S/'.$A_B['S'.$u].',&nbsp;C/'.$A_B['C'.$u].'&nbsp;L/'.$A_B['L'.$u].'&nbsp;';
-					}
-					if($B_A['S']>=$minS&&$B_A['C']>=$minC){
-						echo $B.'->'.$A.': S/'.$B_A['S'.$u].',&nbsp;C/'.$B_A['C'.$u].'&nbsp;L/'.$B_A['L'.$u].'<br/>';
-					}
-				}
-			}
 		}
 	}
 	function aprior($minS=0,$cut=1,$u='%'){
@@ -158,8 +109,7 @@ class Report{
 					$C = $fs2UniAry[$v];
 					if($this->getSupportConfidence($A,$B,$C)['S'] >= $minS && !empty($this->getSupportConfidence($A,$B,$C)['S'])){//Cut 3
 						array_push($freqSubset3,[$A.','.$B.','.$C , $this->getSupportConfidence($A,$B,$C)['S'.$u]]);
-					} 
-						
+					}
 				}
 			}
 		} 
