@@ -257,13 +257,12 @@
 		}
 		$staRes = new Report($ordProducts);
 		$minsup = $_POST['minsup']/100;
-		$res = array('cut'=>[],'empty'=>'');
+		$res = array('cut2'=>[],'cut3'=>[],'empty'=>'');
 		$cut2 = array();
 		$cut3 = array();
-		$cut2 = $staRes->aprior($minsup,2);
-		$cut3 = $staRes->aprior($minsup,3);
-		$res['cut'] = array_merge($cut2,$cut3);
-		$isempty = count($res['cut'])==0 ? 1:0;
+		$res['cut2'] = $staRes->aprior($minsup,2);
+		$res['cut3'] = $staRes->aprior($minsup,3);
+		$isempty = count($res['cut2'])==0&&count($res['cut3'])==0 ? 1:0;
 		$res['empty'] = $isempty;
 		echo json_encode($res);
 	}

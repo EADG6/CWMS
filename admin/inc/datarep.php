@@ -54,6 +54,7 @@ class Report{
 			$supportPercent = round($support/count($ary),4);
 			$confidencePercent = round($support/$freqA,4);
 			$lift = round(($support/$freqA)/($freqB/count($ary)),4);
+			if($C!=$A){$confidencePercent='';$lift='';}
 			$res = [
 				'S'=>$supportPercent,'C'=>$confidencePercent,'L'=>$lift,
 				'S%'=>($supportPercent*100).'%','C%'=>($confidencePercent*100).'%','L%'=>($lift*100).'%',

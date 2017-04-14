@@ -105,14 +105,21 @@
 						<span class='label label-primary'>100%</span>
 					</div>
 				</div>
+				<div class='helptip' id='helptip_info' style="display:none;">
+					<a class='label label-primary'>Support</a> Support(X→Y) = P(X,Y) / P(I)<br/>
+					<a class='label label-warning'>Confidence</a> Confidence(X→Y) = P(Y|X)<br/>
+					<a class='label label-danger'>Lift</a> Lift(X→Y) = P(Y|X) / P(Y)<br/>
+					Rule is invalid when Lift <= 100%
+				</div>
 				<table class='table table table-striped'>
 					<thead>
-						<th>Associate Products 1</th>
-						<th>Associate Products 2</th>
-						<th>Associate Products 3</th>
-						<th>Support</th>
-						<th>Confidence</th>
-						<th>Lift</th>
+						<tr>
+							<th>Associate Products 1</th>
+							<th>Associate Products 2</th>
+							<th>Support</th>
+							<th>Confidence</th>
+							<th>Lift <a href='javascript:void(0);' onclick="$('#helptip_info').toggle()" class="glyphicon glyphicon-question-sign icona"></a></th>
+						</tr>
 					</thead>
 					<tbody id='resbody'></tbody>
 					<tfoot>
