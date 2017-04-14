@@ -76,16 +76,18 @@ class Report{
 		$freqSubset2 = array();
 		$freqSubset3 = array();
 		for($i=0;$i<count($uniAry);$i++){
-			if($this->getSupportConfidence($uniAry[$i])['S'] >= $minS && !empty($this->getSupportConfidence($uniAry[$i])['S'])){//Cut 1
-				array_push($freqSubset1,[$uniAry[$i] , $this->getSupportConfidence($uniAry[$i])['S'.$u]]);
+			$res = $this->getSupportConfidence($uniAry[$i]);
+			if($res['S'] >= $minS && !empty($res['S'])){//Cut 1
+				array_push($freqSubset1,[$uniAry[$i] , $res['S'.$u] , $res['C'.$u] , $res['L'.$u]]);
 			}
 		}
 		for($i=0;$i<count($freqSubset1);$i++){
 			$A = $freqSubset1[$i][0];
 			for($j=$i+1;$j<count($freqSubset1);$j++){
 				$B = $freqSubset1[$j][0];
-				if($this->getSupportConfidence($A,$B)['S'] >= $minS && !empty($this->getSupportConfidence($A,$B)['S'])){//Cut 2
-					array_push($freqSubset2,[$A.','.$B , $this->getSupportConfidence($A,$B)['S'.$u]]);
+				$res = $this->getSupportConfidence($A,$B);
+				if($res['S'] >= $minS && !empty($res['S'])){//Cut 2
+					array_push($freqSubset2,[$A.','.$B , $res['S'.$u] , $res['C'.$u] , $res['L'.$u]]);
 				}
 			}
 		}
@@ -107,8 +109,9 @@ class Report{
 				$B = $fs2UniAry[$j];
 				for($v=$j+1;$v<count($fs2UniAry);$v++){
 					$C = $fs2UniAry[$v];
-					if($this->getSupportConfidence($A,$B,$C)['S'] >= $minS && !empty($this->getSupportConfidence($A,$B,$C)['S'])){//Cut 3
-						array_push($freqSubset3,[$A.','.$B.','.$C , $this->getSupportConfidence($A,$B,$C)['S'.$u]]);
+					$res = $this->getSupportConfidence($A,$B,$C);
+					if($res['S'] >= $minS && !empty($res['S'])){//Cut 3
+						array_push($freqSubset3,[$A.','.$B.','.$C , $res['S'.$u] , $res['C'.$u] , $res['L'.$u]]);
 					}
 				}
 			}

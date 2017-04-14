@@ -1,6 +1,6 @@
 <!--Show All Payment information-->
 <script src="../static/js/mychart.js"></script>
-<div class="col-md-12 mainblocks" style='padding-top:20px;padding-bottom:20px'>	
+<div class="col-md-12 mainblocks" style='padding-top:20px;padding-bottom:20px;'>	
 	<div class="col-md-12" >
 	  <div class="tabbable" id="tabs">
 		<ul class="nav nav-tabs">
@@ -11,7 +11,7 @@
 				<a href="#panel-analysis" data-toggle="tab" id='myanaly'><span class="fa fa-line-chart"></span>&nbsp;Finiancial Analysis</a>
 			</li>
 			<li>
-				<a href="#panel-assoc" data-toggle="tab" id='proassoc'><span class="fa fa-shopping-basket"></span>&nbsp;Product Association</a>
+				<a href="#panel-assoc" data-toggle="tab" id='proassoc'><span class="fa fa-shopping-basket"></span>&nbsp;Basket Analysis</a>
 			</li>
 			<li onclick="creCusUnknownChart();creCusSexChart();creCusAgeChart();crecarbindChart();cresexBuyChart();creageBuyChart();this.onclick='';">
 				<a href="#panel-cus" data-toggle="tab" id='proassoc'><span class="fa fa-users"></span>&nbsp;Customer Analysis</a>
@@ -98,32 +98,29 @@
 			</div>
 			<div class="tab-pane" id="panel-assoc">
 				<div class='form-group'>
-					<label for='minsup'>Min Support: <span id='minsup_lab'>40</span>%</label>
+					<label for='minsup'>Min Support Rate: <span id='minsup_lab'>40</span>%</label>
 					<div class='range'>
 						<span class='label label-primary'>0%</span>
-						<input type='range' id='minsup' min=0 max=100 value='40' onchange='minrange(this,"minsup_lab")'/>
+						<input type='range' id='minsup' min=0 max=100 value='40' oninput='minrange(this,"minsup_lab")' onmousedown='$("html").css("overflow","hidden")' onmouseup='$("html").css("overflow","auto")'/>
 						<span class='label label-primary'>100%</span>
 					</div>
 				</div>
-<?php
-	include("inc/datarep.php");
-	//$sql_ordProducts = "SELECT od.order_id,p.cata_name AS product_name FROM cafe.order_food AS od INNER JOIN cafe.food_catalogue AS p ON od.food_id=p.food_id ORDER BY order_id";
-	$sql_ordProducts = "SELECT od.order_id,p.product_name FROM order_product AS od INNER JOIN product_service AS p ON od.product_id=p.id INNER JOIN orders AS o ON o.id=od.order_id ORDER BY order_id";
-	$result = $mysql->query($sql_ordProducts);
-	$ordProducts = array();
-	$ordID='';$ordNum=0;
-	while($row = $mysql->fetch($result)){
-		if($ordID!=$row['order_id']){
-			array_push($ordProducts,[$row['product_name']]);
-			$ordNum++;
-			$ordID=$row['order_id'];
-		}else{
-			array_push($ordProducts[$ordNum-1],$row['product_name']);
-		}
-	}
-	$staRes = new Report($ordProducts);
-	//print_r($staRes->aprior(0.05,3));
-?>
+				<table class='table table table-striped'>
+					<thead>
+						<th>Associate Products 1</th>
+						<th>Associate Products 2</th>
+						<th>Associate Products 3</th>
+						<th>Support</th>
+						<th>Confidence</th>
+						<th>Lift</th>
+					</thead>
+					<tbody id='resbody'></tbody>
+					<tfoot>
+						<tr id='nores'>
+							<td colspan=6 class='text-center alert-warning'>NO Results, Try to reudce Min Support Rate</td>
+						</tr>
+					</tfoot>
+				</table>
 			</div>
 			<div class="tab-pane" id="panel-cus">
 				<div class='col-sm-3' id='cusUnknown' style='display:none'>

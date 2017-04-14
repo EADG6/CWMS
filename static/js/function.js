@@ -165,23 +165,58 @@
 		var pwd = document.getElementsByName('pwd')[0];
 		var pwdconf = document.getElementsByName('pwdConfirm')[0];
 		var btnsubmit = document.getElementsByName('sign')[0];
-			if(pwd.value.length<4){
-				alert("Your password length is too short! Please type more than 3 word");
-				pwd.className = 'form-control alert-danger';
-				pwdconf.className = 'form-control';
-				pwd.value = '';
-				pwdconf.value = '';
-				pwd.focus();
-				btnsubmit.disabled = true;
+		if(pwd.value.length<4){
+			alert("Your password length is too short! Please type more than 3 word");
+			pwd.className = 'form-control alert-danger';
+			pwdconf.className = 'form-control';
+			pwd.value = '';
+			pwdconf.value = '';
+			pwd.focus();
+			btnsubmit.disabled = true;
+		}else{
+			if(pwd.value == pwdconf.value){
+				pwd.className = 'form-control alert-success';
+				pwdconf.className = 'form-control alert-success';
+				btnsubmit.disabled = false;
 			}else{
-				if(pwd.value == pwdconf.value){
-					pwd.className = 'form-control alert-success';
-					pwdconf.className = 'form-control alert-success';
-					btnsubmit.disabled = false;
-				}else{
-					pwdconf.className = 'form-control alert-danger';
-					pwdconf.value = '';
-					btnsubmit.disabled = true;
-				}
+				pwdconf.className = 'form-control alert-danger';
+				pwdconf.value = '';
+				btnsubmit.disabled = true;
 			}
+		}
+	}
+	/* report page range label */
+	function minrange(ele,id){
+		minsup = $(ele).val()
+		$('#'+id).html(minsup)
+		$.ajax({
+			url:'ajax.php',
+			data:{"minsup":minsup},
+			success:function(data){
+				if(data.empty==0){
+					var htmls;
+					for(var i=0;i<data.cut.length;i++){
+						items = data.cut[i][0].split(',');
+						item_html = '<td>'+items[0]+'</td><td>'+items[1]+'</td>'
+						if(items.length==3){
+							item_html += '<td>'+items[2]+'</td>'
+						}else{
+							item_html += '<td></td>'
+						}
+						htmls += '<tr>'+item_html+'<td>'+data.cut[i][1]+'</td><td>'+data.cut[i][2]+'</td><td>'+data.cut[i][3]+'</td></tr>'
+					}
+					$('#resbody').html(htmls)
+					$('#nores').hide()
+				}else{
+					$('#resbody').html('')
+					$('#nores').show()
+				}
+			},
+			type:'POST',
+			dataType:'json',
+			beforeSend:function(){
+				
+			}
+		});
+		
 	}

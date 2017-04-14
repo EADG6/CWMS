@@ -11,6 +11,7 @@ table tr td:first-child,table tr th:first-child{
 }
 body{
     background-color: #333333;
+	overflow:visible;
 }
 .modal{
 	color: black;

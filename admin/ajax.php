@@ -1,5 +1,4 @@
 <?php
-	session_start();
 	require "../inc/db.php";
 	/**Check if username have been used when sign up*/
 	if(isset($_POST['usercheck'])){
@@ -239,5 +238,33 @@
 			$cus_agebuy['agePay']=array_values($cus_agebuy['agePay']);
 			echo json_encode($cus_agebuy);
 		}
+	}
+	/**product assoc function*/
+	if(isset($_POST['minsup'])){
+		include "inc/datarep.php";
+		$sql_ordProducts = "SELECT od.order_id,p.product_name FROM order_product AS od INNER JOIN product_service AS p ON od.product_id=p.id INNER JOIN orders AS o ON o.id=od.order_id ORDER BY order_id";
+		$result = $mysql->query($sql_ordProducts);
+		$ordProducts = array();
+		$ordID='';$ordNum=0;
+		while($row = $mysql->fetch($result)){
+			if($ordID!=$row['order_id']){
+				array_push($ordProducts,[$row['product_name']]);
+				$ordNum++;
+				$ordID=$row['order_id'];
+			}else{
+				array_push($ordProducts[$ordNum-1],$row['product_name']);
+			}
+		}
+		$staRes = new Report($ordProducts);
+		$minsup = $_POST['minsup']/100;
+		$res = array('cut'=>[],'empty'=>'');
+		$cut2 = array();
+		$cut3 = array();
+		$cut2 = $staRes->aprior($minsup,2);
+		$cut3 = $staRes->aprior($minsup,3);
+		$res['cut'] = array_merge($cut2,$cut3);
+		$isempty = count($res['cut'])==0 ? 1:0;
+		$res['empty'] = $isempty;
+		echo json_encode($res);
 	}
 ?>
