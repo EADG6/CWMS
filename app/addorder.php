@@ -1,3 +1,10 @@
+<?php
+    if ($_SESSION['customer_id'] == 0 ){
+		unset($_SESSION['customer_id']);
+		session_destroy();
+		echo "<script>alert('Please Login First');location.href='login.php'</script>";
+	}
+?>
 <div class="col-sm-10 col-sm-offset-1 form-group" style="background:#fff;border-radius:5px;margin-top:30px">
 	<h1 class="text-center">Appoint an Order</h1>
 	<?php

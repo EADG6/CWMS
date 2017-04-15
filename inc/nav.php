@@ -26,15 +26,17 @@
                     <li>
                         <a href="index.php?page=services">About</a>
                     </li>
-					<?php
+				<?php
 				    if ($_SESSION['customer_id'] != 0 ){
-					?>         
+				?>         
                     <li>
                         <a href="index.php?logout">Logout</a>
                     </li>
-					<?php
-				}
-					?>
+                <?php
+				    }else{
+                        echo "<li><a href='login.php'>Log in</a></li>";
+                    }
+				?>
                 </ul>
             </div>
             <!-- /.navbar-collapse -->

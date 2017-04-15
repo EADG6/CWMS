@@ -56,40 +56,44 @@
 				<?php
 					$sql_orders = "SELECT o.id,c.plate,CONCAT(Date,' ',Time) AS time,o.status,o.rate FROM orders AS o INNER JOIN order_service AS os ON o.id=os.order_id INNER JOIN car AS c ON c.id=os.car_id WHERE o.cus_id='".$_SESSION['customer_id']."'"; 
 					$result_orders = $mysql->query($sql_orders);
-					while ($row_orders = $mysql->fetch($result_orders)){
-				?>							       
-		            <tr>
-					 <td><?php echo $row_orders['id']; ?></td>
-		             <td><?php echo $row_orders['plate']; ?></td>
-		             <td><?php echo $row_orders['time']; ?></td>
-		             <?php //echo $row_orders['rate']; ?>
-		             <td>
-						<button type="button" class="btn btn-primary" id='stars<?php echo $row_orders['id']; ?>'>
-					<?php
-						for($i=0;$i<5;$i++){
-							$star = $row_orders['rate']>$i?'style="color:yellow"':'' ;
-							echo "<i class='fa fa-star stars' $star onclick='changeRate($i,".$row_orders['id'].")' onmouseover='rateStar($i,".$row_orders['id'].")' onmouseout='hideStar($i,".$row_orders['id'].",".$row_orders['rate'].")'></i>";
-						}
-					?>
-						</button>
-					</td>
-					 <td>
-					<?php 
-						switch($row_orders['status']){
-							case 1: echo 'Pending';break;
-							case 2: echo 'On Going';break;
-							case 3: echo 'Done but Unpaid';break;
-							case 4: echo 'Paid';break;
-						}
-					?>
-					 </td>
-					 <td>
-						<a href ="javascript:if(confirm('Are You Sure to Delete?'))location='index.php?page=order&id=<?php echo $row_orders['id']?>'" class="btn btn-danger">Delete </a>
-					 </td>
-					</tr>
-		 				<?php
-		 			}
-		 				?>
+                    if(mysql_num_rows($result_orders)>0){
+                        while ($row_orders = $mysql->fetch($result_orders)){
+                    ?>							       
+                        <tr>
+                         <td><?php echo $row_orders['id']; ?></td>
+                         <td><?php echo $row_orders['plate']; ?></td>
+                         <td><?php echo $row_orders['time']; ?></td>
+                         <?php //echo $row_orders['rate']; ?>
+                         <td>
+                            <button type="button" class="btn btn-primary" id='stars<?php echo $row_orders['id']; ?>'>
+                        <?php
+                            for($i=0;$i<5;$i++){
+                                $star = $row_orders['rate']>$i?'style="color:yellow"':'' ;
+                                echo "<i class='fa fa-star stars' $star onclick='changeRate($i,".$row_orders['id'].")' onmouseover='rateStar($i,".$row_orders['id'].")' onmouseout='hideStar($i,".$row_orders['id'].",".$row_orders['rate'].")'></i>";
+                            }
+                        ?>
+                            </button>
+                        </td>
+                         <td>
+                        <?php 
+                            switch($row_orders['status']){
+                                case 1: echo 'Pending';break;
+                                case 2: echo 'On Going';break;
+                                case 3: echo 'Done but Unpaid';break;
+                                case 4: echo 'Paid';break;
+                            }
+                        ?>
+                         </td>
+                         <td>
+                            <a href ="javascript:if(confirm('Are You Sure to Delete?'))location='index.php?page=order&id=<?php echo $row_orders['id']?>'" class="btn btn-danger">Delete </a>
+                         </td>
+                        </tr>
+                        <?php
+                            }
+                        }else{
+                            echo "<tr><td class='alert-warning'sS colspan=6>No Records</td></tr>";
+                        }
+                        ?>
 				</table>
 			</div>
     	</div>
