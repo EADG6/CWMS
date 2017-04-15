@@ -8,8 +8,8 @@
 		<param name="scale" value="exactfit"/>
 		<param name="quality" value="best"/>
 	</object>
-	<div class="col-sm-6 col-sm-offset-3">
-		<div class='col-sm-12' style="margin-top:40px;padding-top:10px;border-radius:5px;height:400px;background:#fff;">
+	<div class="col-md-6 col-md-offset-3">
+		<div class='col-xs-12' style="margin-top:40px;padding-top:10px;border-radius:5px;height:400px;background:#fff;">
 			<table class="table table table-striped">
                     <thead>
                         <tr>
