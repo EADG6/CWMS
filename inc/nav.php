@@ -9,16 +9,13 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.php">Car Wash Shop</a>
+                <a class="navbar-brand" href="index.php">YiJia Car Washing</a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li>
                         <a href="index.php?page=order">Order</a>
-                    </li>
-                    <li>
-                        <a href="index.php?page=news">News</a>
                     </li>
                     <li>
                         <a href="index.php?page=customer">Customer</a>

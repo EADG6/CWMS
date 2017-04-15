@@ -16,9 +16,9 @@
 			for($i=0;$i<count($_POST['services']);$i++){
 				$sql_orderProduct = "INSERT INTO order_product(order_id,product_id,Quantity) VALUES ('$order_id','".$_POST['services'][$i]."','1')";
 				$mysql->query($sql_orderProduct);
-				$sql_orderService = "INSERT INTO order_service(emp_id,car_id,order_id) VALUES ('$emp_id','$carid','$order_id')";
-				$mysql->query($sql_orderService);
 			}
+            $sql_orderService = "INSERT INTO order_service(emp_id,car_id,order_id) VALUES ('$emp_id','$carid','$order_id')";
+            $mysql->query($sql_orderService);
 			echo"<script type='text/javascript'>alert('There have ".$num_pending." people before'); location='index.php?page=order';</script>"; 
 		}else{
 			echo "<script>alert('No service selected')</script>";

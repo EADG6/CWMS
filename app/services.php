@@ -1,5 +1,5 @@
 <div class="col-md-12">
-<h2>About<h2>
+<h2> <h2>
 </div>
 		<div class="col-md-5 contactInfo">
 			<div>

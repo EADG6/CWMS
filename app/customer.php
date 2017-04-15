@@ -7,7 +7,7 @@
     ?>
 	<div class="container">
         <div class="row">
-				<div class="col-md-12">
+				<div class="col-md-12 customer">
 				<h1>You Can Update Your Information</h1> 
 				</div>
 				<?php
@@ -28,42 +28,42 @@
 			}
 				?> 
 				<form method='post'>
-				    <div class="form-group col-md-5 col-md-offset-0">  
+				    <div class="form-group col-md-5 col-md-offset-0 customer">  
 				    	<label for='fname'>First Name:</label>
 						<input type="text" class="form-control" name="fname" id="fname" value="<?php echo $cusinfo['FirstName']; ?>">
 					</div>
 					
-					<div class="form-group col-md-5 col-md-offset-0">  
+					<div class="form-group col-md-5 col-md-offset-0 customer">  
 				    	<label for='lname'>Last Name:</label>
 						<input type="text" class="form-control" name="lname" id="lname" value="<?php echo $cusinfo['LastName']; ?>">
 					</div>
 					
-				    <div class="form-group col-md-5 col-md-offset-0">  
+				    <div class="form-group col-md-5 col-md-offset-0 customer">  
 				    	<label for='username'>Username:</label>
 						<input type="text" class="form-control" name="username" id='username' value="<?php echo $cusinfo['username']; ?>" disabled>
 					</div>			    	
 					
-				    <div class="form-group col-md-5 col-md-offset-0">  
+				    <div class="form-group col-md-5 col-md-offset-0 customer">  
 				    	<label for='phone'>Phone Number:</label>
 						<input type="text" class="form-control" name="phone" id='phone' value="<?php echo $cusinfo['tel']; ?>">
 					</div>
 					
-					<div class="form-group col-md-5 col-md-offset-0">  
+					<div class="form-group col-md-5 col-md-offset-0 customer">  
 				    	<label for='sex'>Gender:</label>
 						<input type="text" class="form-control" name="sex" id='sex' value="<?php echo $cusinfo['sex']; ?>">
 					</div>
 					
-					<div class="form-group col-md-5 col-md-offset-0">  
+					<div class="form-group col-md-5 col-md-offset-0 customer">  
 				    	<label for='address'>Address:</label>
 						<input type="text" class="form-control" name="address" id='address' value="<?php echo $cusinfo['address']; ?>">
 					</div>
 					
-					<div class="col-md-12 col-md-offset-10">			
+					<div class="col-md-12 col-md-offset-10 customer">			
 				    	<input type="submit" value="Submit" class="btn btn-danger">  
 					</div>
 				</form>
 				
-				<div class="col-md-12">
+				<div class="col-md-12 customer">
 					<hr>
 					<h3>Update Password</h3>
 				</div>
@@ -102,24 +102,23 @@
 				}
 				?>
 				<form method="post">
-			    	<div class="form-group col-md-5 col-md-offset-0">  
+			    	<div class="form-group col-md-5 col-md-offset-0 customer">  
 			   		 	<label for='password'>Password:</label>
 						<input type="text" class="form-control" name="password" id='password' placeholder="Your Old Password">
 					</div>
-			    	<div class="form-group col-md-5 col-md-offset-0">  
+			    	<div class="form-group col-md-5 col-md-offset-0 customer">  
 			   		 	<label for='newpassword'>New Password:</label>
 						<input type="text" class="form-control" name="newpassword" id='newpassword' placeholder="New Password">
 					</div>
-			    	<div class="form-group col-md-5 col-md-offset-0">  
+			    	<div class="form-group col-md-5 col-md-offset-0 customer">  
 			   		 	<label for='newpasswordagain'>New Password Again:</label>
 						<input type="text" class="form-control" name="newpasswordagain" id='newpasswordagain' placeholder="New Password Again">
 					</div>
-					<div class="col-md-12 col-md-offset-10">			
+					<div class="col-md-12 col-md-offset-10 customer">			
 				    	<input type="submit" value="Submit" class="btn btn-danger">  
 					</div>
 				</form>
-				<hr>
-				<div class="col-md-12">
+				<div class="col-md-12 customer"><hr>
 					<h3>Update Car Information</h3>
 				</div>
 				<?php
@@ -131,21 +130,21 @@
 					$num ++;
 				?>
 					<form method="post">
-						<div class="col-md-4">
+						<div class="col-md-4 customer">
 						<h4>Car Information<?php echo $num;?></h4>
-				   	 		<div class="form-group  col-md-offset-0">  
+				   	 		<div class="form-group  col-md-offset-0 customer">  
 				   			 	<label for='plate'>Plate Number:</label>
 								<input type="text" class="form-control" name="plate<?php echo $num;?>" id='plate' value="<?php echo $row_carinfo['plate']; ?>">
 								<input type="hidden" name="id<?php echo $num;?>" value="<?php echo $row_carinfo['id']; ?>">
 							</div>
 					
-				    		<div class="form-group  col-md-offset-0">  
+				    		<div class="form-group  col-md-offset-0 customer">  
 				   			 	<label for='colol'>Color:</label>
 								<input type="text" class="form-control" name="color<?php echo $num;?>" id='color' value="<?php echo $row_carinfo['color']; ?>">
 								<input type="hidden" name="id<?php echo $num;?>" value="<?php echo $row_carinfo['id']; ?>">
 							</div>
 							
-				    		<div class="form-group  col-md-offset-0">  
+				    		<div class="form-group  col-md-offset-0 customer">  
 				   			 	<label for='type'>Type:</label>
 								<input type="text" class="form-control" name="type<?php echo $num;?>" id='type' value="<?php echo $row_carinfo['brand']; ?>">
 								<input type="hidden" name="id<?php echo $num;?>" value="<?php echo $row_carinfo['id']; ?>">
