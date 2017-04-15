@@ -128,48 +128,48 @@ if (isset ($_POST['fname'])) {
 		 <div class="col-md-8 col-md-offset-2" style="margin-bottom:250px;">
 	        <div class="col-xs-12 login" style="margin-top: 40px;">	
 				<h1 class="text-center">Sign Up</h1>  
-				<form method='post'>
-				    <div class="form-group col-md-5">  
+				<form method='post' class='col-md-10 col-md-offset-1'>
+				    <div class="form-group col-md-6">  
 				    	<label for='fname'>First Name:</label>
 						<input type="text" class="form-control" name="fname" id='fname' placeholder="First Name" required>
 					</div>
 					
-				    <div class="form-group col-md-5">  
+				    <div class="form-group col-md-6">  
 				    	<label for='fname'>Last Name:</label>
 						<input type="text" class="form-control" name="lname" id='lname' placeholder="Last Name" required>
 					</div>
 					
-				    <div class="form-group col-md-5">  
+				    <div class="form-group col-md-6">  
 				    	<label for='username'>Username:</label>
 						<input type="text" class="form-control" name="username" id='username' placeholder="Make a User Name" required>
 					</div>
 					
-			    	<div class="form-group col-md-5">  
+			    	<div class="form-group col-md-6">  
 			   		 	<label for='password'>Password:</label>
 						<input type="password" class="form-control" name="password" id='password' placeholder="Your Password" required>
 					</div>
 					
-				    <div class="form-group col-md-5">  
+				    <div class="form-group col-md-6">  
 				   	 	<label for='passwordagain'>Password Again:</label>
 						<input type="password" class="form-control" name="passwordagain" id='passwordagain'placeholder="Password Again" required>
 					</div>
 					
-				    <div class="form-group col-md-5">  
+				    <div class="form-group col-md-6">  
 				    	<label for='phone'>Phone Number:</label>
 						<input type="text" class="form-control" name="phone" id='phone' placeholder="Your Phone Number" required>
 					</div>
 
-					<div class="form-group col-md-5">  
+					<div class="form-group col-md-6">  
 				    	<label for='address'>Address:</label>
 						<input type="text" class="form-control" name="address" id='address' placeholder="Address" required>
 					</div>
 					
-					<div class="form-group col-md-5">  
+					<div class="form-group col-md-6">  
 				    	<label for='sex'>Sex:</label>
 						<select class="form-control" name="sex" id='sex' required>
+							<option value='0'>Unknown</option>
 							<option value='1'>Male</option>
 							<option value='2'>Female</option>
-							<option value='0'>Unknown</option>
 						</select>
 					</div>
 					<div class="col-xs-12">

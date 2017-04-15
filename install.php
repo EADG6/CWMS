@@ -1,5 +1,6 @@
 <?php
 	include('inc/header.php');
+	date_default_timezone_set('PRC');
 ?>
 	<object id='spider' type="application/x-shockwave-flash" style="margin:-20px;position:fixed;z-index:1;display:none" data="http://cdn.abowman.com/widgets/spider/spider.swf?" width="100%" height="100%">
 		<param name="movie" value="http://cdn.abowman.com/widgets/spider/spider.swf?"></param>
@@ -56,7 +57,7 @@
 								$writeable = '<i class="fa fa-close"></i>Not Writable ';
 							}
 							echo "<tr>
-                                <td>".$folder[$i]."</td>
+                                <td>".$path."</td>
                                 <td colspan=2 class='text-center'>$writeable</td>
                                 <td>$readable</td>
                             </tr>";
@@ -69,12 +70,19 @@
 		<button id='install' onclick='location.href="install.php?submit"' class='btn btn-danger btn-lg btn-block center-block'>Start to Install</button>
 	</div>
 <?php
-	$conn =  mysql_connect('localhost','root','0618') or die("Cannot connect to server".mysql_error());
-	$db = mysql_select_db("carwashing",$conn);
-	if($db){
+	if(file_exists('install.lock')){
 		echo "<script>$('#install').attr('disabled',true);$('#spider').show()</script>";
 	}else{
 		if(isset($_GET['submit'])){
+			include "inc/db.php";
+/* Create Lock file to stop re-install*/
+			$lock_file = fopen('install.lock','wb');
+			$lock_cont = 'User: '.$_SERVER['SERVER_ADDR'].' installed system at'.date("Y/m/d H:m:s");
+			fputs($lock_file,$lock_cont);
+			fclose($lock_file);
+			/* 
+			$conn =  mysql_connect('localhost','root','0618') or die("Cannot connect to server".mysql_error());
+			$db = mysql_select_db("carwashing",$conn);
 			mysql_query("CREATE DATABASE IF NOT EXISTS `carwashing` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci",$conn);
 			mysql_select_db("carwashing",$conn) or die("Cannot use this Database");
 			$sql_tables = file_get_contents('carwashing_new.sql');
@@ -83,8 +91,8 @@
 				mysql_query($sql_ary[$i].';');
 				//echo $mysql->fetch($mysql->query('SHOW WARNINGS'))[2].'<br/>';
 			}
-			echo "<script>alert('Create Database Successfully');location.href='index.php'</script>";
-			header("Location:index.php");
+			echo "<script>alert('Create Database Successfully');location.href='index.php'</script>"; */
+			//header("Location:index.php");
 		}
 	}
 	//print_r(scandir(__dir__));
