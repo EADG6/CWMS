@@ -18,6 +18,9 @@
                         <a href="index.php?page=order">Order</a>
                     </li>
                     <li>
+                        <a href="index.php?page=addorder">Add Order</a>
+                    </li>
+                    <li>
                         <a href="index.php?page=customer">Customer</a>
                     </li> 
                     <li>

@@ -31,8 +31,8 @@
 		include "app/services.php";
 	}else if($page=='order'){
 		include "app/order.php";
-	}else if($page=='news'){
-		include "app/news.php";
+	}else if($page=='addorder'){
+		include "app/addorder.php";
 	}else if($page=='addorder'){
 		include "app/addorder.php";
 	}else if($page=='customer'){
