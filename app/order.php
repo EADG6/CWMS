@@ -41,7 +41,7 @@
     <div class="addorder">
 		<h1>Check Order</h1>
     </div>
-			<div class="col-sm-12" style="padding:20px;background:#fff;border-radius:5px;">
+			<div class="col-sm-12 ordertable">
 				<table class="table table table-striped">
 					<thead>
 						<tr>

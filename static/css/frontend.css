@@ -51,3 +51,8 @@ div{color:black;}
 .stars{
 	padding-right: 5px;
 }
+.ordertable{
+    padding:20px;
+    background:#fff;
+    border-radius:5px;
+}
