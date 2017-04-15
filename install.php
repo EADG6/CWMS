@@ -107,6 +107,7 @@
 			$dbConfig = str_replace('{db_host}',$dbhost,$dbConfig);
 			$dbConfig = str_replace('{db_user}',$dbuser,$dbConfig);
 			$dbConfig = str_replace('{db_pwd}',$dbpwd,$dbConfig);
+			$dbConfig = str_replace('false','true',$dbConfig);
 			@file_put_contents('inc/db.php',$dbConfig);
 			$conn =  mysql_connect($dbhost,$dbuser,$dbpwd) or die("Cannot connect to server".mysql_error());
 			mysql_query("CREATE DATABASE IF NOT EXISTS `carwashing` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci",$conn);
