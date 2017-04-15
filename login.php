@@ -39,7 +39,7 @@
 								<input type="password" name="password" class="form-control" placeholder='1234'>  
 							</div>
 							<button type="button" onclick='location.href="login.php?new"' class="btn btn-primary">Sign Up</button>
-							<button type="button" type="submit" class="btn btn-org">Sign In</button>  
+							<button type="submit" class="btn btn-org">Sign In</button>  
 							<button type="button" onclick='location.href="index.php?new"' class="btn btn-primary">Back</button>
 					 	</form>
 			</div>
