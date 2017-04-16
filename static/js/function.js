@@ -198,14 +198,14 @@
 					for(var i=0;i<data.cut2.length;i++){
 						items = data.cut2[i][0].split(',');
 						item_html = '<td>'+items[0]+'</td><td>'+items[1]+'</td>'
-						htmls += '<tr>'+item_html+'<td>'+data.cut2[i][1]+'</td><td>'+data.cut2[i][2]+'</td><td>'+data.cut2[i][3]+'</td></tr>'
+						htmls += '<tr>'+item_html+'<td><b>'+data.cut2[i][1]+'</b></td><td>'+data.cut2[i][2]+'</td><td>'+data.cut2[i][3]+'</td></tr>'
 					}
 					if(data.cut3.length>0){
 						htmls += '<tr><th>Associate Products 1</th><th>Associate Products 2</th><th>Associate Products 3</th><th class="text-center" colspan=3>Support</th></tr>'
 						for(var i=0;i<data.cut3.length;i++){
 							items = data.cut3[i][0].split(',');
 							item_html = '<td>'+items[0]+'</td><td>'+items[1]+'</td><td>'+items[2]+'</td>'
-							htmls += '<tr>'+item_html+'<td class="text-center" colspan=3>'+data.cut2[i][1]+'</td></tr>'
+							htmls += '<tr>'+item_html+'<td class="text-center" colspan=3><b>'+data.cut2[i][1]+'</b></td></tr>'
 						}
 					}
 					$('#resbody').html(htmls)
