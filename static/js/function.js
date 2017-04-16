@@ -165,23 +165,61 @@
 		var pwd = document.getElementsByName('pwd')[0];
 		var pwdconf = document.getElementsByName('pwdConfirm')[0];
 		var btnsubmit = document.getElementsByName('sign')[0];
-			if(pwd.value.length<4){
-				alert("Your password length is too short! Please type more than 3 word");
-				pwd.className = 'form-control alert-danger';
-				pwdconf.className = 'form-control';
-				pwd.value = '';
-				pwdconf.value = '';
-				pwd.focus();
-				btnsubmit.disabled = true;
+		if(pwd.value.length<4){
+			alert("Your password length is too short! Please type more than 3 word");
+			pwd.className = 'form-control alert-danger';
+			pwdconf.className = 'form-control';
+			pwd.value = '';
+			pwdconf.value = '';
+			pwd.focus();
+			btnsubmit.disabled = true;
+		}else{
+			if(pwd.value == pwdconf.value){
+				pwd.className = 'form-control alert-success';
+				pwdconf.className = 'form-control alert-success';
+				btnsubmit.disabled = false;
 			}else{
-				if(pwd.value == pwdconf.value){
-					pwd.className = 'form-control alert-success';
-					pwdconf.className = 'form-control alert-success';
-					btnsubmit.disabled = false;
-				}else{
-					pwdconf.className = 'form-control alert-danger';
-					pwdconf.value = '';
-					btnsubmit.disabled = true;
-				}
+				pwdconf.className = 'form-control alert-danger';
+				pwdconf.value = '';
+				btnsubmit.disabled = true;
 			}
+		}
+	}
+	/* report page range label */
+	function minrange(ele,id){
+		minsup = $(ele).val()
+		$('#'+id).html(minsup)
+		$.ajax({
+			url:'ajax.php',
+			data:{"minsup":minsup},
+			success:function(data){
+				if(data.empty==0){
+					var htmls;
+					for(var i=0;i<data.cut2.length;i++){
+						items = data.cut2[i][0].split(',');
+						item_html = '<td>'+items[0]+'</td><td>'+items[1]+'</td>'
+						htmls += '<tr>'+item_html+'<td><b>'+data.cut2[i][1]+'</b></td><td>'+data.cut2[i][2]+'</td><td>'+data.cut2[i][3]+'</td></tr>'
+					}
+					if(data.cut3.length>0){
+						htmls += '<tr><th>Associate Products 1</th><th>Associate Products 2</th><th>Associate Products 3</th><th class="text-center" colspan=3>Support</th></tr>'
+						for(var i=0;i<data.cut3.length;i++){
+							items = data.cut3[i][0].split(',');
+							item_html = '<td>'+items[0]+'</td><td>'+items[1]+'</td><td>'+items[2]+'</td>'
+							htmls += '<tr>'+item_html+'<td class="text-center" colspan=3><b>'+data.cut2[i][1]+'</b></td></tr>'
+						}
+					}
+					$('#resbody').html(htmls)
+					$('#nores').hide()
+				}else{
+					$('#resbody').html('')
+					$('#nores').show()
+				}
+			},
+			type:'POST',
+			dataType:'json',
+			beforeSend:function(){
+				
+			}
+		});
+		
 	}

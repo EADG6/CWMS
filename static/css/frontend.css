@@ -1,9 +1,25 @@
+div{color:black;}
+.myheader {
+    height: 800px;
+    background: url('../img/5.jpg') center center no-repeat scroll;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+}
+.tagline {
+    text-shadow: 0 0 10px #000;
+    color: white;
+}
+.img-center {
+    margin: 0 auto;
+}
 .footwrap{
     min-height: 600px;
 	padding-top: 50px;
 }
 .mainbody{
-    background: -webkit-linear-gradient(top, #286090 0%,rgba(40, 96, 144, 0.51) 100%);
+    background: #1E3E57;
     width: 100%;
     height: 100%;
     position: fixed;
@@ -20,9 +36,22 @@
     background:white; 
     padding-bottom:40px;
     box-shadow: 1px 2px 12px 0px #555;
-    margin-top: 40px;
 }
 .addorder{
 	color:#dae6f0;
 }
-    
+.customer{
+	color:#dae6f0;
+}
+.btn-org{
+	background: #DB4C4C;
+	color: #fff;
+}
+.stars{
+	padding-right: 5px;
+}
+.ordertable{
+    padding:20px;
+    background:#fff;
+    border-radius:5px;
+}

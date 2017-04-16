@@ -15,7 +15,7 @@
 		</thead>
 		<tbody>
 		<?php
-			$sql_payInfo = "SELECT p.order_id,CONCAT(c.username,' - ',c.firstname,' ',c.lastname) AS customer,p.price,pt.type,p.price*p.discount AS paid,CONCAT(e.username,' - ',e.firstname,' ',e.lastname) AS staff,p.pay_time FROM payment AS p LEFT JOIN customer AS c ON p.cus_id = c.id INNER JOIN pay_type AS pt ON p.pay_type_id=pt.id INNER JOIN employee AS e ON p.emp_id = e.id";
+			$sql_payInfo = "SELECT p.order_id,CONCAT(c.username,' - ',c.firstname,' ',c.lastname) AS customer,p.price,pt.type,p.price*p.discount AS paid,CONCAT(e.username,' - ',e.firstname,' ',e.lastname) AS staff,p.pay_time FROM payment AS p LEFT JOIN customer AS c ON p.cus_id = c.id INNER JOIN pay_type AS pt ON p.pay_type_id=pt.id INNER JOIN employee AS e ON p.emp_id = e.id ORDER BY p.pay_time DESC";
 			$res_payInfo = $mysql->query($sql_payInfo);
 			while($row_payInfo = $mysql->fetch($res_payInfo)){
 				$payer = empty($row_payInfo['customer'])?'Unknown':$row_payInfo['customer'];

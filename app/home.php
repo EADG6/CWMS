@@ -1,7 +1,4 @@
-<header class="business-header">
-    <div class="col-lg-12" style="padding-top:60px;">
-         <h1 class="tagline">YiJia Car Wash Shop</h1>
-    </div>
+<header class="myheader">
 </header>
     <!-- Page Content -->
     <div class="container">

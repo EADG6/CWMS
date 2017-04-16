@@ -13,7 +13,7 @@
 		</thead>
 		<tbody>
 		<?php
-			$sql_payInfo = "SELECT CONCAT(c.username,' - ',c.firstname,' ',c.lastname) AS customer,r.price,pt.type,CONCAT(e.username,' - ',e.firstname,' ',e.lastname) AS staff,r.datetime FROM recharge AS r INNER JOIN customer AS c ON r.cus_id = c.id INNER JOIN pay_type AS pt ON r.pay_type_id=pt.id INNER JOIN employee AS e ON r.emp_id = e.id";
+			$sql_payInfo = "SELECT CONCAT(c.username,' - ',c.firstname,' ',c.lastname) AS customer,r.price,pt.type,CONCAT(e.username,' - ',e.firstname,' ',e.lastname) AS staff,r.datetime FROM recharge AS r INNER JOIN customer AS c ON r.cus_id = c.id INNER JOIN pay_type AS pt ON r.pay_type_id=pt.id INNER JOIN employee AS e ON r.emp_id = e.id ORDER BY r.datetime DESC";
 			$res_payInfo = $mysql->query($sql_payInfo);
 			while($row_payInfo = $mysql->fetch($res_payInfo)){
 				echo"<tr>

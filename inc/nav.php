@@ -9,7 +9,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.php">Car Wash Shop</a>
+                <a class="navbar-brand" href="index.php">YiJia Car Washing</a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -18,7 +18,7 @@
                         <a href="index.php?page=order">Order</a>
                     </li>
                     <li>
-                        <a href="index.php?page=news">News</a>
+                        <a href="index.php?page=addorder">Add Order</a>
                     </li>
                     <li>
                         <a href="index.php?page=customer">Customer</a>
@@ -26,15 +26,17 @@
                     <li>
                         <a href="index.php?page=services">About</a>
                     </li>
-					<?php
+				<?php
 				    if ($_SESSION['customer_id'] != 0 ){
-					?>         
+				?>         
                     <li>
                         <a href="index.php?logout">Logout</a>
                     </li>
-					<?php
-				}
-					?>
+                <?php
+				    }else{
+                        echo "<li><a href='login.php'>Log in</a></li>";
+                    }
+				?>
                 </ul>
             </div>
             <!-- /.navbar-collapse -->

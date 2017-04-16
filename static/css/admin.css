@@ -11,6 +11,7 @@ table tr td:first-child,table tr th:first-child{
 }
 body{
     background-color: #333333;
+	overflow:visible;
 }
 .modal{
 	color: black;
@@ -245,10 +246,62 @@ input[type="number"]{-moz-appearance:textfield;}
 	cursor:pointer;
 }
 /** Recharge Page*/
-	.cards{
-		background:#fff;
-		width:100%;
-		color:black;
-		padding:20px;
-		height:400px;
-	}
+.cards{
+	background:#fff;
+	width:100%;
+	color:black;
+	padding:20px;
+	height:400px;
+}
+/** input range**/
+.range{
+	display: flex;
+	align-items: center;
+    padding: 2px 11px;
+}
+.range span{
+	padding:10px;
+}
+.range input {
+    display: inline-block;
+    overflow: hidden;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding-right: 2px;
+    padding-left: 1px;
+    height: 43px;
+    outline: none;
+    background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #ccc), color-stop(100%, #ccc));
+    background: linear-gradient(to right, #ccc 0%, #ccc 100%);
+    background-position: center;
+    background-size: 99% 2px;
+    background-repeat: no-repeat;
+    -webkit-appearance: none;
+}
+.range input::-webkit-slider-thumb {
+    position: relative;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background-color: #fff;
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.3), 0 3px 5px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    -webkit-appearance: none;
+    border: 0;
+}
+.range input::-webkit-slider-thumb:before {
+    position: absolute;
+    top: 13px;
+    left: -2001px;
+    width: 2000px;
+    height: 2px;
+    background: #444;
+    content: ' ';
+}
+.range input::-webkit-slider-thumb:after {
+    position: absolute;
+    top: -15px;
+    left: -15px;
+    padding: 30px;
+    content: ' '; 
+}

@@ -24,24 +24,23 @@
 	 }
  	if($action == 'login'){
 ?>
-	    <div class="container col-md-8 col-md-offset-2 login" style="margin-bottom: 250px;">
-	        <div class="col-md-6 col-md-offset-4" >	
-					<h1>PLEASE LOGIN</h1>
-					<br> </br>
-						<form method="post">  
+	    <div class="col-md-8 col-md-offset-2" style="margin-bottom:250px;">
+	        <div class="col-xs-12 login" style="margin-top: 40px;">	
+					<h1 class='text-center'>PLEASE LOGIN</h1>
+						<form method="post" class='col-md-6 col-md-offset-3'> 
 							<!-- input the user name -->
-							<div class="form-group col-md-offset-0 centerbox">
+							<div class="form-group centerbox">
 								<label for='username'>Username:</label>
-								<input type="text" name="username" class="form-control" style="width: 200px;" placeholder='cus1'>  
+								<input type="text" name="username" class="form-control" placeholder='cus1'>  
 							</div> 
 							<!-- input the password -->
-							<div class="form-group col-md-offset-0">
+							<div class="form-group">
 								<label for='password'>Password:</label>
-								<input type="password" name="password" class="form-control" style="width: 200px;" placeholder='1234'>  
+								<input type="password" name="password" class="form-control" placeholder='1234'>  
 							</div>
-							<a href="login.php?new" class="btn btn-primary">Sign Up</a>
-							<input type="submit" value="Sign In" class="btn btn-primary">  
-							<a href="index.php?new" class="btn btn-primary">Back</a>
+							<button type="button" onclick='location.href="login.php?new"' class="btn btn-primary">Sign Up</button>
+							<button type="submit" class="btn btn-org">Sign In</button>  
+							<button type="button" onclick='location.href="index.php?new"' class="btn btn-primary">Back</button>
 					 	</form>
 			</div>
 		</div>
@@ -126,58 +125,57 @@ if (isset ($_POST['fname'])) {
 	}  
 }
 ?>  
-		<div class="container">
-			<div class="row">
-				<h1>Please Enter Your Information</h1>  
-				<form method='post'>
-				    <div class="form-group col-md-5 col-md-offset-0">  
+		 <div class="col-md-8 col-md-offset-2" style="margin-bottom:250px;">
+	        <div class="col-xs-12 login" style="margin-top: 40px;">	
+				<h1 class="text-center">Sign Up</h1>  
+				<form method='post' class='col-md-10 col-md-offset-1'>
+				    <div class="form-group col-md-6">  
 				    	<label for='fname'>First Name:</label>
 						<input type="text" class="form-control" name="fname" id='fname' placeholder="First Name" required>
 					</div>
 					
-				    <div class="form-group col-md-5 col-md-offset-0">  
+				    <div class="form-group col-md-6">  
 				    	<label for='fname'>Last Name:</label>
 						<input type="text" class="form-control" name="lname" id='lname' placeholder="Last Name" required>
 					</div>
 					
-				    <div class="form-group col-md-5 col-md-offset-0">  
+				    <div class="form-group col-md-6">  
 				    	<label for='username'>Username:</label>
 						<input type="text" class="form-control" name="username" id='username' placeholder="Make a User Name" required>
 					</div>
 					
-			    	<div class="form-group col-md-5 col-md-offset-0">  
+			    	<div class="form-group col-md-6">  
 			   		 	<label for='password'>Password:</label>
 						<input type="password" class="form-control" name="password" id='password' placeholder="Your Password" required>
 					</div>
 					
-				    <div class="form-group col-md-5 col-md-offset-0">  
+				    <div class="form-group col-md-6">  
 				   	 	<label for='passwordagain'>Password Again:</label>
 						<input type="password" class="form-control" name="passwordagain" id='passwordagain'placeholder="Password Again" required>
 					</div>
 					
-				    <div class="form-group col-md-5 col-md-offset-0">  
+				    <div class="form-group col-md-6">  
 				    	<label for='phone'>Phone Number:</label>
 						<input type="text" class="form-control" name="phone" id='phone' placeholder="Your Phone Number" required>
 					</div>
 
-					<div class="form-group col-md-5 col-md-offset-0">  
+					<div class="form-group col-md-6">  
 				    	<label for='address'>Address:</label>
 						<input type="text" class="form-control" name="address" id='address' placeholder="Address" required>
 					</div>
 					
-					<div class="form-group col-md-5 col-md-offset-0">  
+					<div class="form-group col-md-6">  
 				    	<label for='sex'>Sex:</label>
 						<select class="form-control" name="sex" id='sex' required>
+							<option value='0'>Unknown</option>
 							<option value='1'>Male</option>
 							<option value='2'>Female</option>
-							<option value='0'>Unknown</option>
 						</select>
 					</div>
-					
-					<div class="col-md-4 col-md-offset-8">
+					<div class="col-xs-12">
 				    	<a href="login.php" class="btn btn-primary" >Back</a>
-				    	<input type="submit" value="Submit" class="btn btn-primary">  
-				   	 	<input type="reset" value="Delete" class="btn btn-primary">
+				    	<input type="submit" value="Submit" class="btn btn-danger">  
+				   	 	<input type="reset" value="Reset" class="btn btn-primary">
 					</div>
 				</form>
         	</div>        

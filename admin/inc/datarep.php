@@ -4,13 +4,6 @@ class Report{
 		$this->ary = $ary;
 		$this->uniAry = $this->uniqueAry();
 	}
-/* 	function randomText($length=6){
-		$length=(int)$length;
-		if($length>32||$length<3){
-			$length==6;
-		}
-		return base64_encode(mcrypt_create_iv($length,MCRYPT_DEV_RANDOM));
-	} */
 	function uniqueAry($dataSetAry=''){
 		$ary = empty($dataSetAry)?$this->ary:$dataSetAry;
 		$uniqueAry = [];
@@ -25,24 +18,6 @@ class Report{
 		}
 		return $uniqueAry;
 	}
-	/* function linearRegression($x=0){
-		$aSum = 0;
-		$bSum = 0;
-		$a2Sum = 0;
-		$abProSum = 0;
-		for($i=0;$i<count($ary);$i++){
-			$abProSum += $this->ary[$i][0] * $this->ary[$i][1];
-			$aSum += $this->ary[$i][0];
-			$bSum += $this->ary[$i][1];
-			$a2Sum += pow($this->ary[$i][0],2);
-		}
-		$denominator = count($ary)*$a2Sum - pow($aSum,2);
-		$k = (count($ary)*$abProSum - $aSum*$bSum)/$denominator;
-		$c = ($a2Sum*$bSum - $aSum*$abProSum)/$denominator;
-		$y = $k*$x+$c;
-		echo "f(x)=".$k."x+".$c.'<br/>';
-		echo "x = $x <br/> y = $y";
-	} */
 	function getSupportConfidence($A,$B='',$C='',$dataSetAry=''){
 		$ary = empty($dataSetAry)?$this->ary:$dataSetAry;
 		if($B==''){
@@ -79,36 +54,13 @@ class Report{
 			$supportPercent = round($support/count($ary),4);
 			$confidencePercent = round($support/$freqA,4);
 			$lift = round(($support/$freqA)/($freqB/count($ary)),4);
+			if($C!=$A){$confidencePercent='';$lift='';}
 			$res = [
 				'S'=>$supportPercent,'C'=>$confidencePercent,'L'=>$lift,
 				'S%'=>($supportPercent*100).'%','C%'=>($confidencePercent*100).'%','L%'=>($lift*100).'%',
 				'S/'=>$support.'/'.count($ary),'C/'=>$support.'/'.$freqA,'L/'=>$support.'/'.$freqA.'/('.$freqB.'/'.count($ary).')'
 			];
 			return $res;
-		}
-	}
-	function find2SC($minS=0,$minC=0,$u='%',$dataSetAry=''){
-		if($minS>1||$minC>1){
-			echo 'Error: Support_min or Confidence_min cannot greater than 1';
-			return false;
-		}
-		$ary = empty($dataSetAry)?$this->ary:$dataSetAry;
-		$uniAry = $this->uniqueAry();
-		for($i=0;$i<count($uniAry);$i++){
-			$A = $uniAry[$i];
-			for($j=$i+1;$j<count($uniAry);$j++){
-				$B = $uniAry[$j];
-				$A_B = $this->getSupportConfidence($A,$B);
-				$B_A = $this->getSupportConfidence($B,$A);
-				if(!empty($A_B['S'])&&!empty($B_A['S'])){
-					if($A_B['S']>=$minS&&$A_B['C']>=$minC){
-						echo $A.'->'.$B.': S/'.$A_B['S'.$u].',&nbsp;C/'.$A_B['C'.$u].'&nbsp;L/'.$A_B['L'.$u].'&nbsp;';
-					}
-					if($B_A['S']>=$minS&&$B_A['C']>=$minC){
-						echo $B.'->'.$A.': S/'.$B_A['S'.$u].',&nbsp;C/'.$B_A['C'.$u].'&nbsp;L/'.$B_A['L'.$u].'<br/>';
-					}
-				}
-			}
 		}
 	}
 	function aprior($minS=0,$cut=1,$u='%'){
@@ -124,20 +76,35 @@ class Report{
 		$freqSubset1 = array();
 		$freqSubset2 = array();
 		$freqSubset3 = array();
+		$maxsup = 0;
 		for($i=0;$i<count($uniAry);$i++){
-			if($this->getSupportConfidence($uniAry[$i])['S'] >= $minS && !empty($this->getSupportConfidence($uniAry[$i])['S'])){//Cut 1
-				array_push($freqSubset1,[$uniAry[$i] , $this->getSupportConfidence($uniAry[$i])['S'.$u]]);
+			$res = $this->getSupportConfidence($uniAry[$i]);
+			if($res['S'] >= $minS && !empty($res['S'])){//Cut 1
+				if($res['S'] < $maxsup){
+					array_push($freqSubset1,[$uniAry[$i] , $res['S'.$u] , $res['C'.$u] , $res['L'.$u]]);
+				}else{
+					array_unshift($freqSubset1,[$uniAry[$i] , $res['S'.$u] , $res['C'.$u] , $res['L'.$u]]);
+					$maxsup = $res['S'];
+				}
 			}
 		}
+		$maxsup = 0;
 		for($i=0;$i<count($freqSubset1);$i++){
 			$A = $freqSubset1[$i][0];
 			for($j=$i+1;$j<count($freqSubset1);$j++){
 				$B = $freqSubset1[$j][0];
-				if($this->getSupportConfidence($A,$B)['S'] >= $minS && !empty($this->getSupportConfidence($A,$B)['S'])){//Cut 2
-					array_push($freqSubset2,[$A.','.$B , $this->getSupportConfidence($A,$B)['S'.$u]]);
+				$res = $this->getSupportConfidence($A,$B);
+				if($res['S'] >= $minS && !empty($res['S'])){//Cut 2
+					if($res['S'] < $maxsup){
+						array_push($freqSubset2,[$A.','.$B , $res['S'.$u] , $res['C'.$u] , $res['L'.$u]]);
+					}else{
+						array_unshift($freqSubset2,[$A.','.$B , $res['S'.$u] , $res['C'.$u] , $res['L'.$u]]);
+						$maxsup = $res['S'];
+					}
 				}
 			}
 		}
+		$maxsup = 0;
 		$fs2Str = '';
 		for($i=0;$i<count($freqSubset2);$i++){
 			$fs2Str .= $freqSubset2[$i][0].',';
@@ -156,10 +123,15 @@ class Report{
 				$B = $fs2UniAry[$j];
 				for($v=$j+1;$v<count($fs2UniAry);$v++){
 					$C = $fs2UniAry[$v];
-					if($this->getSupportConfidence($A,$B,$C)['S'] >= $minS && !empty($this->getSupportConfidence($A,$B,$C)['S'])){//Cut 3
-						array_push($freqSubset3,[$A.','.$B.','.$C , $this->getSupportConfidence($A,$B,$C)['S'.$u]]);
-					} 
-						
+					$res = $this->getSupportConfidence($A,$B,$C);
+					if($res['S'] >= $minS && !empty($res['S'])){//Cut 3
+						if($res['S'] < $maxsup){
+							array_push($freqSubset3,[$A.','.$B.','.$C , $res['S'.$u] , $res['C'.$u] , $res['L'.$u]]);
+						}else{
+							array_unshift($freqSubset3,[$A.','.$B.','.$C , $res['S'.$u] , $res['C'.$u] , $res['L'.$u]]);
+							$maxsup = $res['S'];
+						}
+					}
 				}
 			}
 		} 

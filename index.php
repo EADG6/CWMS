@@ -1,6 +1,7 @@
 <?php
 	 //Start the session
 	 session_start();
+	 date_default_timezone_set('PRC'); 
 	 //Make sure login
 	 if (!isset($_SESSION['customer_id'])){
 		 	$_SESSION['customer_id'] = 0;
@@ -30,8 +31,8 @@
 		include "app/services.php";
 	}else if($page=='order'){
 		include "app/order.php";
-	}else if($page=='news'){
-		include "app/news.php";
+	}else if($page=='addorder'){
+		include "app/addorder.php";
 	}else if($page=='addorder'){
 		include "app/addorder.php";
 	}else if($page=='customer'){

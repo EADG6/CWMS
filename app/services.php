@@ -1,5 +1,5 @@
 <div class="col-md-12">
-<h2>About<h2>
+<h2> <h2>
 </div>
 		<div class="col-md-5 contactInfo">
 			<div>
@@ -21,7 +21,7 @@
 		</div>
 		<div class="col-md-6 contactInfo">
 		   	<h3>Work Time</h3>
-			<table class="zebra">
+			<table class="table table table-striped" style="backround:#fff;border-radius:5px">
 				<thead>
 					<tr>
 			       	 	<th>Weak</th>        
