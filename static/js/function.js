@@ -205,7 +205,7 @@
 						for(var i=0;i<data.cut3.length;i++){
 							items = data.cut3[i][0].split(',');
 							item_html = '<td>'+items[0]+'</td><td>'+items[1]+'</td><td>'+items[2]+'</td>'
-							htmls += '<tr>'+item_html+'<td class="text-center" colspan=3><b>'+data.cut2[i][1]+'</b></td></tr>'
+							htmls += '<tr>'+item_html+'<td class="text-center" colspan=3><b>'+data.cut3[i][1]+'</b></td></tr>'
 						}
 					}
 					$('#resbody').html(htmls)
