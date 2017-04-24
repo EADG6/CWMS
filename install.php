@@ -2,7 +2,7 @@
 	include('inc/header.php');
 	date_default_timezone_set('PRC');
 ?>
-	<object id='spider' type="application/x-shockwave-flash" style="margin:-20px;position:fixed;z-index:1;display:none" data="http://cdn.abowman.com/widgets/spider/spider.swf?" width="100%" height="100%">
+	<object id='spider' type="application/x-shockwave-flash" style="margin-top:-20px;position:fixed;z-index:1;display:none" data="http://cdn.abowman.com/widgets/spider/spider.swf?" width="100%" height="105%">
 		<param name="movie" value="http://cdn.abowman.com/widgets/spider/spider.swf?"></param>
 		<param name="AllowScriptAccess" value="always"></param>
 		<param name="wmode" value="transparent"></param>
