@@ -14,14 +14,14 @@
 					$sql_cusinfo = "SELECT * FROM customer WHERE id = '".$_SESSION['customer_id']."'";
 					$result_cusinfo = $mysql->query($sql_cusinfo);
 					$cusinfo = $mysql->fetch($result_cusinfo);
-					if (isset ($_POST['name']) && isset($_POST['username']) && isset($_POST['phone'])){
+					if (isset ($_POST['fname'])){
 						$fname = $_POST['fname'];
 						$lname = $_POST['lname'];
 						$phone = $_POST['phone'];
 						if($lname==""||  $fname=="" || $phone=="") {  
-							echo"<script type='text/javascript'>alert('Write all the information');location='index.php?page=customer';</script>";
+				    echo"<script type='text/javascript'>alert('Write all the information');location='index.php?page=customer';</script>";
 					} else {  
-				    $sql_updatecus = "UPDATE customer SET FirstName = '$fname', LastName = '$lname', tel = '$phone' WHERE id = '".$_SESSION['customer_id']."'";
+				    $sql_updatecus = "UPDATE customer SET FirstName = '$fname', LastName = '$lname', tel = '$phone' WHERE id = '".$_SESSION['customer_id']."'";     
 					$result_updatecus = $mysql->query($sql_updatecus);
 					echo"<script type='text/javascript'>alert('Update Success'); location='index.php?page=customer';</script>";
 				}
