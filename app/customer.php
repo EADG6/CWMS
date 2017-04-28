@@ -14,14 +14,16 @@
 					$sql_cusinfo = "SELECT * FROM customer WHERE id = '".$_SESSION['customer_id']."'";
 					$result_cusinfo = $mysql->query($sql_cusinfo);
 					$cusinfo = $mysql->fetch($result_cusinfo);
-					if (isset ($_POST['name']) && isset($_POST['username']) && isset($_POST['phone'])){
+					if (isset ($_POST['fname'])){
 						$fname = $_POST['fname'];
 						$lname = $_POST['lname'];
 						$phone = $_POST['phone'];
-						if($lname==""||  $fname=="" || $phone=="") {  
-							echo"<script type='text/javascript'>alert('Write all the information');location='index.php?page=customer';</script>";
+                        $sex = $_POST['sex'];
+                        $address = $_POST['address'];
+						if($lname==""||  $fname=="" || $phone=="" || $address=="") {  
+				    echo"<script type='text/javascript'>alert('Write all the information');location='index.php?page=customer';</script>";
 					} else {  
-				    $sql_updatecus = "UPDATE customer SET FirstName = '$fname', LastName = '$lname', tel = '$phone' WHERE id = '".$_SESSION['customer_id']."'";
+				    $sql_updatecus = "UPDATE customer SET FirstName = '$fname', LastName = '$lname', tel = '$phone', address = '$address', sex = '$sex' WHERE id = '".$_SESSION['customer_id']."'";     
 					$result_updatecus = $mysql->query($sql_updatecus);
 					echo"<script type='text/javascript'>alert('Update Success'); location='index.php?page=customer';</script>";
 				}
@@ -30,12 +32,12 @@
 				<form method='post'>
 				    <div class="form-group col-md-5 col-md-offset-0 customer">  
 				    	<label for='fname'>First Name:</label>
-						<input type="text" class="form-control" name="fname" id="fname" value="<?php echo $cusinfo['FirstName']; ?>">
+						<input type="text" maxlength="20" class="form-control" name="fname" id="fname" value="<?php echo $cusinfo['FirstName']; ?>">
 					</div>
 					
 					<div class="form-group col-md-5 col-md-offset-0 customer">  
 				    	<label for='lname'>Last Name:</label>
-						<input type="text" class="form-control" name="lname" id="lname" value="<?php echo $cusinfo['LastName']; ?>">
+						<input type="text" maxlength="20" class="form-control" name="lname" id="lname" value="<?php echo $cusinfo['LastName']; ?>">
 					</div>
 					
 				    <div class="form-group col-md-5 col-md-offset-0 customer">  
@@ -45,17 +47,23 @@
 					
 				    <div class="form-group col-md-5 col-md-offset-0 customer">  
 				    	<label for='phone'>Phone Number:</label>
-						<input type="text" class="form-control" name="phone" id='phone' value="<?php echo $cusinfo['tel']; ?>">
-					</div>
-					
-					<div class="form-group col-md-5 col-md-offset-0 customer">  
-				    	<label for='sex'>Gender:</label>
-						<input type="text" class="form-control" name="sex" id='sex' value="<?php echo $cusinfo['sex']; ?>">
+						<input type="text" maxlength="13" class="form-control" name="phone" id='phone' value="<?php echo $cusinfo['tel']; ?>">
 					</div>
 					
 					<div class="form-group col-md-5 col-md-offset-0 customer">  
 				    	<label for='address'>Address:</label>
-						<input type="text" class="form-control" name="address" id='address' value="<?php echo $cusinfo['address']; ?>">
+						<input type="text" maxlength="40" class="form-control" name="address" id='address' value="<?php echo $cusinfo['address']; ?>">
+					</div>
+                    
+                    <div class="form-group col-md-5 col-md-offset-0 customer">  
+				    	<label for='sex'>Gender:</label>
+                        <div class="form-control">
+                        <td>
+				            <label>Male<input type='radio' name='sex' value=1/></label> 
+				            <label>Female<input type='radio' name='sex' value=2/></label> 
+				            <label>Unknown<input type='radio' name='sex' value=0 checked/></label>
+			             </td>
+                        </div>
 					</div>
 					
 					<div class="col-md-12 col-md-offset-10 customer">			
