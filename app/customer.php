@@ -58,14 +58,12 @@
                     <div class="form-group col-md-5 col-md-offset-0 customer">  
 				    	<label for='sex'>Gender:</label>
                         <div class="form-control">
-                        <td>
+				            <label>Unknown<input type='radio' name='sex' value=0 checked/></label>
 				            <label>Male<input type='radio' name='sex' value=1/></label> 
 				            <label>Female<input type='radio' name='sex' value=2/></label> 
-				            <label>Unknown<input type='radio' name='sex' value=0 checked/></label>
-			             </td>
                         </div>
 					</div>
-					
+					<script>$('[name="sex"]')[<?php echo $cusinfo['sex'];?>].checked=true;</script>
 					<div class="col-md-12 col-md-offset-10 customer">			
 				    	<input type="submit" value="Submit" class="btn btn-danger">  
 					</div>
