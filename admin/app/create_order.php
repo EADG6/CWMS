@@ -123,7 +123,7 @@
 				if($('#carselect').val()==undefined){
 					$('#carselect').val($('#car1').val())
 				}
-				if(editcarid>0){
+				if(editcarid.length>0){
 					$('#carselect').val(editcarid);
 				}
 			},
