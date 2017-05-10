@@ -18,19 +18,6 @@
 			pwd.type='password';
 		};
 	}
-	/* Set time stamp to now */
-	function setTimeToNow(){
-		document.getElementsByName('reqsDate')[0].valueAsDate = new Date(new Date().setDate(new Date().getDate()+2))
-	}
-	/* Date must later than tomorrow */
-	function checkDate(){
-		reqDate = document.getElementsByName('reqsDate')[0].valueAsDate
-		reqDate = reqDate.setDate(reqDate.getDate()-2)
-		if(reqDate < new Date().getTime()){
-			alert("The test drive request time must later than today");
-			setTimeToNow();
-		}
-	}
 	/* Add 0 in date time when it less than 10*/
 	function add0(e){
 		if(e.toString().length==1){
