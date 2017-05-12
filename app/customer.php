@@ -110,15 +110,15 @@
 				<form method="post">
 			    	<div class="form-group col-md-5 col-md-offset-0 customer">  
 			   		 	<label for='password'>Password:</label>
-						<input type="text" class="form-control" name="password" id='password' placeholder="Your Old Password">
+						<input type="text" class="form-control" name="password" id='password' placeholder="Your Old Password" required>
 					</div>
 			    	<div class="form-group col-md-5 col-md-offset-0 customer">  
 			   		 	<label for='newpassword'>New Password:</label>
-						<input type="text" class="form-control" name="newpassword" id='newpassword' placeholder="New Password">
+						<input type="text" class="form-control" name="newpassword" id='newpassword' placeholder="New Password" required>
 					</div>
 			    	<div class="form-group col-md-5 col-md-offset-0 customer">  
 			   		 	<label for='newpasswordagain'>New Password Again:</label>
-						<input type="text" class="form-control" name="newpasswordagain" id='newpasswordagain' placeholder="New Password Again">
+						<input type="text" class="form-control" name="newpasswordagain" id='newpasswordagain' placeholder="New Password Again" required>
 					</div>
 					<div class="col-md-12 col-md-offset-10 customer">			
 				    	<input type="submit" value="Submit" class="btn btn-danger">  
