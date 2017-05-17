@@ -37,7 +37,9 @@
 			$carinfo['status'] = mysql_num_rows($res_cars);
 			while($row = $mysql->fetch($res_cars)){
 				$i++;
-				$carinfo['car'.$i] = ['id'=>$row['id'],'carinfo'=>$row['carinfo']];
+				if(!empty(trim($row['carinfo']))){
+					$carinfo['car'.$i] = ['id'=>$row['id'],'carinfo'=>$row['carinfo']];
+				}
 			}
 			echo json_encode($carinfo);
 		}else{

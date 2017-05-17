@@ -55,16 +55,16 @@ $sql_cusinfo = "SELECT id from customer order by id DESC;";
 			</td>
 		</tr>
 		<tr>
-			<td class='bold'>Bind Car 1</td>
+			<td class='bold'>Bind Car 1 *</td>
 			<input type='hidden' name='carid1'/>
 			<td>
-				<input type='text' name='plate1' maxlength='50' placeholder='Car Plate' class='form-control'/>
+				<input type='text' name='plate1' maxlength='50' placeholder='Car Plate' class='form-control' required/>
 			</td>
 			<td>
-				<input type='text' name='brand1' maxlength='50' placeholder='Car Brand' class='form-control'/>
+				<input type='text' name='brand1' maxlength='50' placeholder='Car Brand' class='form-control' required/>
 			</td>
 			<td>
-				<input type='text' name='color1' maxlength='50' placeholder='Car Color' class='form-control'/>
+				<input type='text' name='color1' maxlength='50' placeholder='Car Color' class='form-control' required/>
 			</td>
 		</tr>
 		<tr>

@@ -28,7 +28,7 @@
 				</div>
 				<div class="form-group">
 					<label>Price:</label>
-					<input type="number" name='price' class="form-control" max=9999 required></input>
+					<input type="number" name='price' class="form-control"  min="1" max="999" required></input>
 				</div>
 				<div class="form-group">
 					<button type="submit" class="btn btn-block btn-success">Submit</button>

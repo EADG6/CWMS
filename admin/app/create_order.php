@@ -104,16 +104,26 @@
 			data:{"cusid":cusid},
 			success:function(data){
 				if(data.status > 0){
-					$('#car1').val(data.car1.id)
-					$('#car1').html(data.car1.carinfo)
+					if(data.hasOwnProperty('car1')){
+						$('#car1').val(data.car1.id)
+						$('#car1').html(data.car1.carinfo)
+					}
 					if(data.status > 1){
-						$('#car2').val(data.car2.id)
-						$('#car2').html(data.car2.carinfo)
-						$('#car2').show()
+						if(data.hasOwnProperty('car2')){
+							$('#car2').val(data.car2.id)
+							$('#car2').html(data.car2.carinfo)
+							$('#car2').show();
+						}else{
+							$('#car2').hide();
+						}
 						if(data.status > 2){
-							$('#car3').val(data.car3.id)
-							$('#car3').html(data.car3.carinfo)
-							$('#car3').show()
+							if(data.hasOwnProperty('car3')){
+								$('#car3').val(data.car3.id)
+								$('#car3').html(data.car3.carinfo)
+								$('#car3').show()
+							}else{
+								$('#car3').hide()
+							}
 						}
 					}
 				}else{
@@ -123,9 +133,10 @@
 				if($('#carselect').val()==undefined){
 					$('#carselect').val($('#car1').val())
 				}
-				if(editcarid.length>0){
+				if(typeof editcarid!='undefined'){
 					$('#carselect').val(editcarid);
 				}
+				
 			},
 			type:'POST',
 			dataType:'json'
