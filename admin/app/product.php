@@ -152,11 +152,10 @@ if($action == 'cata'){
 				<td>
 					<input type='number' class='form-control' name='origId' maxlength='6' value='$productId' disabled='disabled'/>
 					<input type='hidden' name='cataId' value='$productId' />
-					<!--save latest id number for insert new catalogue(set product.id = catalogue_id for each product cata) -->
 				</td>
 			</tr>
 			<tr>
-				<th>Name<span class='req'> *</span></th>
+				<th>Name<span> *</span></th>
 				<td>
 					<input type='text' class='form-control' maxlength='30' name='productName' required/>
 				</td>
@@ -180,7 +179,7 @@ if($action == 'cata'){
 			<tr>
 				<th><span class='hideCata'>Price<span class='req'> *</span></span></th>
 				<td><span class='hideCata'>
-					<label>&#165;&nbsp;</label><input type='number' class='form-control' min='0' max='999' name='price' required/>
+					<input type='number' class='form-control' min='0' max='9999' name='price' required/>
 				</span></td>
 			</tr>
 			<tr>
@@ -224,18 +223,6 @@ if($action == 'cata'){
 			</script>";
 	}
 }else if($action== 'weekly'){
-	/*echo "<style>
-			input[type=range]:before { content: attr(min); padding-right: 5px; }
-			input[type=range]:after { content: attr(max); padding-left: 5px;}
-		</style>
-		<script>function changenum(){
-					document.getElementById('rangeres').innerHTML = document.getElementById('weeknum').value;
-				}
-		</script>
-		<b>Week <span id='rangeres'><span></b>
-		<input type='range' id='weeknum' step='1' min='0' max='53' onchange='changenum()'/>";*/
-/**show weekly report*/
-/**a form to change week and year, default is now*/
 	$timeres = $mysql->fetch($mysql->query('select year(now()),week(now(),1)'));
 	$weeknum = $timeres[1];
 	$yearnum = $timeres[0];

@@ -141,7 +141,7 @@ $sql_cusinfo = "SELECT id from customer order by id DESC;";
 	}
 }else if($action == 'info'){
 /**show all customer's information*/
-		$sql_cusinfo = "SELECT c.*,year(from_days(datediff(now(),birth))) AS age,COUNT(car.id) AS cars FROM customer AS c LEFT JOIN car ON car.cus_id=c.id GROUP BY car.cus_id";
+		$sql_cusinfo = "SELECT c.*,year(from_days(datediff(now(),birth))) AS age,COUNT(car.id) AS cars FROM customer AS c LEFT JOIN (SELECT * FROM car WHERE plate!='') AS car ON car.cus_id=c.id GROUP BY car.cus_id";
 		$result = $mysql->query($sql_cusinfo);
 ?>		
 	<div class="col-md-12 mainblocks">

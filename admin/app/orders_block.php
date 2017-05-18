@@ -105,9 +105,10 @@
 			$('#stars').parent().attr('disabled',false)
 		}
 	}
-	function changeStatus(orid,origstatus){
+	function changeStatus(orid,origstatus,empname){
 		$('[name="ordstatusid"]').val(orid)
 		$('[name="orderstatus"]').val(origstatus)
+		$('#worker1').html(empname)
 		$('#modal-status').click()
 	}
 	function changestatusname(ele){
@@ -203,7 +204,7 @@
 			<span id="btn2<?php echo $row_order[0];?>">
 				<button type="button"  onclick="payOrder('<?php echo $row_order['id']."','".$row_order['cus_id']."','".$row_item['order_price'];?>')" id='paybtn<?php echo $row_order['id'];?>' class='btn btn-success'>Pay</button>
 				<button type="button" onclick="rateOrder('<?php echo $row_order['id']."','".$row_order['rate']."','".$empname;?>')" class='btn btn-warning' id='rate<?php echo $row_order['id'];?>' style='display:none'><?php echo $ratedstars;?></button>
-				<button type="button" onclick="changeStatus('<?php echo $row_order['id']."','".$row_order['status'];?>')" class='btn btn-warning' id='status<?php echo $row_order['id'];?>'><?php echo $row_order['status_name'];?></button>
+				<button type="button" onclick="changeStatus('<?php echo $row_order['id']."','".$row_order['status']."','".$empname;?>')" class='btn btn-warning' id='status<?php echo $row_order['id'];?>'><?php echo $row_order['status_name'];?></button>
 				<button type='button' name='edit' onclick="submit('<?php echo $row_order[0];?>')"  class='btn btn-primary'>Edit</button>
 				<button type='button' onclick="deleteOrder('<?php echo $row_order['id'];?>')" class='btn btn-danger'>Del</button>
 				<form method='post' action=''>
@@ -330,6 +331,7 @@
 							<h1 class="modal-title text-center" id='popFormLabel'>
 								Change Order Status
 							</h1>
+							<div class="modal-title text-center"><span id='worker1'></span></div>
 						</div>
 						<div class="modal-body">
 							<div class="form-group">
