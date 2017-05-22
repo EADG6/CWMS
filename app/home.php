@@ -29,18 +29,18 @@
         <hr>
 
         <div class="row">
-            <div class="col-sm-4">
+            <div class="col-sm-4" style="color:#fff">
                 <img class="img-circle img-responsive img-center" src="../CWMS/static/img/3.jpg" alt="">
                 <h2>Ordinary member</h2>
                 <p>Recharge 400 RMB per car; SUV and MPV recharge 500 RMB Member wash car 20 RMB for small car, SUV and MPV cost 25 every time; Give a free car wax for one car; Give a free Windshield washer fluid for one year; For each ordinary member upper limit three cars.                   </p>
             </div>
-            <div class="col-sm-4">
+            <div class="col-sm-4" style="color:#fff">
                 <img class="img-circle img-responsive img-center" src="../CWMS/static/img/7.jpg" alt="">
                 <h2>Silver member</h2>
                 <p>Recharge 800 RMB per car; SUV and MPV recharge 1000 RMB Member wash car 15 RMB for small car, SUV and MPV cost 20 every time; Give a free car wax for two cars; Give a free windshield washer fluid for one year; Routine inspection of car for three times; Cars inspection one time for free For each silver member upper limit three cars.
                 </p>
             </div>
-            <div class="col-sm-4">
+            <div class="col-sm-4" style="color:#fff">
                 <img class="img-circle img-responsive img-center" src="../CWMS/static/img/6.jpg" alt="" >
                 <h2>Gold Member</h2>
                 <p>Recharge 1500 RMB per car; SUV and MPV recharge 2000 RMB Member wash car 10 RMB for small car, SUV and MPV cost 15 every time; Give a free car wax for four cars; Give a free car polishing for twice; Give a free windshield washer fluid for one year; Routine inspection of car for three times; Cars inspection one time for free For each silver member upper limit five cars.
