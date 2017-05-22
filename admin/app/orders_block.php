@@ -62,7 +62,7 @@
 	function discountPrice(){
 		origPri = $('[name="totprice"]').val()
 		if($('[name="paytype"]').val()==1){
-			$('#payordid').html(origPri*0.9)
+			$('#payordid').html((origPri*0.9).toFixed(2))
 		}else{
 			$('#payordid').html($('[name="totprice"]').val())
 		}
