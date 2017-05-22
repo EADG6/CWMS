@@ -28,7 +28,7 @@
 
         <hr>
 
-        <div class="row">
+        <div class="row text-center">
             <div class="col-sm-4" style="color:#fff">
                 <img class="img-circle img-responsive img-center" src="../CWMS/static/img/3.jpg" alt="">
                 <h2>Ordinary member</h2>
