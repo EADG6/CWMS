@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS `car` (
   `brand` varchar(100) DEFAULT NULL,
   `color` varchar(100) DEFAULT NULL,
   `cus_id` int(10) unsigned DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=latin1;
 
 INSERT IGNORE INTO `car` (`id`, `plate`, `brand`, `color`, `cus_id`) VALUES
 (1, 'Chuan-A78U95', 'Honda', 'Blue', 1),
@@ -17,12 +17,15 @@ INSERT IGNORE INTO `car` (`id`, `plate`, `brand`, `color`, `cus_id`) VALUES
 (4, 'Chuan-Q54250', 'Ford', 'Grey', 2),
 (5, 'Chuan-Q25045', 'Toyota', 'White', 2),
 (6, 'Yu-B23454', 'Tesla', 'Black', 5),
-(13, 'car1', '1', '1', 8),
-(14, '', '', '', 8),
-(15, '', '', '', 8),
-(16, '1', '23', '2', 9),
-(17, '3', '3', '3', 9),
-(18, '', '', '', 9);
+(13, 'Chuan-333333', 'Ford', 'red', 8),
+(14, 'Jing-888888', 'Ferrari', 'red', 8),
+(15, 'Zhe-A66666', 'BYD', 'blue', 8),
+(16, 'Jing-A53434', 'Honda', 'white', 9),
+(17, 'Chuan-A39483', 'Tesla', 'blue', 9),
+(18, 'Chuan-B25632', 'Honda', 'white', 9),
+(19, 'Chuan-A12312', 'Lexus', 'black', 10),
+(20, '', '', '', 10),
+(21, '', '', '', 10);
 
 CREATE TABLE IF NOT EXISTS `customer` (
   `id` int(10) unsigned NOT NULL,
@@ -36,14 +39,15 @@ CREATE TABLE IF NOT EXISTS `customer` (
   `address` varchar(225) DEFAULT NULL,
   `balance` double DEFAULT NULL,
   `birth` date DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 
 INSERT IGNORE INTO `customer` (`id`, `username`, `pwdhash`, `salt`, `FirstName`, `LastName`, `sex`, `tel`, `address`, `balance`, `birth`) VALUES
-(1, 'cus1', '4037f3d099eb4e3cd9e657df21936662', 'f018f9', 'Hao', 'Liu', 1, '123456789001', 'CDUTSong2-562', 146.3, '1996-06-01'),
-(2, 'cus2', 'f056d6a7a5ec600efee50537bd50549f', 'd13ca1', 'Yuan', 'Tian', 1, '1829444332', 'CDUTSong2-334', 17.799999999999997, '1986-06-01'),
+(1, 'cus1', '4037f3d099eb4e3cd9e657df21936662', 'f018f9', 'Hao', 'Liu', 1, '123456789001', 'CDUTSong2-562', 188.8, '1996-06-01'),
+(2, 'cus2', 'f056d6a7a5ec600efee50537bd50549f', 'd13ca1', 'Young', 'Yang', 1, '1829444332', 'CDUTSong2-334', 17.7, '1986-06-01'),
 (5, 'kevin', '9abe16a3aa0abd091d9dfb9649080e37', '9879f9', 'Kevin', 'He', 3, '23333', 'CDUT562', 178, '1987-06-01'),
-(8, 'test', 'e861c63b3bf88589fda553c977b0e538', 'bSK3NDPs', 'test', 'test', 2, '1233', '12333', 10, '1995-06-01'),
-(9, 'test1', '96b2fde0498302384e5e282fa73e7150', '2/RwUARx', 'test1', '1', 1, '1', '1', 300.1, '1895-06-01');
+(8, 'Toby', 'e861c63b3bf88589fda553c977b0e538', 'bSK3NDPs', 'Toby', 'Mao', 2, '1233', '12333', 10, '1995-06-01'),
+(9, 'test1', '96b2fde0498302384e5e282fa73e7150', '2/RwUARx', 'Hary', 'Li', 1, '1', '1', 300.1, '1895-06-01'),
+(10, 'Porter', '31b045e61abe399da8b53c0c6da7d502', 'aUQBKcB8', 'Michel', 'Porter', 2, '1234', 'Cdut-334', 200, NULL);
 
 CREATE TABLE IF NOT EXISTS `employee` (
   `id` int(11) NOT NULL,
@@ -57,14 +61,14 @@ CREATE TABLE IF NOT EXISTS `employee` (
   `phone` varchar(50) NOT NULL,
   `role_id` int(11) DEFAULT NULL,
   `hiredate` date DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 
 INSERT IGNORE INTO `employee` (`id`, `username`, `pwdhash`, `salt`, `gender`, `birth`, `firstname`, `lastname`, `phone`, `role_id`, `hiredate`) VALUES
 (1, 'Marshall', '434aebd7567c6a76dab0267bd10ddc10', 'c38142', 1, '1996-06-18', 'Marshall', 'Liu', '1234567890', 3, '2016-12-01'),
 (2, 'Cary', '1252b17fb65291ece0f4ea4fa019de8f', 'e5b4c0', 1, '1996-02-13', 'Carry', 'Tian', '1234567890', 1, '2016-12-01'),
 (3, 'Leo', '018e3904257d20399c7842526fc67c54', 'a99149', 1, '1995-04-23', 'Leo', 'Li', '1234567890', 2, '2016-12-01'),
-(4, 'Kevin', 'ba16456bd49a53c1f3248055c0f0492e', '531ea7', 3, '1996-03-15', 'Kevin', 'He', '1234567890', 2, '2016-12-01'),
-(5, 'test', '0cb0b90fdf40569ebae76f77c8bd64bd', 'pql7Nv6I', 3, NULL, '1', '1', '11099102', 4, '2017-03-26');
+(4, 'Johnny', 'ba16456bd49a53c1f3248055c0f0492e', '531ea7', 1, '1996-03-15', 'Johnny', 'Dai', '1234567890', 2, '2016-12-01'),
+(7, 'John', '81e9f31caa8f550fc701118dba6eac9b', 'pwCm7vAh', 1, '1995-05-18', 'Chuxiang', 'Qing', '12344566', 2, '2017-05-18');
 
 CREATE TABLE IF NOT EXISTS `gender` (
   `id` int(11) NOT NULL,
@@ -83,7 +87,7 @@ CREATE TABLE IF NOT EXISTS `orders` (
   `Time` time DEFAULT NULL,
   `status` int(11) DEFAULT NULL,
   `rate` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=69 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=77 DEFAULT CHARSET=latin1;
 
 INSERT IGNORE INTO `orders` (`id`, `cus_id`, `Date`, `Time`, `status`, `rate`) VALUES
 (41, 2, '2017-03-25', '19:21:56', 4, 5),
@@ -91,24 +95,29 @@ INSERT IGNORE INTO `orders` (`id`, `cus_id`, `Date`, `Time`, `status`, `rate`) V
 (51, 1, '2017-03-26', '01:03:19', 4, 2),
 (53, 2, '2017-03-26', '03:03:03', 4, 3),
 (56, NULL, '2017-03-26', '03:05:27', 4, 4),
-(58, 8, '2017-03-26', '03:10:37', 3, 5),
-(59, 5, '2017-03-28', '16:37:32', 3, 0),
-(60, 2, '2017-03-28', '16:37:54', 2, 0),
-(61, NULL, '2017-03-28', '16:38:19', 1, 0),
-(62, NULL, '2017-04-02', '18:54:33', 1, 0),
+(58, 8, '2017-03-26', '03:10:37', 4, 5),
+(59, 5, '2017-03-28', '16:37:32', 4, 0),
 (63, 5, '2017-04-03', '13:37:14', 4, 0),
 (64, 1, '2017-04-03', '14:04:29', 4, 0),
 (65, 5, '2017-04-03', '18:27:51', 4, 0),
 (66, NULL, '2017-04-03', '19:24:24', 4, 0),
-(67, NULL, '2017-04-03', '19:25:41', 3, 0),
-(68, 1, '2017-04-11', '15:36:06', 1, 0);
+(67, NULL, '2017-04-03', '19:25:41', 4, 0),
+(68, 1, '2017-04-11', '15:36:06', 4, 0),
+(69, 1, '2017-05-07', '14:52:46', 4, 3),
+(70, 1, '2017-05-09', '16:35:40', 4, 5),
+(71, 2, '2017-05-09', '16:36:33', 3, 0),
+(72, 9, '2017-05-09', '16:37:52', 3, 0),
+(73, 10, '2017-05-18', '18:47:03', 3, 0),
+(74, 10, '2017-05-27', '11:15:41', 4, 4),
+(75, 1, '2017-05-27', '11:17:11', 3, 0),
+(76, 2, '2017-05-27', '11:24:01', 1, 0);
 
 CREATE TABLE IF NOT EXISTS `order_product` (
   `item_id` int(10) unsigned NOT NULL,
   `order_id` int(10) unsigned DEFAULT NULL,
   `product_id` int(10) unsigned DEFAULT NULL,
   `Quantity` int(11) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=136 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=158 DEFAULT CHARSET=latin1;
 
 INSERT IGNORE INTO `order_product` (`item_id`, `order_id`, `product_id`, `Quantity`) VALUES
 (98, 41, 3, 1),
@@ -121,11 +130,6 @@ INSERT IGNORE INTO `order_product` (`item_id`, `order_id`, `product_id`, `Quanti
 (116, 58, 11, 1),
 (117, 59, 3, 1),
 (118, 59, 10, 1),
-(119, 60, 17, 1),
-(120, 60, 7, 1),
-(121, 61, 6, 1),
-(122, 62, 15, 1),
-(123, 62, 13, 2),
 (124, 63, 4, 1),
 (125, 64, 9, 1),
 (126, 64, 7, 1),
@@ -137,14 +141,36 @@ INSERT IGNORE INTO `order_product` (`item_id`, `order_id`, `product_id`, `Quanti
 (132, 67, 7, 1),
 (133, 67, 15, 1),
 (134, 68, 7, 1),
-(135, 68, 15, 1);
+(135, 68, 15, 1),
+(136, 69, 3, 1),
+(137, 69, 9, 1),
+(138, 69, 7, 1),
+(139, 70, 3, 1),
+(140, 70, 9, 1),
+(141, 70, 7, 1),
+(142, 71, 9, 1),
+(143, 71, 7, 1),
+(144, 72, 16, 1),
+(145, 73, 3, 1),
+(146, 73, 10, 1),
+(147, 73, 9, 1),
+(148, 73, 7, 1),
+(149, 73, 15, 1),
+(150, 74, 9, 1),
+(151, 74, 7, 1),
+(152, 75, 3, 1),
+(153, 75, 9, 1),
+(154, 75, 7, 1),
+(155, 76, 3, 1),
+(156, 76, 9, 1),
+(157, 76, 7, 1);
 
 CREATE TABLE IF NOT EXISTS `order_service` (
   `id` int(11) NOT NULL,
   `emp_id` int(11) DEFAULT NULL,
   `car_id` int(11) DEFAULT NULL,
   `order_id` int(10) unsigned DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=latin1;
 
 INSERT IGNORE INTO `order_service` (`id`, `emp_id`, `car_id`, `order_id`) VALUES
 (1, 2, 5, 41),
@@ -152,8 +178,13 @@ INSERT IGNORE INTO `order_service` (`id`, `emp_id`, `car_id`, `order_id`) VALUES
 (7, 2, 4, 53),
 (10, 1, 13, 58),
 (11, 3, 6, 59),
-(12, 3, 5, 60),
-(13, 3, 6, 63);
+(13, 3, 6, 63),
+(14, 2, 1, 69),
+(15, 3, 2, 70),
+(16, 4, 16, 72),
+(17, 2, 19, 73),
+(18, 3, 2, 75),
+(19, 4, 3, 76);
 
 CREATE TABLE IF NOT EXISTS `order_status` (
   `id` int(11) NOT NULL,
@@ -175,7 +206,7 @@ CREATE TABLE IF NOT EXISTS `payment` (
   `pay_time` datetime DEFAULT NULL,
   `pay_type_id` int(11) DEFAULT NULL,
   `emp_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=latin1;
 
 INSERT IGNORE INTO `payment` (`id`, `order_id`, `cus_id`, `price`, `discount`, `pay_time`, `pay_type_id`, `emp_id`) VALUES
 (10, 41, 5, 25, 0.9, '2017-03-25 21:13:02', 1, 1),
@@ -186,7 +217,14 @@ INSERT IGNORE INTO `payment` (`id`, `order_id`, `cus_id`, `price`, `discount`, `
 (17, 66, NULL, 340, 1, '2017-04-03 19:24:36', 2, 1),
 (18, 65, 5, 200, 1, '2017-04-06 03:13:47', 4, 1),
 (19, 63, 5, 35, 0.9, '2017-04-11 15:36:56', 1, 1),
-(20, 64, 9, 260, 1, '2017-04-11 15:51:51', 2, 1);
+(20, 64, 9, 260, 1, '2017-04-11 15:51:51', 2, 1),
+(21, 69, 1, 285, 1, '2017-05-07 15:09:39', 3, 1),
+(22, 68, 1, 183, 1, '2017-05-22 22:54:16', 4, 1),
+(23, 74, 10, 260, 1, '2017-05-27 11:15:56', 2, 1),
+(24, 58, 8, 260, 1, '2017-05-27 11:18:18', 3, 1),
+(25, 59, 5, 55, 1, '2017-05-27 11:18:30', 4, 1),
+(26, 67, NULL, 288, 1, '2017-05-27 11:19:10', 3, 1),
+(27, 70, 1, 285, 0.9, '2017-05-27 11:19:50', 1, 1);
 
 CREATE TABLE IF NOT EXISTS `pay_type` (
   `id` int(11) NOT NULL,
@@ -232,7 +270,7 @@ CREATE TABLE IF NOT EXISTS `recharge` (
   `datetime` datetime DEFAULT NULL,
   `pay_type_id` int(11) DEFAULT NULL,
   `emp_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=latin1;
 
 INSERT IGNORE INTO `recharge` (`id`, `cus_id`, `price`, `datetime`, `pay_type_id`, `emp_id`) VALUES
 (12, 1, 120, '2017-03-21 15:00:43', 4, 2),
@@ -240,7 +278,10 @@ INSERT IGNORE INTO `recharge` (`id`, `cus_id`, `price`, `datetime`, `pay_type_id
 (14, 5, 200, '2017-03-28 16:39:34', 4, 1),
 (15, 1, 123, '2017-04-06 03:14:22', 2, 1),
 (16, 9, 10, '2017-04-06 03:14:47', 3, 1),
-(18, 9, 300, '2017-04-11 15:49:44', 3, 1);
+(18, 9, 300, '2017-04-11 15:49:44', 3, 1),
+(19, 1, 99, '2017-05-17 20:36:40', 4, 1),
+(20, 10, 200, '2017-05-27 11:16:10', 3, 1),
+(21, 1, 300, '2017-05-27 11:19:39', 3, 1);
 
 CREATE TABLE IF NOT EXISTS `role` (
   `id` int(11) NOT NULL,
@@ -296,29 +337,29 @@ ALTER TABLE `role`
 
 
 ALTER TABLE `car`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=19;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=22;
 ALTER TABLE `customer`
-  MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=10;
+  MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=11;
 ALTER TABLE `employee`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
 ALTER TABLE `gender`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 ALTER TABLE `orders`
-  MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=69;
+  MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=77;
 ALTER TABLE `order_product`
-  MODIFY `item_id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=136;
+  MODIFY `item_id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=158;
 ALTER TABLE `order_service`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=20;
 ALTER TABLE `order_status`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 ALTER TABLE `payment`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=21;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=28;
 ALTER TABLE `pay_type`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 ALTER TABLE `product_service`
   MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=18;
 ALTER TABLE `recharge`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=19;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=22;
 ALTER TABLE `role`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 
