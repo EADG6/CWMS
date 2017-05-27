@@ -3,13 +3,13 @@
 		        <tr><td class='text-centered tab'>
 				<nav>
 					<div class="left-menu">
-						<a href="index.php?page=create_order"><button class='btn btn-primary' type="button">Create Order</button></a>
-						<a href="index.php?page=current_orders"><button class='btn btn-default' type="button">Current Orders</button></a>
+						<a href="index.php?page=create_order"><button class='btn btn-primary' type="button"><i class="fa fa-plus"></i> Create Order</button></a>
+						<a href="index.php?page=current_orders"><button class='btn btn-info' type="button"><i class="fa fa-shopping-cart"></i> Current Orders</button></a>
 					</div>
 					<div class="right-menu">
 						<div class="nav dropdown">
-						    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Menu
-						    <span class="caret"></span></button>
+						    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+							<i class="fa fa-navicon "></i> Menu <span class="caret"></span></button>
 						    <ul class="dropdown-menu">
 						      <li class="dropdown-header">Overviews</li>
 							  <li><a href="index.php?page=product&action=weekly">Weekly Report</a></li>
@@ -42,7 +42,7 @@
 		</div>
 		<div class='col-xs-1'>
 			<div class="left_tab">
-				<a href='#'><img src='../static/img/icon/up.png'/></a><br/>
+				<a href='#'><i class="fa fa-3x fa-chevron-up"></i></a><br/>
 				<?php
 				if(!isset($_GET['action'])){
 					$_GET['action']='';
@@ -55,7 +55,7 @@
 					}
 				}
 				?>
-				<a href='#bottom'><img src='../static/img/icon/down.png'/></a>
+				<a href='#bottom'><i class="fa fa-3x fa-chevron-down"></i></a>
 			</div>
 		</div>
 		<div class='col-xs-11'>

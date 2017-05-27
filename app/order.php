@@ -28,6 +28,7 @@
    	//delete the menu
     $result = $mysql->query("DELETE FROM order_product WHERE order_id = $id");
     $result = $mysql->query("DELETE FROM order_service WHERE order_id = $id");
+    $result = $mysql->query("DELETE FROM orders WHERE id = $id");
     $result = $mysql->query("DELETE FROM payment WHERE order_id = $id");
    		echo"<script type='text/javascript'>alert('Menu Delete Now'); location='index.php?page=order';</script>"; 
    }

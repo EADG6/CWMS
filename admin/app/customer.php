@@ -55,16 +55,16 @@ $sql_cusinfo = "SELECT id from customer order by id DESC;";
 			</td>
 		</tr>
 		<tr>
-			<td class='bold'>Bind Car 1</td>
+			<td class='bold'>Bind Car 1 *</td>
 			<input type='hidden' name='carid1'/>
 			<td>
-				<input type='text' name='plate1' maxlength='50' placeholder='Car Plate' class='form-control'/>
+				<input type='text' name='plate1' maxlength='50' placeholder='Car Plate' class='form-control' required/>
 			</td>
 			<td>
-				<input type='text' name='brand1' maxlength='50' placeholder='Car Brand' class='form-control'/>
+				<input type='text' name='brand1' maxlength='50' placeholder='Car Brand' class='form-control' required/>
 			</td>
 			<td>
-				<input type='text' name='color1' maxlength='50' placeholder='Car Color' class='form-control'/>
+				<input type='text' name='color1' maxlength='50' placeholder='Car Color' class='form-control' required/>
 			</td>
 		</tr>
 		<tr>
@@ -141,7 +141,7 @@ $sql_cusinfo = "SELECT id from customer order by id DESC;";
 	}
 }else if($action == 'info'){
 /**show all customer's information*/
-		$sql_cusinfo = "SELECT c.*,year(from_days(datediff(now(),birth))) AS age,COUNT(car.id) AS cars FROM customer AS c LEFT JOIN car ON car.cus_id=c.id GROUP BY car.cus_id";
+		$sql_cusinfo = "SELECT c.*,year(from_days(datediff(now(),birth))) AS age,COUNT(car.id) AS cars FROM customer AS c LEFT JOIN (SELECT * FROM car WHERE plate!='') AS car ON car.cus_id=c.id GROUP BY car.cus_id";
 		$result = $mysql->query($sql_cusinfo);
 ?>		
 	<div class="col-md-12 mainblocks">

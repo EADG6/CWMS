@@ -11,20 +11,20 @@
 		 }
 	 //Connect database
 	 require "inc/db.php";
-	 include "inc/header.php";
-	 include "inc/nav.php";
 	 if(isset($_GET['page'])){
 		$page = $_GET['page'];
 	 }else{
-		$page = 'home'; //If can't get page go to index.php
+		$page = 'home';
 	 }
 	 if(isset($_GET['logout'])){
 		unset($_SESSION['customer_id']);
 		session_destroy();
-		echo "<script>location.href='index.php'</script>";
+		header("Location:index.php");
 		//redirect('login.php');
 	 }
 	 //show all the page's location
+	 include "inc/header.php";
+	 include "inc/nav.php";
 	 if($page=='home'){
 		include "app/home.php";
 	}else if($page=='services'){

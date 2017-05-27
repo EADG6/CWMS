@@ -18,19 +18,6 @@
 			pwd.type='password';
 		};
 	}
-	/* Set time stamp to now */
-	function setTimeToNow(){
-		document.getElementsByName('reqsDate')[0].valueAsDate = new Date(new Date().setDate(new Date().getDate()+2))
-	}
-	/* Date must later than tomorrow */
-	function checkDate(){
-		reqDate = document.getElementsByName('reqsDate')[0].valueAsDate
-		reqDate = reqDate.setDate(reqDate.getDate()-2)
-		if(reqDate < new Date().getTime()){
-			alert("The test drive request time must later than today");
-			setTimeToNow();
-		}
-	}
 	/* Add 0 in date time when it less than 10*/
 	function add0(e){
 		if(e.toString().length==1){
@@ -205,7 +192,7 @@
 						for(var i=0;i<data.cut3.length;i++){
 							items = data.cut3[i][0].split(',');
 							item_html = '<td>'+items[0]+'</td><td>'+items[1]+'</td><td>'+items[2]+'</td>'
-							htmls += '<tr>'+item_html+'<td class="text-center" colspan=3><b>'+data.cut2[i][1]+'</b></td></tr>'
+							htmls += '<tr>'+item_html+'<td class="text-center" colspan=3><b>'+data.cut3[i][1]+'</b></td></tr>'
 						}
 					}
 					$('#resbody').html(htmls)

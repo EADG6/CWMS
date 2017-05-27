@@ -7,6 +7,9 @@
 	include "inc/header.php";
 	if(isset($_SERVER['HTTP_REFERER'])){
 		$lastpage = explode('CWMS/',$_SERVER['HTTP_REFERER'])[1]; // get previous page name
+		if(empty($lastpage)){
+			$lastpage = 'index.php';
+		}
 		if(isset($_SESSION['gotopage'])){ // if already set the session
 			if($lastpage!='login.php'&&$lastpage!='login.php?new'){ //rewrite previous page in the session only if it's not about login page
 				$_SESSION['gotopage'] = $lastpage;
