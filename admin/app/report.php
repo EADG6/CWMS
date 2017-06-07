@@ -78,9 +78,9 @@
 ?>
 			</div>
 <script>
-	creProSoldChart([<?php echo implode(',',$prod['quan']).'],['.implode(',',$prod['label']).'],"'.ucwords($timestamp).'",['.implode(',',$prod['pri']).']';?>)
-	creSoldProp('<?php echo $condition."','".ucwords($timestamp);?>')
-	creOrdTrend('<?php echo $condition."','".ucwords($timestamp);?>')
+	creProSoldChart([<?php echo implode(',',$prod['quan']).'],['.implode(',',$prod['label']).'],"'.ucwords($timestamp).'",['.implode(',',$prod['pri']).']';?>);
+	creSoldProp('<?php echo $condition."','".ucwords($timestamp);?>');
+	creOrdTrend('<?php echo $condition."','".ucwords($timestamp);?>');
 </script>
 			<div class="tab-pane" id="panel-analysis">
 				<div class='col-sm-12' id='finanTrend' style='display:none'>

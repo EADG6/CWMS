@@ -34,7 +34,7 @@ if($action == 'cata'){
 	</div>
 	<table class ='table table-stripped'>
 		<thead>
-			<th colspan='3'>Product catalogue:</th>
+			<th colspan='3'>All Products:</th>
 			<tr>
 				<th>Catalogue ID</th>
 				<th class='text-center'>Catalogue Name</th>

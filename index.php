@@ -33,8 +33,6 @@
 		include "app/order.php";
 	}else if($page=='addorder'){
 		include "app/addorder.php";
-	}else if($page=='addorder'){
-		include "app/addorder.php";
 	}else if($page=='customer'){
 		include "app/customer.php";
 	}

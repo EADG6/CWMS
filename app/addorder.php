@@ -80,7 +80,7 @@
 			</div>
 			<div class="form-group">
 				<label>Time:</label>
-				<input type="time" class="form-control" name="time" min="<?php echo date('H:m',time());?>" onchange="checkDate()" value="<?php echo date('H:m',time());?>" required>
+				<input type="time" class="form-control" name="time" min="<?php echo date('H:m',time());?>" onchange="checkTime()" value="<?php echo date('H:m',time());?>" required>
 			</div>
 			<div class="form-group">
 				<button type="submit" class="btn btn-block btn-lg btn-primary">Submit</button>
@@ -89,11 +89,15 @@
 	</div>
     <script>
 	/* Date must later than tomorrow */
-	function checkDate(){
-		reqDate = document.getElementsByName('time')[0].valueAsDate
-		reqDate = reqDate.getTime()
-		if(reqDate < new Date().getTime()){
-			alert("The order time must later than today");
+	function checkTime(){
+		reqtime = document.getElementsByName('time')[0].value.split(':')
+		reqH = reqtime[0];
+		reqM = reqtime[1];
+		now = new Date();
+		curH = now.getHours();
+		curM = now.getMinutes();
+		if(reqH<curH||((reqH==curH)&&(reqM>curM))){
+			alert("The order time must later than Now");
 			$('[name="time"]').val('')
 		}
 	}

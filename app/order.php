@@ -64,7 +64,6 @@
                          <td><?php echo $row_orders['id']; ?></td>
                          <td><?php echo $row_orders['plate']; ?></td>
                          <td><?php echo $row_orders['time']; ?></td>
-                         <?php //echo $row_orders['rate']; ?>
                          <td>
                             <button type="button" class="btn btn-primary" id='stars<?php echo $row_orders['id']; ?>'>
                         <?php
@@ -79,20 +78,20 @@
                         <?php 
                             switch($row_orders['status']){
                                 case 1: echo 'Pending';break;
-                                case 2: echo 'On Going';break;
+                                case 2: echo 'On Going<script>$(document).ready(function(){$("#delbtn'.$row_orders['id'].'").attr("href","javascript:alert(\'You cannot delete ongoing order\')");$("#delbtn'.$row_orders['id'].'").attr("class","btn btn-default")})</script>';break;
                                 case 3: echo 'Done but Unpaid';break;
                                 case 4: echo 'Paid';break;
                             }
                         ?>
                          </td>
                          <td>
-                            <a href ="javascript:if(confirm('Are You Sure to Delete?'))location='index.php?page=order&id=<?php echo $row_orders['id']?>'" class="btn btn-danger">Delete </a>
+                            <a href ="javascript:if(confirm('Are You Sure to Delete?'))location='index.php?page=order&id=<?php echo $row_orders['id'];?>'" id='delbtn<?php echo $row_orders['id'];?>' class="btn btn-danger">Delete </a>
                          </td>
                         </tr>
                         <?php
                             }
                         }else{
-                            echo "<tr><td class='alert-warning'sS colspan=6>No Records</td></tr>";
+                            echo "<tr><td class='alert-warning' colspan=6>No Records</td></tr>";
                         }
                         ?>
 				</table>

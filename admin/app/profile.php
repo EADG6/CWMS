@@ -8,11 +8,11 @@
 				<div class="form-group col-md-6 col-md-offset-1">
 					
 					<div class="form-group">
-						 <label>Password </label>
+						 <label>Original Password </label>
 						 <input type="password" class="form-control" name='oldpwd' required/>
 					</div>
 					<div class="form-group">
-						 <label>Password </label>
+						 <label>New Password </label>
 						 <input type="password" class="form-control" onchange='checkpwd()' name='pwd' required/>
 						 <kbd class='seepwd' onmousedown="seepwd('pwd')"><i class='fa fa-eye'></i></kbd>
 					</div>

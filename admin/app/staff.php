@@ -84,7 +84,7 @@
 								  <option value="">Select a Role...</option>
 					<?php
 						//Get all user role
-						$sql_queryRole = "SELECT * FROM role ORDER BY pid";
+						$sql_queryRole = "SELECT * FROM role ORDER BY id";
 						$sql_queryRole = $mysql->query($sql_queryRole);
 						while($row_queryRole = $mysql->fetch($sql_queryRole)){
 							$isdiabled = $row_queryRole['pid']==0 ? 'disabled':'';
