@@ -8,7 +8,7 @@
 				<a href="#panel-sales" data-toggle="tab"><span class="fa fa-car"></span>&nbsp;Product Sales</a>
 			</li>
 			<li onclick="this.onclick='';crefinanTrend();creOrdStaChart();creCusTransacChart();crePaytypeChart()">
-				<a href="#panel-analysis" data-toggle="tab" id='myanaly'><span class="fa fa-line-chart"></span>&nbsp;Finiancial Analysis</a>
+				<a href="#panel-analysis" data-toggle="tab" id='myanaly'><span class="fa fa-line-chart"></span>&nbsp;Financial Analysis</a>
 			</li>
 			<li>
 				<a href="#panel-assoc" data-toggle="tab" id='proassoc'><span class="fa fa-shopping-basket"></span>&nbsp;Basket Analysis</a>
