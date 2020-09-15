@@ -57,7 +57,7 @@
 				<?php
 					$sql_orders = "SELECT o.id,c.plate,CONCAT(Date,' ',Time) AS time,o.status,o.rate FROM orders AS o INNER JOIN order_service AS os ON o.id=os.order_id INNER JOIN car AS c ON c.id=os.car_id WHERE o.cus_id='".$_SESSION['customer_id']."'"; 
 					$result_orders = $mysql->query($sql_orders);
-                    if(mysql_num_rows($result_orders)>0){
+                    if(mysqli_num_rows($result_orders)>0){
                         while ($row_orders = $mysql->fetch($result_orders)){
                     ?>							       
                         <tr>

@@ -1,5 +1,5 @@
 <?php
-	include('inc/header.php');
+	include('inc/header.html');
 	date_default_timezone_set('PRC');
 ?>
 	<object id='spider' type="application/x-shockwave-flash" style="margin-top:-20px;position:fixed;z-index:1;display:none" data="http://cdn.abowman.com/widgets/spider/spider.swf?" width="100%" height="105%">
@@ -31,7 +31,7 @@
 							<td>PHP Version</td><td>5.5.x</td><td><?php echo phpversion();?></td><td>5.3.0</td>
 						</tr>
                         <tr>
-							<td>MySQL Version</td><td>5.x.x</td><td><?php echo function_exists('mysql_connect')?mysql_get_server_info():'<span>&radic;</span>Error';?></td><td>5.2</td>
+							<td>MySQL Version</td><td>5.x.x</td><td><?php echo function_exists('mysqli_connect')?"mysqli_get_server_info()":'<span>&radic;</span>Error';?></td><td>5.2</td>
 						</tr>
                         <tr>
                             <td>SESSION</td><td>Open</td><td><?php echo function_exists('session_start')?'<i class="fa fa-check"></i>Supported':'<span>&radic;</span>Nonsupport';?></td><td>Open</td>
@@ -109,13 +109,13 @@
 			$dbConfig = str_replace('{db_pwd}',$dbpwd,$dbConfig);
 			$dbConfig = str_replace('false','true',$dbConfig);
 			@file_put_contents('inc/db.php',$dbConfig);
-			$conn =  mysql_connect($dbhost,$dbuser,$dbpwd) or die("Cannot connect to server".mysql_error());
-			mysql_query("CREATE DATABASE IF NOT EXISTS `carwashing` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci",$conn);
-			mysql_select_db("carwashing",$conn) or die("Cannot use this Database");
+			$conn =  mysqli_connect($dbhost,$dbuser,$dbpwd,'');
+			mysqli_query($conn,"CREATE DATABASE IF NOT EXISTS `carwashing` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci");
+			mysqli_select_db($conn,"carwashing");
 			$sql_tables = file_get_contents('carwashing_new.sql');
 			$sql_ary = explode(';',$sql_tables);
 			for($i=0;$i<count($sql_ary);$i++){
-				mysql_query($sql_ary[$i].';');
+				mysqli_query($conn,$sql_ary[$i].';');
 			}
 			echo "<script>alert('Create Database Successfully');location.href='admin/index.php'</script>";
 		}

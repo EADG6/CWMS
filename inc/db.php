@@ -8,17 +8,16 @@
 		if(!$installed){
 			header("Location:install.php");
 		}
-        $conn =  mysql_connect('localhost','root','') or die("Cannot connect to server".mysql_error());
-        $db = mysql_select_db("carwashing",$conn);
-        mysql_query("set names gbk");
+        $conn =  mysqli_connect('localhost','root','','carwashing');
+        mysqli_query($conn,"set names gbk");
         return $conn;
     }
 	function fetch($result){
-        $row = mysql_fetch_array($result);
+        $row = mysqli_fetch_array($result);
         return $row;
     }
 	function query($sql){
-        $res = mysql_query($sql,$this->conn) or die(mysql_error());
+        $res = mysqli_query($this->conn,$sql);
 		return $res;
 	}
 	function oneQuery($sql){	//Get one value from db
@@ -26,8 +25,13 @@
 	}
 }
 $mysql = new Mysql();
-	function inputCheck($input){	//prevent some of SQL injection and XSS attack
-		$input=mysql_real_escape_string(htmlspecialchars(strip_tags($input)));
+	function inputCheck($input){	 
+		global $mysql;
+		$input = mysqli_real_escape_string( //prevent some of SQL injection
+			$mysql->conn,htmlspecialchars( //invalid html tag
+				strip_tags($input) //delete html.php,xml tags
+			)
+		);
 		return $input;
 	}
 	function redirect($url,$msg=''){	//redirect and alert

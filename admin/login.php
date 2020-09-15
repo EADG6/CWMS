@@ -78,7 +78,7 @@
 		$res_pwd = $mysql->query("SELECT id,pwdhash,salt,role_id FROM employee WHERE username = '$username'"); 
 		$adminInfo = $mysql->fetch($res_pwd);
 		$pwdhash = MD5($pwd.$adminInfo['salt']);
-		if(mysql_num_rows($res_pwd)){
+		if(mysqli_num_rows($res_pwd)){
 			$rightpwd = $adminInfo['pwdhash'];
 			if($pwdhash == $rightpwd){
 				$_SESSION['admin'] = $username;
@@ -101,7 +101,7 @@
 	if(isset($_POST['sign'])){
 		$username = strtolower(inputCheck(preg_replace("/\s/","",$_POST['username'])));
 		$nameUsed = $mysql->query("SELECT id FROM employee WHERE username = '$username'");
-		if(!mysql_num_rows($nameUsed)&&!empty($username)){
+		if(!mysqli_num_rows($nameUsed)&&!empty($username)){
 			$pwd = inputCheck($_POST['pwd']);
 			$salt=base64_encode(mcrypt_create_iv(6,MCRYPT_DEV_RANDOM)); //Add random salt
 			$pwdhash = MD5($pwd.$salt); //MD5 of pwd+salt
@@ -117,7 +117,7 @@
 			$sql_newUser = "INSERT employee(username,pwdhash,salt,gender,firstname,lastname,phone,role_id,hiredate) VALUES ('$username','$pwdhash','$salt','$sex','$fname','$lname','$tel','$role',NOW())";
 			$mysql->query($sql_newUser);
 			$_SESSION['admin'] = $username;
-			$_SESSION['adminid'] =  mysql_insert_id();
+			$_SESSION['adminid'] =  mysqli_insert_id($mysqli->conn);
 			$_SESSION['role']=$role;
 		}else{
 			echo "<script>alert('Username has been used or empty, please change another one!')</script>";

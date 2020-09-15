@@ -25,7 +25,7 @@
 				$car_id = inputCheck($_POST["carid"]);
                 $sql_inserto = "INSERT orders(cus_id,date,time,status) VALUE($cus_id,curdate(),curtime(),1)";
                 $mysql->query($sql_inserto);
-				$order_id = mysql_insert_id();
+				$order_id = mysql_insert_id($mysql->conn);
 				if(!empty($emp_id)&&!empty($car_id)){
 					$mysql->query("INSERT order_service(emp_id,car_id,order_id) VALUE('$emp_id','$car_id','$order_id')");
 				}

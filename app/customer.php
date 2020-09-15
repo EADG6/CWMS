@@ -130,7 +130,7 @@
 				<?php
 				$sql_cuscarid = "SELECT * FROM car WHERE cus_id ='".$_SESSION['customer_id']."'";
 				$result_cuscarid = $mysql->query($sql_cuscarid);
-				$rows = mysql_num_rows($result_cuscarid);
+				$rows = mysqli_num_rows($result_cuscarid);
 				$num = 0;
 				while ($row_carinfo = $mysql->fetch($result_cuscarid)) {
 					$num ++;

@@ -23,7 +23,7 @@
 		//redirect('login.php');
 	 }
 	 //show all the page's location
-	 include "inc/header.php";
+	 include "inc/header.html";
 	 include "inc/nav.php";
 	 if($page=='home'){
 		include "app/home.php";
@@ -36,5 +36,5 @@
 	}else if($page=='customer'){
 		include "app/customer.php";
 	}
-	include "inc/footer.php";
+	include "inc/footer.html";
 ?>

@@ -4,7 +4,7 @@
 	session_start();
 	//Connect database
 	require "inc/db.php";
-	include "inc/header.php";
+	include "inc/header.html";
 	if(isset($_SERVER['HTTP_REFERER'])){
 		$lastpage = explode('CWMS/',$_SERVER['HTTP_REFERER'])[1]; // get previous page name
 		if(empty($lastpage)){
@@ -65,7 +65,7 @@
 				$res_pwd = $mysql->query("SELECT id,username,pwdhash,salt FROM customer WHERE username = '$username'"); 
 				$cusInfo = $mysql->fetch($res_pwd);
 				$pwdhash = MD5($pwd.$cusInfo['salt']);
-				if(mysql_num_rows($res_pwd)){
+				if(mysqli_num_rows($res_pwd)){
 					$rightpwd = $cusInfo['pwdhash'];
 					if($pwdhash == $rightpwd){
 						$_SESSION['customer_name'] = $cusInfo['username'];
@@ -109,7 +109,7 @@ if (isset ($_POST['fname'])) {
 	} else {  
 	    $sql = "SELECT * FROM customer WHERE username = '$username'";
 	    $query = $mysql->query("$sql");
-	    $rows = mysql_num_rows($query);
+	    $rows = mysqli_num_rows($query);
 	        if ($rows ==1){
 			echo"<script type='text/javascript'>alert('Username in Using');location='login.php?new';  
             </script>";
@@ -185,5 +185,5 @@ if (isset ($_POST['fname'])) {
     	</div>
 	<?php
 }
-	include "inc/footer.php";
+	include "inc/footer.html";
 	?>
